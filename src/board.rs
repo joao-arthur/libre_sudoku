@@ -1,6 +1,9 @@
 use std::{collections::HashSet, fmt};
 
-use crate::{cell::Cell, group::{self, Group}};
+use crate::{
+    cell::Cell,
+    group::{self, Group},
+};
 
 pub type Board = [[Option<Cell>; 9]; 9];
 

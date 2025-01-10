@@ -23,7 +23,7 @@ impl Cell {
             Cell::_7 => 7,
             Cell::_8 => 8,
             Cell::_9 => 9,
-        } 
+        }
     }
 
     pub fn from_u8(value: u8) -> Option<Cell> {
