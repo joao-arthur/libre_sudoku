@@ -67,26 +67,26 @@ pub fn from_str(rows: [&str; 9]) -> Result<Board, FromStringErr> {
     ])
 }
 
-fn get_col(b: &Board, i: &Cell) -> Group {
+pub fn get_col(b: &Board, i: &Cell) -> Group {
     [
-        b.get(0).unwrap().get(usize::from(i.to_u8() - 1)).unwrap().clone(),
-        b.get(1).unwrap().get(usize::from(i.to_u8() - 1)).unwrap().clone(),
-        b.get(2).unwrap().get(usize::from(i.to_u8() - 1)).unwrap().clone(),
-        b.get(3).unwrap().get(usize::from(i.to_u8() - 1)).unwrap().clone(),
-        b.get(4).unwrap().get(usize::from(i.to_u8() - 1)).unwrap().clone(),
-        b.get(5).unwrap().get(usize::from(i.to_u8() - 1)).unwrap().clone(),
-        b.get(6).unwrap().get(usize::from(i.to_u8() - 1)).unwrap().clone(),
-        b.get(7).unwrap().get(usize::from(i.to_u8() - 1)).unwrap().clone(),
-        b.get(8).unwrap().get(usize::from(i.to_u8() - 1)).unwrap().clone(),
+        b.get(0).unwrap().get(usize::from(i.to_idx())).unwrap().clone(),
+        b.get(1).unwrap().get(usize::from(i.to_idx())).unwrap().clone(),
+        b.get(2).unwrap().get(usize::from(i.to_idx())).unwrap().clone(),
+        b.get(3).unwrap().get(usize::from(i.to_idx())).unwrap().clone(),
+        b.get(4).unwrap().get(usize::from(i.to_idx())).unwrap().clone(),
+        b.get(5).unwrap().get(usize::from(i.to_idx())).unwrap().clone(),
+        b.get(6).unwrap().get(usize::from(i.to_idx())).unwrap().clone(),
+        b.get(7).unwrap().get(usize::from(i.to_idx())).unwrap().clone(),
+        b.get(8).unwrap().get(usize::from(i.to_idx())).unwrap().clone(),
     ]
 }
 
-fn get_row(b: &Board, i: &Cell) -> Group {
-    b.get(usize::from(i.to_u8() - 1)).unwrap().clone()
+pub fn get_row(b: &Board, i: &Cell) -> Group {
+    b.get(usize::from(i.to_idx())).unwrap().clone()
 }
 
-fn get_sq(b: &Board, i: &Cell) -> Group {
-    let ii = i.to_u8() - 1;
+pub fn get_sq(b: &Board, i: &Cell) -> Group {
+    let ii = i.to_idx();
     let row_i = ii / 3;
     let col_i = ii - row_i * 3;
 
@@ -102,6 +102,10 @@ fn get_sq(b: &Board, i: &Cell) -> Group {
         b.get(usize::from(row_i * 3 + 2)).unwrap().get(usize::from(col_i * 3 + 2)).unwrap().clone(),
     ]
 }
+
+//pub fn get_sq_idx(col: Cell, row: Cell) -> Cell {
+//    col.to_u8()
+//}
 
 #[cfg(test)]
 mod test {

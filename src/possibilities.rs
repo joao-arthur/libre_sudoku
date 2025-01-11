@@ -10,23 +10,23 @@ fn get_possibilities(row: &Group, col: &Group, sq: &Group) -> Possibilities {
     let mut group_possibilities = vec![true; 9];
     for c in row {
         if let Some(c) = c {
-            group_possibilities[(c.to_u8() - 1) as usize] = false;
+            group_possibilities[(c.to_idx()) as usize] = false;
         }
     }
     for c in col {
         if let Some(c) = c {
-            group_possibilities[(c.to_u8() - 1) as usize] = false;
+            group_possibilities[(c.to_idx()) as usize] = false;
         }
     }
     for c in sq {
         if let Some(c) = c {
-            group_possibilities[(c.to_u8() - 1) as usize] = false;
+            group_possibilities[(c.to_idx()) as usize] = false;
         }
     }
     let mut possibilities: Possibilities = vec![];
     for (i, p) in group_possibilities.iter().enumerate() {
         if *p {
-            if let Some(c) = Cell::from_u8((i + 1) as u8) {
+            if let Some(c) = Cell::from_idx(i as u8) {
                 possibilities.push(c);
             }
         }

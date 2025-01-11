@@ -7,7 +7,7 @@ pub type Group = [Option<Cell>; 9];
 fn parse_digit(c: Option<char>) -> Option<Cell> {
     if let Some(c) = c {
         if c.is_digit(10) {
-            return Cell::from_u8(c.to_digit(10).unwrap() as u8);
+            return Cell::from_str(&c.to_string());
         } else {
             return None;
         }

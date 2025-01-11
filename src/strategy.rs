@@ -13,12 +13,12 @@ pub fn strategy_last_empty_in_group(g: &Group) -> Option<Cell> {
     let mut group_taken = vec![false; 9];
     for c in g {
         if let Some(c) = c {
-            group_taken[(c.to_u8() - 1) as usize] = true;
+            group_taken[(c.to_idx()) as usize] = true;
         }
     }
     for (i, c) in group_taken.iter().enumerate() {
         if !c {
-            return Cell::from_u8((i + 1) as u8);
+            return Cell::from_idx(i as u8);
         }
     }
     None
