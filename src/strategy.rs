@@ -1,5 +1,3 @@
-use std::collections::LinkedList;
-
 use crate::{cell::Cell, group::Group};
 
 fn strategy_last_empty_in_group(g: &Group) -> Option<Cell> {
@@ -12,35 +10,18 @@ fn strategy_last_empty_in_group(g: &Group) -> Option<Cell> {
     if cells_len != 8 {
         return None;
     }
-    let mut group = vec![false; 9];
+    let mut group_taken = vec![false; 9];
     for c in g {
         if let Some(c) = c {
-            group[(c.to_u8() - 1) as usize] = true;
+            group_taken[(c.to_u8() - 1) as usize] = true;
         }
     }
-    for (i, c) in group.iter().enumerate() {
+    for (i, c) in group_taken.iter().enumerate() {
         if !c {
             return Cell::from_u8((i + 1) as u8);
         }
     }
     None
-}
-
-fn get_col_possibilities() {}
-fn get_row_possibilities() {}
-fn get_square_possibilities() {}
-
-fn get_possibilities(
-    row: Group,
-    col: Group,
-    sq: Group,
-    x: u8,
-    y: u8
-) {
-
-
-
-
 }
 
 fn get_col_with_mandatory_posibility() {}
@@ -60,8 +41,6 @@ fn possibility_clear_trios_square() {}
 
 #[cfg(test)]
 mod test {
-    use std::time::Instant;
-
     use crate::group;
 
     use super::*;

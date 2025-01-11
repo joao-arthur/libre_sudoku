@@ -85,7 +85,7 @@ fn get_row(b: &Board, i: &Cell) -> Group {
     b.get(usize::from(i.to_u8() - 1)).unwrap().clone()
 }
 
-fn get_sqr(b: &Board, i: &Cell) -> Group {
+fn get_sq(b: &Board, i: &Cell) -> Group {
     let ii = i.to_u8() - 1;
     let row_i = ii / 3;
     let col_i = ii - row_i * 3;
@@ -186,7 +186,7 @@ mod test {
     }
 
     #[test]
-    fn test_get_sqr() {
+    fn test_get_sq() {
         let b = from_str([
             " 112 233 ",
             "111222333",
@@ -199,14 +199,14 @@ mod test {
             " 778 899 ",
         ])
         .unwrap();
-        assert_eq!(get_sqr(&b, &Cell::_1), group::from_str(" 11111111"));
-        assert_eq!(get_sqr(&b, &Cell::_2), group::from_str("2 2222222"));
-        assert_eq!(get_sqr(&b, &Cell::_3), group::from_str("33 333333"));
-        assert_eq!(get_sqr(&b, &Cell::_4), group::from_str("444 44444"));
-        assert_eq!(get_sqr(&b, &Cell::_5), group::from_str("5555 5555"));
-        assert_eq!(get_sqr(&b, &Cell::_6), group::from_str("66666 666"));
-        assert_eq!(get_sqr(&b, &Cell::_7), group::from_str("777777 77"));
-        assert_eq!(get_sqr(&b, &Cell::_8), group::from_str("8888888 8"));
-        assert_eq!(get_sqr(&b, &Cell::_9), group::from_str("99999999 "));
+        assert_eq!(get_sq(&b, &Cell::_1), group::from_str(" 11111111"));
+        assert_eq!(get_sq(&b, &Cell::_2), group::from_str("2 2222222"));
+        assert_eq!(get_sq(&b, &Cell::_3), group::from_str("33 333333"));
+        assert_eq!(get_sq(&b, &Cell::_4), group::from_str("444 44444"));
+        assert_eq!(get_sq(&b, &Cell::_5), group::from_str("5555 5555"));
+        assert_eq!(get_sq(&b, &Cell::_6), group::from_str("66666 666"));
+        assert_eq!(get_sq(&b, &Cell::_7), group::from_str("777777 77"));
+        assert_eq!(get_sq(&b, &Cell::_8), group::from_str("8888888 8"));
+        assert_eq!(get_sq(&b, &Cell::_9), group::from_str("99999999 "));
     }
 }
