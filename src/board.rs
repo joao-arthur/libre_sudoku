@@ -1,11 +1,11 @@
-use std::{collections::HashSet, fmt};
+use std::fmt;
 
 use crate::{
     cell::Cell,
     group::{self, Group},
 };
 
-pub type Board = [[Option<Cell>; 9]; 9];
+pub type Board = [Group; 9];
 
 #[derive(Debug, PartialEq)]
 pub struct InvalidCharacterErr;

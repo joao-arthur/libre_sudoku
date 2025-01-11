@@ -1,10 +1,12 @@
 use crate::{cell::Cell, group::Group};
 
+pub type Possibilities = Vec<Cell>;
+
 fn get_col_possibilities() {}
 fn get_row_possibilities() {}
 fn get_square_possibilities() {}
 
-fn get_possibilities(row: &Group, col: &Group, sq: &Group) -> Vec<Cell> {
+fn get_possibilities(row: &Group, col: &Group, sq: &Group) -> Possibilities {
     let mut group_possibilities = vec![true; 9];
     for c in row {
         if let Some(c) = c {
@@ -21,7 +23,7 @@ fn get_possibilities(row: &Group, col: &Group, sq: &Group) -> Vec<Cell> {
             group_possibilities[(c.to_u8() - 1) as usize] = false;
         }
     }
-    let mut possibilities: Vec<Cell> = vec![];
+    let mut possibilities: Possibilities = vec![];
     for (i, p) in group_possibilities.iter().enumerate() {
         if *p {
             if let Some(c) = Cell::from_u8((i + 1) as u8) {

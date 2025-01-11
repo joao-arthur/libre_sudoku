@@ -2,6 +2,7 @@ mod board;
 mod cell;
 mod group;
 mod possibilities;
+mod solve;
 mod strategy;
 
 fn main() {
