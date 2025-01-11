@@ -1,27 +1,47 @@
+use std::collections::LinkedList;
+
 use crate::{cell::Cell, group::Group};
 
 fn strategy_last_empty_in_group(g: &Group) -> Option<Cell> {
-    let cells: Vec<Cell> = g.iter().filter(|c| c.is_some()).map(|c| c.clone().unwrap()).collect();
-    if cells.len() < 8 {
+    let mut cells_len: u8 = 0;
+    for c in g {
+        if c.is_some() {
+            cells_len += 1;
+        }
+    }
+    if cells_len != 8 {
         return None;
     }
-    let group = vec![
-        Cell::_1,
-        Cell::_2,
-        Cell::_3,
-        Cell::_4,
-        Cell::_5,
-        Cell::_6,
-        Cell::_7,
-        Cell::_8,
-        Cell::_9,
-    ];
-    group.iter().cloned().filter(|gc| cells.iter().cloned().find(|c| c == gc).is_none()).last()
+    let mut group = vec![false; 9];
+    for c in g {
+        if let Some(c) = c {
+            group[(c.to_u8() - 1) as usize] = true;
+        }
+    }
+    for (i, c) in group.iter().enumerate() {
+        if !c {
+            return Cell::from_u8((i + 1) as u8);
+        }
+    }
+    None
 }
 
 fn get_col_possibilities() {}
 fn get_row_possibilities() {}
 fn get_square_possibilities() {}
+
+fn get_possibilities(
+    row: Group,
+    col: Group,
+    sq: Group,
+    x: u8,
+    y: u8
+) {
+
+
+
+
+}
 
 fn get_col_with_mandatory_posibility() {}
 fn get_row_with_mandatory_posibility() {}
@@ -40,6 +60,8 @@ fn possibility_clear_trios_square() {}
 
 #[cfg(test)]
 mod test {
+    use std::time::Instant;
+
     use crate::group;
 
     use super::*;
@@ -60,14 +82,47 @@ mod test {
     #[test]
     fn test_strategy_last_empty_in_group_none() {
         assert_eq!(strategy_last_empty_in_group(&group::from_str("  3456789")), None);
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("1  456789")), None);
         assert_eq!(strategy_last_empty_in_group(&group::from_str("12  56789")), None);
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("123  6789")), None);
         assert_eq!(strategy_last_empty_in_group(&group::from_str("1234  789")), None);
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("12345  89")), None);
         assert_eq!(strategy_last_empty_in_group(&group::from_str("123456  9")), None);
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("1234567  ")), None);
+
         assert_eq!(strategy_last_empty_in_group(&group::from_str("   456789")), None);
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("1   56789")), None);
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("12   6789")), None);
         assert_eq!(strategy_last_empty_in_group(&group::from_str("123   789")), None);
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("1234   89")), None);
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("12345   9")), None);
         assert_eq!(strategy_last_empty_in_group(&group::from_str("123456   ")), None);
+
         assert_eq!(strategy_last_empty_in_group(&group::from_str("    56789")), None);
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("1    6789")), None);
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("12    789")), None);
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("123    89")), None);
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("1234    9")), None);
         assert_eq!(strategy_last_empty_in_group(&group::from_str("12345    ")), None);
+
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("     6789")), None);
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("1     789")), None);
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("12     89")), None);
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("123     9")), None);
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("12345    ")), None);
+
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("      789")), None);
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("1      89")), None);
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("12      9")), None);
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("123      ")), None);
+
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("       89")), None);
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("1       9")), None);
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("12       ")), None);
+
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("        9")), None);
+        assert_eq!(strategy_last_empty_in_group(&group::from_str("1        ")), None);
+
         assert_eq!(strategy_last_empty_in_group(&group::from_str("         ")), None);
     }
 }
