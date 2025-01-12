@@ -103,9 +103,30 @@ pub fn get_sq(b: &Board, i: &Cell) -> Group {
     ]
 }
 
-//pub fn get_sq_idx(col: Cell, row: Cell) -> Cell {
-//    col.to_u8()
-//}
+pub fn get_cell(b: &Board, row: &Cell, col: &Cell) -> Option<Cell> {
+    b[row.to_idx() as usize][col.to_idx() as usize].clone()
+}
+
+pub fn get_sq_idx(row: &Cell, col: &Cell) -> Cell {
+    let row_i = row.to_idx() / 3;
+    let col_i = col.to_idx() / 3;
+
+    Cell::from_idx(row_i * 3 + col_i).unwrap()
+}
+
+pub fn to_string(b: &Board) -> String {
+    let mut res: String = String::from("");
+    for row in b {
+        for col in row {
+            match col {
+                Some(val) => res.push_str(val.to_str()),
+                None => res.push_str(" "),
+            }
+        }
+        res.push_str("\n")
+    }
+    res
+}
 
 #[cfg(test)]
 mod test {
@@ -213,4 +234,64 @@ mod test {
         assert_eq!(get_sq(&b, &Cell::_8), group::from_str("8888888 8"));
         assert_eq!(get_sq(&b, &Cell::_9), group::from_str("99999999 "));
     }
+
+    #[test]
+    fn test_get_cell() {
+        let b = from_str([
+            " 23456789",
+            "1 3456789",
+            "12 456789",
+            "123 56789",
+            "1234 6789",
+            "12345 789",
+            "123456 89",
+            "1234567 9",
+            "12345678 ",
+        ])
+        .unwrap();
+        assert_eq!(get_cell(&b, &Cell::_1, &Cell::_1), None);
+        assert_eq!(get_cell(&b, &Cell::_2, &Cell::_2), None);
+        assert_eq!(get_cell(&b, &Cell::_3, &Cell::_3), None);
+
+        assert_eq!(get_cell(&b, &Cell::_1, &Cell::_2), Some(Cell::_2));
+        assert_eq!(get_cell(&b, &Cell::_1, &Cell::_3), Some(Cell::_3));
+        assert_eq!(get_cell(&b, &Cell::_1, &Cell::_4), Some(Cell::_4));
+
+        assert_eq!(get_cell(&b, &Cell::_9, &Cell::_6), Some(Cell::_6));
+        assert_eq!(get_cell(&b, &Cell::_9, &Cell::_7), Some(Cell::_7));
+        assert_eq!(get_cell(&b, &Cell::_9, &Cell::_8), Some(Cell::_8));
+        
+    }
+
+    #[test]
+    fn test_get_sq_idx() {
+        assert_eq!(get_sq_idx(&Cell::_1, &Cell::_1), Cell::_1);
+        assert_eq!(get_sq_idx(&Cell::_1, &Cell::_2), Cell::_1);
+        assert_eq!(get_sq_idx(&Cell::_1, &Cell::_3), Cell::_1);
+
+        assert_eq!(get_sq_idx(&Cell::_4, &Cell::_1), Cell::_4);
+        assert_eq!(get_sq_idx(&Cell::_4, &Cell::_2), Cell::_4);
+        assert_eq!(get_sq_idx(&Cell::_4, &Cell::_3), Cell::_4);
+        
+        assert_eq!(get_sq_idx(&Cell::_7, &Cell::_1), Cell::_7);
+        assert_eq!(get_sq_idx(&Cell::_7, &Cell::_2), Cell::_7);
+        assert_eq!(get_sq_idx(&Cell::_7, &Cell::_3), Cell::_7);
+        
+        assert_eq!(get_sq_idx(&Cell::_3, &Cell::_7), Cell::_3);
+        assert_eq!(get_sq_idx(&Cell::_3, &Cell::_8), Cell::_3);
+        assert_eq!(get_sq_idx(&Cell::_3, &Cell::_9), Cell::_3);
+
+        assert_eq!(get_sq_idx(&Cell::_6, &Cell::_7), Cell::_6);
+        assert_eq!(get_sq_idx(&Cell::_6, &Cell::_8), Cell::_6);
+        assert_eq!(get_sq_idx(&Cell::_6, &Cell::_9), Cell::_6);
+        
+        assert_eq!(get_sq_idx(&Cell::_9, &Cell::_7), Cell::_9);
+        assert_eq!(get_sq_idx(&Cell::_9, &Cell::_8), Cell::_9);
+        assert_eq!(get_sq_idx(&Cell::_9, &Cell::_9), Cell::_9);
+        
+        assert_eq!(get_sq_idx(&Cell::_4, &Cell::_4), Cell::_5);
+        assert_eq!(get_sq_idx(&Cell::_5, &Cell::_5), Cell::_5);
+        assert_eq!(get_sq_idx(&Cell::_6, &Cell::_6), Cell::_5);
+    }
+
 }
