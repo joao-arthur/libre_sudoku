@@ -1,5 +1,5 @@
 use crate::{
-    board::{get_cell, get_col, get_row, get_sq, get_sq_idx, Board},
+    board::{Board, get_cell, get_col, get_row, get_sq, get_sq_idx},
     cell::Cell,
     strategy::{strategy_last_empty_in_group, strategy_only_possibility},
 };

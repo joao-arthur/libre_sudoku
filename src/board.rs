@@ -12,7 +12,7 @@ pub struct InvalidCharacterErr;
 
 impl fmt::Display for InvalidCharacterErr {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Only [0-9] characters are allowed!")
+        write!(f, "Must match the pattern [0-9 ]")
     }
 }
 
@@ -21,7 +21,7 @@ pub struct InvalidLengthErr;
 
 impl fmt::Display for InvalidLengthErr {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "The length of every line must be 9!")
+        write!(f, "The length of every line must be 9")
     }
 }
 
@@ -147,15 +147,105 @@ mod test {
                 "12345678 ",
             ]),
             Ok([
-                [None, Some(Cell::_2), Some(Cell::_3), Some(Cell::_4), Some(Cell::_5), Some(Cell::_6), Some(Cell::_7), Some(Cell::_8), Some(Cell::_9)],
-                [Some(Cell::_1), None, Some(Cell::_3), Some(Cell::_4), Some(Cell::_5), Some(Cell::_6), Some(Cell::_7), Some(Cell::_8), Some(Cell::_9)],
-                [Some(Cell::_1), Some(Cell::_2), None, Some(Cell::_4), Some(Cell::_5), Some(Cell::_6), Some(Cell::_7), Some(Cell::_8), Some(Cell::_9)],
-                [Some(Cell::_1), Some(Cell::_2), Some(Cell::_3), None, Some(Cell::_5), Some(Cell::_6), Some(Cell::_7), Some(Cell::_8), Some(Cell::_9)],
-                [Some(Cell::_1), Some(Cell::_2), Some(Cell::_3), Some(Cell::_4), None, Some(Cell::_6), Some(Cell::_7), Some(Cell::_8), Some(Cell::_9)],
-                [Some(Cell::_1), Some(Cell::_2), Some(Cell::_3), Some(Cell::_4), Some(Cell::_5), None, Some(Cell::_7), Some(Cell::_8), Some(Cell::_9)],
-                [Some(Cell::_1), Some(Cell::_2), Some(Cell::_3), Some(Cell::_4), Some(Cell::_5), Some(Cell::_6), None, Some(Cell::_8), Some(Cell::_9)],
-                [Some(Cell::_1), Some(Cell::_2), Some(Cell::_3), Some(Cell::_4), Some(Cell::_5), Some(Cell::_6), Some(Cell::_7), None, Some(Cell::_9)],
-                [Some(Cell::_1), Some(Cell::_2), Some(Cell::_3), Some(Cell::_4), Some(Cell::_5), Some(Cell::_6), Some(Cell::_7), Some(Cell::_8), None],
+                [
+                    None,
+                    Some(Cell::_2),
+                    Some(Cell::_3),
+                    Some(Cell::_4),
+                    Some(Cell::_5),
+                    Some(Cell::_6),
+                    Some(Cell::_7),
+                    Some(Cell::_8),
+                    Some(Cell::_9)
+                ],
+                [
+                    Some(Cell::_1),
+                    None,
+                    Some(Cell::_3),
+                    Some(Cell::_4),
+                    Some(Cell::_5),
+                    Some(Cell::_6),
+                    Some(Cell::_7),
+                    Some(Cell::_8),
+                    Some(Cell::_9)
+                ],
+                [
+                    Some(Cell::_1),
+                    Some(Cell::_2),
+                    None,
+                    Some(Cell::_4),
+                    Some(Cell::_5),
+                    Some(Cell::_6),
+                    Some(Cell::_7),
+                    Some(Cell::_8),
+                    Some(Cell::_9)
+                ],
+                [
+                    Some(Cell::_1),
+                    Some(Cell::_2),
+                    Some(Cell::_3),
+                    None,
+                    Some(Cell::_5),
+                    Some(Cell::_6),
+                    Some(Cell::_7),
+                    Some(Cell::_8),
+                    Some(Cell::_9)
+                ],
+                [
+                    Some(Cell::_1),
+                    Some(Cell::_2),
+                    Some(Cell::_3),
+                    Some(Cell::_4),
+                    None,
+                    Some(Cell::_6),
+                    Some(Cell::_7),
+                    Some(Cell::_8),
+                    Some(Cell::_9)
+                ],
+                [
+                    Some(Cell::_1),
+                    Some(Cell::_2),
+                    Some(Cell::_3),
+                    Some(Cell::_4),
+                    Some(Cell::_5),
+                    None,
+                    Some(Cell::_7),
+                    Some(Cell::_8),
+                    Some(Cell::_9)
+                ],
+                [
+                    Some(Cell::_1),
+                    Some(Cell::_2),
+                    Some(Cell::_3),
+                    Some(Cell::_4),
+                    Some(Cell::_5),
+                    Some(Cell::_6),
+                    None,
+                    Some(Cell::_8),
+                    Some(Cell::_9)
+                ],
+                [
+                    Some(Cell::_1),
+                    Some(Cell::_2),
+                    Some(Cell::_3),
+                    Some(Cell::_4),
+                    Some(Cell::_5),
+                    Some(Cell::_6),
+                    Some(Cell::_7),
+                    None,
+                    Some(Cell::_9)
+                ],
+                [
+                    Some(Cell::_1),
+                    Some(Cell::_2),
+                    Some(Cell::_3),
+                    Some(Cell::_4),
+                    Some(Cell::_5),
+                    Some(Cell::_6),
+                    Some(Cell::_7),
+                    Some(Cell::_8),
+                    None
+                ],
             ])
         );
     }
@@ -260,7 +350,6 @@ mod test {
         assert_eq!(get_cell(&b, &Cell::_9, &Cell::_6), Some(Cell::_6));
         assert_eq!(get_cell(&b, &Cell::_9, &Cell::_7), Some(Cell::_7));
         assert_eq!(get_cell(&b, &Cell::_9, &Cell::_8), Some(Cell::_8));
-        
     }
 
     #[test]
@@ -272,11 +361,11 @@ mod test {
         assert_eq!(get_sq_idx(&Cell::_4, &Cell::_1), Cell::_4);
         assert_eq!(get_sq_idx(&Cell::_4, &Cell::_2), Cell::_4);
         assert_eq!(get_sq_idx(&Cell::_4, &Cell::_3), Cell::_4);
-        
+
         assert_eq!(get_sq_idx(&Cell::_7, &Cell::_1), Cell::_7);
         assert_eq!(get_sq_idx(&Cell::_7, &Cell::_2), Cell::_7);
         assert_eq!(get_sq_idx(&Cell::_7, &Cell::_3), Cell::_7);
-        
+
         assert_eq!(get_sq_idx(&Cell::_3, &Cell::_7), Cell::_3);
         assert_eq!(get_sq_idx(&Cell::_3, &Cell::_8), Cell::_3);
         assert_eq!(get_sq_idx(&Cell::_3, &Cell::_9), Cell::_3);
@@ -284,14 +373,13 @@ mod test {
         assert_eq!(get_sq_idx(&Cell::_6, &Cell::_7), Cell::_6);
         assert_eq!(get_sq_idx(&Cell::_6, &Cell::_8), Cell::_6);
         assert_eq!(get_sq_idx(&Cell::_6, &Cell::_9), Cell::_6);
-        
+
         assert_eq!(get_sq_idx(&Cell::_9, &Cell::_7), Cell::_9);
         assert_eq!(get_sq_idx(&Cell::_9, &Cell::_8), Cell::_9);
         assert_eq!(get_sq_idx(&Cell::_9, &Cell::_9), Cell::_9);
-        
+
         assert_eq!(get_sq_idx(&Cell::_4, &Cell::_4), Cell::_5);
         assert_eq!(get_sq_idx(&Cell::_5, &Cell::_5), Cell::_5);
         assert_eq!(get_sq_idx(&Cell::_6, &Cell::_6), Cell::_5);
     }
-
 }
