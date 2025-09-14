@@ -1,6 +1,5 @@
-use std::char;
-
 use crate::cell::Cell;
+use std::char;
 
 pub type Group = [Option<Cell>; 9];
 
@@ -31,11 +30,17 @@ pub fn from_str(row: &str) -> Group {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use super::from_str;
+    use crate::cell::Cell;
 
     #[test]
-    fn test_get_col() {
+    fn from_empty_str() {
+        assert_eq!(from_str(""), [None, None, None, None, None, None, None, None, None]);
         assert_eq!(from_str("         "), [None, None, None, None, None, None, None, None, None]);
+    }
+
+    #[test]
+    fn from_str_missing_parts() {
         assert_eq!(
             from_str(" 11111111"),
             [
@@ -160,6 +165,24 @@ mod tests {
                 Some(Cell::_9),
                 Some(Cell::_9),
                 None
+            ]
+        );
+    }
+
+    #[test]
+    fn from_full_str() {
+        assert_eq!(
+            from_str("123456789"),
+            [
+                Some(Cell::_1),
+                Some(Cell::_2),
+                Some(Cell::_3),
+                Some(Cell::_4),
+                Some(Cell::_5),
+                Some(Cell::_6),
+                Some(Cell::_7),
+                Some(Cell::_8),
+                Some(Cell::_9),
             ]
         );
     }
