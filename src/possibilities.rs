@@ -26,7 +26,7 @@ fn get_possibilities(row: &Group, col: &Group, sq: &Group) -> Possibilities {
     let mut possibilities: Possibilities = vec![];
     for (i, p) in group_possibilities.iter().enumerate() {
         if *p {
-            if let Some(c) = Cell::from_idx(i as u8) {
+            if let Some(c) = Cell::try_from_idx(i as u8) {
                 possibilities.push(c);
             }
         }
@@ -35,7 +35,7 @@ fn get_possibilities(row: &Group, col: &Group, sq: &Group) -> Possibilities {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use crate::group;
 
     use super::*;

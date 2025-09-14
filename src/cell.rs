@@ -12,21 +12,7 @@ pub enum Cell {
 }
 
 impl Cell {
-    pub fn to_idx(&self) -> u8 {
-        match self {
-            Cell::_1 => 0,
-            Cell::_2 => 1,
-            Cell::_3 => 2,
-            Cell::_4 => 3,
-            Cell::_5 => 4,
-            Cell::_6 => 5,
-            Cell::_7 => 6,
-            Cell::_8 => 7,
-            Cell::_9 => 8,
-        }
-    }
-
-    pub fn from_idx(value: u8) -> Option<Cell> {
+    pub fn try_from_idx(value: u8) -> Option<Cell> {
         match value {
             0 => Some(Cell::_1),
             1 => Some(Cell::_2),
@@ -41,7 +27,25 @@ impl Cell {
         }
     }
 
-    pub fn from_str(s: &str) -> Option<Cell> {
+    pub fn from_idx(value: u8) -> Cell {
+        Cell::try_from_idx(value).unwrap()
+    }
+
+    pub fn to_idx(&self) -> u8 {
+        match self {
+            Cell::_1 => 0,
+            Cell::_2 => 1,
+            Cell::_3 => 2,
+            Cell::_4 => 3,
+            Cell::_5 => 4,
+            Cell::_6 => 5,
+            Cell::_7 => 6,
+            Cell::_8 => 7,
+            Cell::_9 => 8,
+        }
+    }
+
+    pub fn try_from_str(s: &str) -> Option<Cell> {
         match s {
             "1" => Some(Cell::_1),
             "2" => Some(Cell::_2),
@@ -54,6 +58,10 @@ impl Cell {
             "9" => Some(Cell::_9),
             _ => None,
         }
+    }
+
+    pub fn from_str(s: &str) -> Cell {
+        Cell::try_from_str(s).unwrap()
     }
 
     pub fn to_str(self: &Cell) -> &'static str {
@@ -72,11 +80,38 @@ impl Cell {
 }
 
 #[cfg(test)]
-mod test {
-    use super::*;
+mod tests {
+    use super::Cell;
 
     #[test]
-    fn test_cell_to_idx() {
+    fn try_from_idx() {
+        assert_eq!(Cell::try_from_idx(0), Some(Cell::_1));
+        assert_eq!(Cell::try_from_idx(1), Some(Cell::_2));
+        assert_eq!(Cell::try_from_idx(2), Some(Cell::_3));
+        assert_eq!(Cell::try_from_idx(3), Some(Cell::_4));
+        assert_eq!(Cell::try_from_idx(4), Some(Cell::_5));
+        assert_eq!(Cell::try_from_idx(5), Some(Cell::_6));
+        assert_eq!(Cell::try_from_idx(6), Some(Cell::_7));
+        assert_eq!(Cell::try_from_idx(7), Some(Cell::_8));
+        assert_eq!(Cell::try_from_idx(8), Some(Cell::_9));
+        assert_eq!(Cell::try_from_idx(9), None);
+    }
+
+    #[test]
+    fn from_idx() {
+        assert_eq!(Cell::from_idx(0), Cell::_1);
+        assert_eq!(Cell::from_idx(1), Cell::_2);
+        assert_eq!(Cell::from_idx(2), Cell::_3);
+        assert_eq!(Cell::from_idx(3), Cell::_4);
+        assert_eq!(Cell::from_idx(4), Cell::_5);
+        assert_eq!(Cell::from_idx(5), Cell::_6);
+        assert_eq!(Cell::from_idx(6), Cell::_7);
+        assert_eq!(Cell::from_idx(7), Cell::_8);
+        assert_eq!(Cell::from_idx(8), Cell::_9);
+    }
+
+    #[test]
+    fn to_idx() {
         assert_eq!(Cell::_1.to_idx(), 0);
         assert_eq!(Cell::_2.to_idx(), 1);
         assert_eq!(Cell::_3.to_idx(), 2);
@@ -89,35 +124,34 @@ mod test {
     }
 
     #[test]
-    fn test_cell_from_idx() {
-        assert_eq!(Cell::from_idx(0), Some(Cell::_1));
-        assert_eq!(Cell::from_idx(1), Some(Cell::_2));
-        assert_eq!(Cell::from_idx(2), Some(Cell::_3));
-        assert_eq!(Cell::from_idx(3), Some(Cell::_4));
-        assert_eq!(Cell::from_idx(4), Some(Cell::_5));
-        assert_eq!(Cell::from_idx(5), Some(Cell::_6));
-        assert_eq!(Cell::from_idx(6), Some(Cell::_7));
-        assert_eq!(Cell::from_idx(7), Some(Cell::_8));
-        assert_eq!(Cell::from_idx(8), Some(Cell::_9));
-        assert_eq!(Cell::from_idx(9), None);
+    fn try_from_str() {
+        assert_eq!(Cell::try_from_str("0"), None);
+        assert_eq!(Cell::try_from_str("1"), Some(Cell::_1));
+        assert_eq!(Cell::try_from_str("2"), Some(Cell::_2));
+        assert_eq!(Cell::try_from_str("3"), Some(Cell::_3));
+        assert_eq!(Cell::try_from_str("4"), Some(Cell::_4));
+        assert_eq!(Cell::try_from_str("5"), Some(Cell::_5));
+        assert_eq!(Cell::try_from_str("6"), Some(Cell::_6));
+        assert_eq!(Cell::try_from_str("7"), Some(Cell::_7));
+        assert_eq!(Cell::try_from_str("8"), Some(Cell::_8));
+        assert_eq!(Cell::try_from_str("9"), Some(Cell::_9));
     }
 
     #[test]
-    fn test_from_str() {
-        assert_eq!(Cell::from_str("0"), None);
-        assert_eq!(Cell::from_str("1"), Some(Cell::_1));
-        assert_eq!(Cell::from_str("2"), Some(Cell::_2));
-        assert_eq!(Cell::from_str("3"), Some(Cell::_3));
-        assert_eq!(Cell::from_str("4"), Some(Cell::_4));
-        assert_eq!(Cell::from_str("5"), Some(Cell::_5));
-        assert_eq!(Cell::from_str("6"), Some(Cell::_6));
-        assert_eq!(Cell::from_str("7"), Some(Cell::_7));
-        assert_eq!(Cell::from_str("8"), Some(Cell::_8));
-        assert_eq!(Cell::from_str("9"), Some(Cell::_9));
+    fn from_str() {
+        assert_eq!(Cell::from_str("1"), Cell::_1);
+        assert_eq!(Cell::from_str("2"), Cell::_2);
+        assert_eq!(Cell::from_str("3"), Cell::_3);
+        assert_eq!(Cell::from_str("4"), Cell::_4);
+        assert_eq!(Cell::from_str("5"), Cell::_5);
+        assert_eq!(Cell::from_str("6"), Cell::_6);
+        assert_eq!(Cell::from_str("7"), Cell::_7);
+        assert_eq!(Cell::from_str("8"), Cell::_8);
+        assert_eq!(Cell::from_str("9"), Cell::_9);
     }
 
     #[test]
-    fn test_to_str() {
+    fn to_str() {
         assert_eq!(Cell::_1.to_str(), "1");
         assert_eq!(Cell::_2.to_str(), "2");
         assert_eq!(Cell::_3.to_str(), "3");

@@ -7,8 +7,8 @@ use crate::{
 fn solve(b: &mut Board) {
     for row_i in 0..9 {
         for col_i in 0..9 {
-            if let Some(row_cell) = Cell::from_idx(row_i) {
-                if let Some(col_cell) = Cell::from_idx(col_i) {
+            if let Some(row_cell) = Cell::try_from_idx(row_i) {
+                if let Some(col_cell) = Cell::try_from_idx(col_i) {
                     if get_cell(&b, &row_cell, &col_cell).is_none() {
                         let row = get_row(b, &row_cell);
                         let col = get_col(b, &col_cell);
@@ -34,7 +34,7 @@ fn solve(b: &mut Board) {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use crate::board::{self, to_string};
 
     use super::*;

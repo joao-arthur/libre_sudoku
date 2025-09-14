@@ -1,13 +1,10 @@
-mod board;
-mod cell;
-mod group;
-mod possibilities;
-mod solve;
-mod strategy;
+pub mod board;
+pub mod cell;
+pub mod group;
+pub mod possibilities;
+pub mod solve;
+pub mod strategy;
 
-fn main() {
-    println!("Hello, world!");
-}
 
 /*
 

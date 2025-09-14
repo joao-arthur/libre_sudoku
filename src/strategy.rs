@@ -18,7 +18,7 @@ pub fn strategy_last_empty_in_group(g: &Group) -> Option<Cell> {
     }
     for (i, c) in group_taken.iter().enumerate() {
         if !c {
-            return Cell::from_idx(i as u8);
+            return Cell::try_from_idx(i as u8);
         }
     }
     None
@@ -46,7 +46,7 @@ fn possibility_clear_trios_col() {}
 fn possibility_clear_trios_square() {}
 
 #[cfg(test)]
-mod test {
+mod tests {
     use crate::group;
 
     use super::*;

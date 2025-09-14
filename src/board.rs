@@ -111,11 +111,11 @@ pub fn get_sq_idx(row: &Cell, col: &Cell) -> Cell {
     let row_i = row.to_idx() / 3;
     let col_i = col.to_idx() / 3;
 
-    Cell::from_idx(row_i * 3 + col_i).unwrap()
+    Cell::try_from_idx(row_i * 3 + col_i).unwrap()
 }
 
 pub fn to_string(b: &Board) -> String {
-    let mut res: String = String::from("");
+    let mut res = String::from("");
     for row in b {
         for col in row {
             match col {
@@ -129,7 +129,7 @@ pub fn to_string(b: &Board) -> String {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use super::*;
 
     #[test]
