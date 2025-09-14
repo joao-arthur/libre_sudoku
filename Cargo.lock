@@ -5,3 +5,11 @@ version = 4
 [[package]]
 name = "libre_sudoku"
 version = "1.0.0"
+dependencies = [
+ "manfredo",
+]
+
+[[package]]
+name = "manfredo"
+version = "1.0.0"
+source = "git+https://github.com/joao-arthur/manfredo?rev=912afba2bcd2e3a8aab1eaee46037693f3c92e1d#912afba2bcd2e3a8aab1eaee46037693f3c92e1d"

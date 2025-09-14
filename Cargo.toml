@@ -3,3 +3,6 @@ name = "libre_sudoku"
 version = "1.0.0"
 edition = "2024"
 license = "AGPL-3.0"
+
+[dependencies]
+manfredo = { git = "https://github.com/joao-arthur/manfredo", rev = "912afba2bcd2e3a8aab1eaee46037693f3c92e1d" }
