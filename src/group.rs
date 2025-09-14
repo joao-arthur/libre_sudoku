@@ -34,13 +34,13 @@ mod tests {
     use crate::cell::Cell;
 
     #[test]
-    fn from_empty_str() {
+    fn empty_str() {
         assert_eq!(from_str(""), [None, None, None, None, None, None, None, None, None]);
         assert_eq!(from_str("         "), [None, None, None, None, None, None, None, None, None]);
     }
 
     #[test]
-    fn from_str_missing_parts() {
+    fn missing_parts() {
         assert_eq!(
             from_str(" 11111111"),
             [
@@ -170,7 +170,7 @@ mod tests {
     }
 
     #[test]
-    fn from_full_str() {
+    fn full_str() {
         assert_eq!(
             from_str("123456789"),
             [

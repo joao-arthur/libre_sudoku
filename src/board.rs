@@ -1,9 +1,8 @@
-use std::fmt;
-
 use crate::{
     cell::Cell,
     group::{self, Group},
 };
+use std::fmt;
 
 pub type Board = [Group; 9];
 
@@ -31,7 +30,7 @@ pub enum FromStringErr {
     InvalidLength(InvalidLengthErr),
 }
 
-pub fn from_str(rows: [&str; 9]) -> Result<Board, FromStringErr> {
+pub fn try_from_str(rows: [&str; 9]) -> Result<Board, FromStringErr> {
     if !rows
         .join("")
         .replace("0", "")
@@ -67,6 +66,10 @@ pub fn from_str(rows: [&str; 9]) -> Result<Board, FromStringErr> {
     ])
 }
 
+pub fn from_str(rows: [&str; 9]) -> Board {
+    try_from_str(rows).unwrap()
+}
+
 pub fn get_col(b: &Board, i: &Cell) -> Group {
     [
         b.get(0).unwrap().get(usize::from(i.to_idx())).unwrap().clone(),
@@ -89,7 +92,6 @@ pub fn get_sq(b: &Board, i: &Cell) -> Group {
     let ii = i.to_idx();
     let row_i = ii / 3;
     let col_i = ii - row_i * 3;
-
     [
         b.get(usize::from(row_i * 3 + 0)).unwrap().get(usize::from(col_i * 3 + 0)).unwrap().clone(),
         b.get(usize::from(row_i * 3 + 0)).unwrap().get(usize::from(col_i * 3 + 1)).unwrap().clone(),
@@ -130,12 +132,15 @@ pub fn to_string(b: &Board) -> String {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use super::{
+        from_str, get_cell, get_col, get_row, get_sq, get_sq_idx, to_string, try_from_str,
+    };
+    use crate::{cell::Cell, group};
 
     #[test]
-    fn test_from_str() {
+    fn test_try_from_str() {
         assert_eq!(
-            from_str([
+            try_from_str([
                 " 23456789",
                 "1 3456789",
                 "12 456789",
@@ -251,8 +256,126 @@ mod tests {
     }
 
     #[test]
+    fn test_from_str() {
+        assert_eq!(
+            from_str([
+                " 23456789",
+                "1 3456789",
+                "12 456789",
+                "123 56789",
+                "1234 6789",
+                "12345 789",
+                "123456 89",
+                "1234567 9",
+                "12345678 ",
+            ]),
+            [
+                [
+                    None,
+                    Some(Cell::_2),
+                    Some(Cell::_3),
+                    Some(Cell::_4),
+                    Some(Cell::_5),
+                    Some(Cell::_6),
+                    Some(Cell::_7),
+                    Some(Cell::_8),
+                    Some(Cell::_9)
+                ],
+                [
+                    Some(Cell::_1),
+                    None,
+                    Some(Cell::_3),
+                    Some(Cell::_4),
+                    Some(Cell::_5),
+                    Some(Cell::_6),
+                    Some(Cell::_7),
+                    Some(Cell::_8),
+                    Some(Cell::_9)
+                ],
+                [
+                    Some(Cell::_1),
+                    Some(Cell::_2),
+                    None,
+                    Some(Cell::_4),
+                    Some(Cell::_5),
+                    Some(Cell::_6),
+                    Some(Cell::_7),
+                    Some(Cell::_8),
+                    Some(Cell::_9)
+                ],
+                [
+                    Some(Cell::_1),
+                    Some(Cell::_2),
+                    Some(Cell::_3),
+                    None,
+                    Some(Cell::_5),
+                    Some(Cell::_6),
+                    Some(Cell::_7),
+                    Some(Cell::_8),
+                    Some(Cell::_9)
+                ],
+                [
+                    Some(Cell::_1),
+                    Some(Cell::_2),
+                    Some(Cell::_3),
+                    Some(Cell::_4),
+                    None,
+                    Some(Cell::_6),
+                    Some(Cell::_7),
+                    Some(Cell::_8),
+                    Some(Cell::_9)
+                ],
+                [
+                    Some(Cell::_1),
+                    Some(Cell::_2),
+                    Some(Cell::_3),
+                    Some(Cell::_4),
+                    Some(Cell::_5),
+                    None,
+                    Some(Cell::_7),
+                    Some(Cell::_8),
+                    Some(Cell::_9)
+                ],
+                [
+                    Some(Cell::_1),
+                    Some(Cell::_2),
+                    Some(Cell::_3),
+                    Some(Cell::_4),
+                    Some(Cell::_5),
+                    Some(Cell::_6),
+                    None,
+                    Some(Cell::_8),
+                    Some(Cell::_9)
+                ],
+                [
+                    Some(Cell::_1),
+                    Some(Cell::_2),
+                    Some(Cell::_3),
+                    Some(Cell::_4),
+                    Some(Cell::_5),
+                    Some(Cell::_6),
+                    Some(Cell::_7),
+                    None,
+                    Some(Cell::_9)
+                ],
+                [
+                    Some(Cell::_1),
+                    Some(Cell::_2),
+                    Some(Cell::_3),
+                    Some(Cell::_4),
+                    Some(Cell::_5),
+                    Some(Cell::_6),
+                    Some(Cell::_7),
+                    Some(Cell::_8),
+                    None
+                ],
+            ]
+        );
+    }
+
+    #[test]
     fn test_get_col() {
-        let b = from_str([
+        let board = try_from_str([
             " 23456789",
             "1 3456789",
             "12 456789",
@@ -264,20 +387,20 @@ mod tests {
             "12345678 ",
         ])
         .unwrap();
-        assert_eq!(get_col(&b, &Cell::_1), group::from_str(" 11111111"));
-        assert_eq!(get_col(&b, &Cell::_2), group::from_str("2 2222222"));
-        assert_eq!(get_col(&b, &Cell::_3), group::from_str("33 333333"));
-        assert_eq!(get_col(&b, &Cell::_4), group::from_str("444 44444"));
-        assert_eq!(get_col(&b, &Cell::_5), group::from_str("5555 5555"));
-        assert_eq!(get_col(&b, &Cell::_6), group::from_str("66666 666"));
-        assert_eq!(get_col(&b, &Cell::_7), group::from_str("777777 77"));
-        assert_eq!(get_col(&b, &Cell::_8), group::from_str("8888888 8"));
-        assert_eq!(get_col(&b, &Cell::_9), group::from_str("99999999 "));
+        assert_eq!(get_col(&board, &Cell::_1), group::from_str(" 11111111"));
+        assert_eq!(get_col(&board, &Cell::_2), group::from_str("2 2222222"));
+        assert_eq!(get_col(&board, &Cell::_3), group::from_str("33 333333"));
+        assert_eq!(get_col(&board, &Cell::_4), group::from_str("444 44444"));
+        assert_eq!(get_col(&board, &Cell::_5), group::from_str("5555 5555"));
+        assert_eq!(get_col(&board, &Cell::_6), group::from_str("66666 666"));
+        assert_eq!(get_col(&board, &Cell::_7), group::from_str("777777 77"));
+        assert_eq!(get_col(&board, &Cell::_8), group::from_str("8888888 8"));
+        assert_eq!(get_col(&board, &Cell::_9), group::from_str("99999999 "));
     }
 
     #[test]
     fn test_get_row() {
-        let b = from_str([
+        let board = try_from_str([
             " 11111111",
             "2 2222222",
             "33 333333",
@@ -289,20 +412,20 @@ mod tests {
             "99999999 ",
         ])
         .unwrap();
-        assert_eq!(get_row(&b, &Cell::_1), group::from_str(" 11111111"));
-        assert_eq!(get_row(&b, &Cell::_2), group::from_str("2 2222222"));
-        assert_eq!(get_row(&b, &Cell::_3), group::from_str("33 333333"));
-        assert_eq!(get_row(&b, &Cell::_4), group::from_str("444 44444"));
-        assert_eq!(get_row(&b, &Cell::_5), group::from_str("5555 5555"));
-        assert_eq!(get_row(&b, &Cell::_6), group::from_str("66666 666"));
-        assert_eq!(get_row(&b, &Cell::_7), group::from_str("777777 77"));
-        assert_eq!(get_row(&b, &Cell::_8), group::from_str("8888888 8"));
-        assert_eq!(get_row(&b, &Cell::_9), group::from_str("99999999 "));
+        assert_eq!(get_row(&board, &Cell::_1), group::from_str(" 11111111"));
+        assert_eq!(get_row(&board, &Cell::_2), group::from_str("2 2222222"));
+        assert_eq!(get_row(&board, &Cell::_3), group::from_str("33 333333"));
+        assert_eq!(get_row(&board, &Cell::_4), group::from_str("444 44444"));
+        assert_eq!(get_row(&board, &Cell::_5), group::from_str("5555 5555"));
+        assert_eq!(get_row(&board, &Cell::_6), group::from_str("66666 666"));
+        assert_eq!(get_row(&board, &Cell::_7), group::from_str("777777 77"));
+        assert_eq!(get_row(&board, &Cell::_8), group::from_str("8888888 8"));
+        assert_eq!(get_row(&board, &Cell::_9), group::from_str("99999999 "));
     }
 
     #[test]
     fn test_get_sq() {
-        let b = from_str([
+        let board = try_from_str([
             " 112 233 ",
             "111222333",
             "111222333",
@@ -314,20 +437,20 @@ mod tests {
             " 778 899 ",
         ])
         .unwrap();
-        assert_eq!(get_sq(&b, &Cell::_1), group::from_str(" 11111111"));
-        assert_eq!(get_sq(&b, &Cell::_2), group::from_str("2 2222222"));
-        assert_eq!(get_sq(&b, &Cell::_3), group::from_str("33 333333"));
-        assert_eq!(get_sq(&b, &Cell::_4), group::from_str("444 44444"));
-        assert_eq!(get_sq(&b, &Cell::_5), group::from_str("5555 5555"));
-        assert_eq!(get_sq(&b, &Cell::_6), group::from_str("66666 666"));
-        assert_eq!(get_sq(&b, &Cell::_7), group::from_str("777777 77"));
-        assert_eq!(get_sq(&b, &Cell::_8), group::from_str("8888888 8"));
-        assert_eq!(get_sq(&b, &Cell::_9), group::from_str("99999999 "));
+        assert_eq!(get_sq(&board, &Cell::_1), group::from_str(" 11111111"));
+        assert_eq!(get_sq(&board, &Cell::_2), group::from_str("2 2222222"));
+        assert_eq!(get_sq(&board, &Cell::_3), group::from_str("33 333333"));
+        assert_eq!(get_sq(&board, &Cell::_4), group::from_str("444 44444"));
+        assert_eq!(get_sq(&board, &Cell::_5), group::from_str("5555 5555"));
+        assert_eq!(get_sq(&board, &Cell::_6), group::from_str("66666 666"));
+        assert_eq!(get_sq(&board, &Cell::_7), group::from_str("777777 77"));
+        assert_eq!(get_sq(&board, &Cell::_8), group::from_str("8888888 8"));
+        assert_eq!(get_sq(&board, &Cell::_9), group::from_str("99999999 "));
     }
 
     #[test]
     fn test_get_cell() {
-        let b = from_str([
+        let board = try_from_str([
             " 23456789",
             "1 3456789",
             "12 456789",
@@ -339,17 +462,17 @@ mod tests {
             "12345678 ",
         ])
         .unwrap();
-        assert_eq!(get_cell(&b, &Cell::_1, &Cell::_1), None);
-        assert_eq!(get_cell(&b, &Cell::_2, &Cell::_2), None);
-        assert_eq!(get_cell(&b, &Cell::_3, &Cell::_3), None);
+        assert_eq!(get_cell(&board, &Cell::_1, &Cell::_1), None);
+        assert_eq!(get_cell(&board, &Cell::_2, &Cell::_2), None);
+        assert_eq!(get_cell(&board, &Cell::_3, &Cell::_3), None);
 
-        assert_eq!(get_cell(&b, &Cell::_1, &Cell::_2), Some(Cell::_2));
-        assert_eq!(get_cell(&b, &Cell::_1, &Cell::_3), Some(Cell::_3));
-        assert_eq!(get_cell(&b, &Cell::_1, &Cell::_4), Some(Cell::_4));
+        assert_eq!(get_cell(&board, &Cell::_1, &Cell::_2), Some(Cell::_2));
+        assert_eq!(get_cell(&board, &Cell::_1, &Cell::_3), Some(Cell::_3));
+        assert_eq!(get_cell(&board, &Cell::_1, &Cell::_4), Some(Cell::_4));
 
-        assert_eq!(get_cell(&b, &Cell::_9, &Cell::_6), Some(Cell::_6));
-        assert_eq!(get_cell(&b, &Cell::_9, &Cell::_7), Some(Cell::_7));
-        assert_eq!(get_cell(&b, &Cell::_9, &Cell::_8), Some(Cell::_8));
+        assert_eq!(get_cell(&board, &Cell::_9, &Cell::_6), Some(Cell::_6));
+        assert_eq!(get_cell(&board, &Cell::_9, &Cell::_7), Some(Cell::_7));
+        assert_eq!(get_cell(&board, &Cell::_9, &Cell::_8), Some(Cell::_8));
     }
 
     #[test]
@@ -381,5 +504,34 @@ mod tests {
         assert_eq!(get_sq_idx(&Cell::_4, &Cell::_4), Cell::_5);
         assert_eq!(get_sq_idx(&Cell::_5, &Cell::_5), Cell::_5);
         assert_eq!(get_sq_idx(&Cell::_6, &Cell::_6), Cell::_5);
+    }
+
+    #[test]
+    fn test_to_string() {
+        assert_eq!(
+            to_string(
+                &try_from_str([
+                    " 23456789",
+                    "1 3456789",
+                    "12 456789",
+                    "123 56789",
+                    "1234 6789",
+                    "12345 789",
+                    "123456 89",
+                    "1234567 9",
+                    "12345678 ",
+                ])
+                .unwrap()
+            ),
+            String::from(" 23456789\n")
+                + "1 3456789\n"
+                + "12 456789\n"
+                + "123 56789\n"
+                + "1234 6789\n"
+                + "12345 789\n"
+                + "123456 89\n"
+                + "1234567 9\n"
+                + "12345678 \n"
+        );
     }
 }

@@ -36,9 +36,8 @@ fn get_possibilities(row: &Group, col: &Group, sq: &Group) -> Possibilities {
 
 #[cfg(test)]
 mod tests {
-    use crate::group;
-
-    use super::*;
+    use super::get_possibilities;
+    use crate::{cell::Cell, group};
 
     #[test]
     fn test_get_possibilities() {

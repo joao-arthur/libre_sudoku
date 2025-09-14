@@ -35,7 +35,7 @@ fn solve(b: &mut Board) {
 
 #[cfg(test)]
 mod tests {
-    use crate::board::{self, to_string};
+    use crate::board;
 
     use super::*;
 
@@ -51,8 +51,7 @@ mod tests {
             "964715328",
             "731682594",
             "528934167",
-        ])
-        .unwrap();
+        ]);
         let solution = board::from_str([
             "172549683",
             "645873219",
@@ -63,9 +62,8 @@ mod tests {
             "964715328",
             "731682594",
             "528934167",
-        ])
-        .unwrap();
+        ]);
         solve(&mut b);
-        assert_eq!(to_string(&b), to_string(&solution));
+        assert_eq!(board::to_string(&b), board::to_string(&solution));
     }
 }
