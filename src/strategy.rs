@@ -47,9 +47,8 @@ fn possibility_clear_trios_square() {}
 
 #[cfg(test)]
 mod tests {
-    use crate::group;
-
     use super::*;
+    use crate::group;
 
     #[test]
     fn test_strategy_last_empty_in_group_some() {

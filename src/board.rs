@@ -152,105 +152,15 @@ mod tests {
                 "12345678 ",
             ]),
             Ok([
-                [
-                    None,
-                    Some(Cell::_2),
-                    Some(Cell::_3),
-                    Some(Cell::_4),
-                    Some(Cell::_5),
-                    Some(Cell::_6),
-                    Some(Cell::_7),
-                    Some(Cell::_8),
-                    Some(Cell::_9)
-                ],
-                [
-                    Some(Cell::_1),
-                    None,
-                    Some(Cell::_3),
-                    Some(Cell::_4),
-                    Some(Cell::_5),
-                    Some(Cell::_6),
-                    Some(Cell::_7),
-                    Some(Cell::_8),
-                    Some(Cell::_9)
-                ],
-                [
-                    Some(Cell::_1),
-                    Some(Cell::_2),
-                    None,
-                    Some(Cell::_4),
-                    Some(Cell::_5),
-                    Some(Cell::_6),
-                    Some(Cell::_7),
-                    Some(Cell::_8),
-                    Some(Cell::_9)
-                ],
-                [
-                    Some(Cell::_1),
-                    Some(Cell::_2),
-                    Some(Cell::_3),
-                    None,
-                    Some(Cell::_5),
-                    Some(Cell::_6),
-                    Some(Cell::_7),
-                    Some(Cell::_8),
-                    Some(Cell::_9)
-                ],
-                [
-                    Some(Cell::_1),
-                    Some(Cell::_2),
-                    Some(Cell::_3),
-                    Some(Cell::_4),
-                    None,
-                    Some(Cell::_6),
-                    Some(Cell::_7),
-                    Some(Cell::_8),
-                    Some(Cell::_9)
-                ],
-                [
-                    Some(Cell::_1),
-                    Some(Cell::_2),
-                    Some(Cell::_3),
-                    Some(Cell::_4),
-                    Some(Cell::_5),
-                    None,
-                    Some(Cell::_7),
-                    Some(Cell::_8),
-                    Some(Cell::_9)
-                ],
-                [
-                    Some(Cell::_1),
-                    Some(Cell::_2),
-                    Some(Cell::_3),
-                    Some(Cell::_4),
-                    Some(Cell::_5),
-                    Some(Cell::_6),
-                    None,
-                    Some(Cell::_8),
-                    Some(Cell::_9)
-                ],
-                [
-                    Some(Cell::_1),
-                    Some(Cell::_2),
-                    Some(Cell::_3),
-                    Some(Cell::_4),
-                    Some(Cell::_5),
-                    Some(Cell::_6),
-                    Some(Cell::_7),
-                    None,
-                    Some(Cell::_9)
-                ],
-                [
-                    Some(Cell::_1),
-                    Some(Cell::_2),
-                    Some(Cell::_3),
-                    Some(Cell::_4),
-                    Some(Cell::_5),
-                    Some(Cell::_6),
-                    Some(Cell::_7),
-                    Some(Cell::_8),
-                    None
-                ],
+                group::from_str(" 23456789"),
+                group::from_str("1 3456789"),
+                group::from_str("12 456789"),
+                group::from_str("123 56789"),
+                group::from_str("1234 6789"),
+                group::from_str("12345 789"),
+                group::from_str("123456 89"),
+                group::from_str("1234567 9"),
+                group::from_str("12345678 "),
             ])
         );
     }
@@ -270,112 +180,22 @@ mod tests {
                 "12345678 ",
             ]),
             [
-                [
-                    None,
-                    Some(Cell::_2),
-                    Some(Cell::_3),
-                    Some(Cell::_4),
-                    Some(Cell::_5),
-                    Some(Cell::_6),
-                    Some(Cell::_7),
-                    Some(Cell::_8),
-                    Some(Cell::_9)
-                ],
-                [
-                    Some(Cell::_1),
-                    None,
-                    Some(Cell::_3),
-                    Some(Cell::_4),
-                    Some(Cell::_5),
-                    Some(Cell::_6),
-                    Some(Cell::_7),
-                    Some(Cell::_8),
-                    Some(Cell::_9)
-                ],
-                [
-                    Some(Cell::_1),
-                    Some(Cell::_2),
-                    None,
-                    Some(Cell::_4),
-                    Some(Cell::_5),
-                    Some(Cell::_6),
-                    Some(Cell::_7),
-                    Some(Cell::_8),
-                    Some(Cell::_9)
-                ],
-                [
-                    Some(Cell::_1),
-                    Some(Cell::_2),
-                    Some(Cell::_3),
-                    None,
-                    Some(Cell::_5),
-                    Some(Cell::_6),
-                    Some(Cell::_7),
-                    Some(Cell::_8),
-                    Some(Cell::_9)
-                ],
-                [
-                    Some(Cell::_1),
-                    Some(Cell::_2),
-                    Some(Cell::_3),
-                    Some(Cell::_4),
-                    None,
-                    Some(Cell::_6),
-                    Some(Cell::_7),
-                    Some(Cell::_8),
-                    Some(Cell::_9)
-                ],
-                [
-                    Some(Cell::_1),
-                    Some(Cell::_2),
-                    Some(Cell::_3),
-                    Some(Cell::_4),
-                    Some(Cell::_5),
-                    None,
-                    Some(Cell::_7),
-                    Some(Cell::_8),
-                    Some(Cell::_9)
-                ],
-                [
-                    Some(Cell::_1),
-                    Some(Cell::_2),
-                    Some(Cell::_3),
-                    Some(Cell::_4),
-                    Some(Cell::_5),
-                    Some(Cell::_6),
-                    None,
-                    Some(Cell::_8),
-                    Some(Cell::_9)
-                ],
-                [
-                    Some(Cell::_1),
-                    Some(Cell::_2),
-                    Some(Cell::_3),
-                    Some(Cell::_4),
-                    Some(Cell::_5),
-                    Some(Cell::_6),
-                    Some(Cell::_7),
-                    None,
-                    Some(Cell::_9)
-                ],
-                [
-                    Some(Cell::_1),
-                    Some(Cell::_2),
-                    Some(Cell::_3),
-                    Some(Cell::_4),
-                    Some(Cell::_5),
-                    Some(Cell::_6),
-                    Some(Cell::_7),
-                    Some(Cell::_8),
-                    None
-                ],
+                group::from_str(" 23456789"),
+                group::from_str("1 3456789"),
+                group::from_str("12 456789"),
+                group::from_str("123 56789"),
+                group::from_str("1234 6789"),
+                group::from_str("12345 789"),
+                group::from_str("123456 89"),
+                group::from_str("1234567 9"),
+                group::from_str("12345678 "),
             ]
         );
     }
 
     #[test]
     fn test_get_col() {
-        let board = try_from_str([
+        let board = from_str([
             " 23456789",
             "1 3456789",
             "12 456789",
@@ -385,8 +205,7 @@ mod tests {
             "123456 89",
             "1234567 9",
             "12345678 ",
-        ])
-        .unwrap();
+        ]);
         assert_eq!(get_col(&board, &Cell::_1), group::from_str(" 11111111"));
         assert_eq!(get_col(&board, &Cell::_2), group::from_str("2 2222222"));
         assert_eq!(get_col(&board, &Cell::_3), group::from_str("33 333333"));
@@ -400,7 +219,7 @@ mod tests {
 
     #[test]
     fn test_get_row() {
-        let board = try_from_str([
+        let board = from_str([
             " 11111111",
             "2 2222222",
             "33 333333",
@@ -410,8 +229,7 @@ mod tests {
             "777777 77",
             "8888888 8",
             "99999999 ",
-        ])
-        .unwrap();
+        ]);
         assert_eq!(get_row(&board, &Cell::_1), group::from_str(" 11111111"));
         assert_eq!(get_row(&board, &Cell::_2), group::from_str("2 2222222"));
         assert_eq!(get_row(&board, &Cell::_3), group::from_str("33 333333"));
@@ -425,7 +243,7 @@ mod tests {
 
     #[test]
     fn test_get_sq() {
-        let board = try_from_str([
+        let board = from_str([
             " 112 233 ",
             "111222333",
             "111222333",
@@ -435,8 +253,7 @@ mod tests {
             "777888999",
             "777888999",
             " 778 899 ",
-        ])
-        .unwrap();
+        ]);
         assert_eq!(get_sq(&board, &Cell::_1), group::from_str(" 11111111"));
         assert_eq!(get_sq(&board, &Cell::_2), group::from_str("2 2222222"));
         assert_eq!(get_sq(&board, &Cell::_3), group::from_str("33 333333"));
@@ -450,7 +267,7 @@ mod tests {
 
     #[test]
     fn test_get_cell() {
-        let board = try_from_str([
+        let board = from_str([
             " 23456789",
             "1 3456789",
             "12 456789",
@@ -460,8 +277,7 @@ mod tests {
             "123456 89",
             "1234567 9",
             "12345678 ",
-        ])
-        .unwrap();
+        ]);
         assert_eq!(get_cell(&board, &Cell::_1, &Cell::_1), None);
         assert_eq!(get_cell(&board, &Cell::_2, &Cell::_2), None);
         assert_eq!(get_cell(&board, &Cell::_3, &Cell::_3), None);
