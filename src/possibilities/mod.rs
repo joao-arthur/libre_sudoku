@@ -2,10 +2,48 @@ use crate::{cell::Cell, group::Group};
 
 pub type Possibilities = Vec<Cell>;
 
-pub use self::cell::cell_possibilities;
+pub fn cell_possibilities(row: &Group, col: &Group, sq: &Group) -> Possibilities {
+    let mut group_possibilities = vec![true; 9];
+    for c in row {
+        if let Some(c) = c {
+            group_possibilities[c.to_idx() as usize] = false;
+        }
+    }
+    for c in col {
+        if let Some(c) = c {
+            group_possibilities[c.to_idx() as usize] = false;
+        }
+    }
+    for c in sq {
+        if let Some(c) = c {
+            group_possibilities[c.to_idx() as usize] = false;
+        }
+    }
+    let mut possibilities: Possibilities = vec![];
+    for (i, p) in group_possibilities.iter().enumerate() {
+        if *p {
+            if let Some(c) = Cell::try_from_idx(i as u8) {
+                possibilities.push(c);
+            }
+        }
+    }
+    possibilities
+}
 
-mod cell;
+fn col_possibilities() {}
 
-fn get_col_possibilities() {}
-fn get_row_possibilities() {}
-fn get_square_possibilities() {}
+fn row_possibilities() {}
+
+fn square_possibilities() {}
+
+#[cfg(test)]
+mod test_cell;
+
+#[cfg(test)]
+mod test_col;
+
+#[cfg(test)]
+mod test_row;
+
+#[cfg(test)]
+mod test_sq;
