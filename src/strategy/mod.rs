@@ -1,6 +1,3 @@
-
-
-
 mod last_empty_in_group;
 mod only_possibility;
 

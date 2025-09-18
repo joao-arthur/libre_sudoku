@@ -1,12 +1,6 @@
 use crate::{cell::Cell, group::Group};
 
-pub type Possibilities = Vec<Cell>;
-
-fn get_col_possibilities() {}
-fn get_row_possibilities() {}
-fn get_square_possibilities() {}
-
-fn get_cell_possibilities(row: &Group, col: &Group, sq: &Group) -> Possibilities {
+pub fn cell_possibilities(row: &Group, col: &Group, sq: &Group) -> Possibilities {
     let mut group_possibilities = vec![true; 9];
     for c in row {
         if let Some(c) = c {
@@ -36,13 +30,13 @@ fn get_cell_possibilities(row: &Group, col: &Group, sq: &Group) -> Possibilities
 
 #[cfg(test)]
 mod tests {
-    use super::get_cell_possibilities;
+    use super::cell_possibilities;
     use crate::{cell::Cell, group};
 
     #[test]
-    fn test_get_cell_possibilities() {
+    fn test_cell_possibilities() {
         assert_eq!(
-            get_cell_possibilities(
+            cell_possibilities(
                 &group::from_str("    9  3 "),
                 &group::from_str("  4 6   9"),
                 &group::from_str("   726 9 "),
@@ -50,7 +44,7 @@ mod tests {
             vec![Cell::_1, Cell::_5, Cell::_8]
         );
         assert_eq!(
-            get_cell_possibilities(
+            cell_possibilities(
                 &group::from_str("         "),
                 &group::from_str("         "),
                 &group::from_str("         "),
