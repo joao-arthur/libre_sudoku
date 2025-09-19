@@ -30,11 +30,17 @@ pub fn cell_possibilities(row: &Group, col: &Group, sq: &Group) -> Possibilities
     possibilities
 }
 
-fn col_possibilities() {}
+fn col_possibilities() -> Possibilities {
+    vec![]
+}
 
-fn row_possibilities() {}
+fn row_possibilities() -> Possibilities {
+    vec![]
+}
 
-fn square_possibilities() {}
+fn square_possibilities() -> Possibilities {
+    vec![]
+}
 
 #[cfg(test)]
 mod test_cell;

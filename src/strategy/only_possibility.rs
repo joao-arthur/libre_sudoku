@@ -13,7 +13,7 @@ mod tests {
     use crate::cell::Cell;
 
     #[test]
-    fn possible_1() {
+    fn _1_possible() {
         assert_eq!(strategy_only_possibility(&vec![Cell::_1]), Some(Cell::_1));
         assert_eq!(strategy_only_possibility(&vec![Cell::_2]), Some(Cell::_2));
         assert_eq!(strategy_only_possibility(&vec![Cell::_3]), Some(Cell::_3));
@@ -26,22 +26,25 @@ mod tests {
     }
 
     #[test]
-    fn possible_2() {
+    fn _2_possible() {
         assert_eq!(strategy_only_possibility(&vec![Cell::_1, Cell::_2]), None);
     }
 
     #[test]
-    fn possible_3() {
+    fn _3_possible() {
         assert_eq!(strategy_only_possibility(&vec![Cell::_1, Cell::_2, Cell::_3]), None);
     }
 
     #[test]
-    fn possible_4() {
+    fn _4_possible() {
         assert_eq!(strategy_only_possibility(&vec![Cell::_1, Cell::_2, Cell::_3, Cell::_4]), None);
     }
 
     #[test]
-    fn possible_5() {
-        assert_eq!(strategy_only_possibility(&vec![Cell::_1, Cell::_2, Cell::_3, Cell::_4]), None);
+    fn _5_possible() {
+        assert_eq!(
+            strategy_only_possibility(&vec![Cell::_1, Cell::_2, Cell::_3, Cell::_4, Cell::_5]),
+            None
+        );
     }
 }

@@ -2,7 +2,7 @@ use super::cell_possibilities;
 use crate::{cell::Cell, group};
 
 #[test]
-fn test_cell_possibilities() {
+fn _3_possible() {
     assert_eq!(
         cell_possibilities(
             &group::from_str("    9  3 "),
@@ -11,6 +11,9 @@ fn test_cell_possibilities() {
         ),
         vec![Cell::_1, Cell::_5, Cell::_8]
     );
+}
+
+fn _9_possible() {
     assert_eq!(
         cell_possibilities(
             &group::from_str("         "),
