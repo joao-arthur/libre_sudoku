@@ -30,26 +30,26 @@ pub fn cell_possibilities(row: &Group, col: &Group, sq: &Group) -> Possibilities
     possibilities
 }
 
-fn col_possibilities() -> Possibilities {
-    vec![]
+fn group_possibilities(group: &Group) -> Possibilities {
+    let mut group_possibilities = vec![true; 9];
+    for c in group {
+        if let Some(c) = c {
+            group_possibilities[c.to_idx() as usize] = false;
+        }
+    }
+    let mut possibilities: Possibilities = vec![];
+    for (i, p) in group_possibilities.iter().enumerate() {
+        if *p {
+            if let Some(c) = Cell::try_from_idx(i as u8) {
+                possibilities.push(c);
+            }
+        }
+    }
+    possibilities
 }
 
-fn row_possibilities() -> Possibilities {
-    vec![]
-}
-
-fn square_possibilities() -> Possibilities {
-    vec![]
-}
+#[cfg(test)]
+mod test_cell_possibilities;
 
 #[cfg(test)]
-mod test_cell;
-
-#[cfg(test)]
-mod test_col;
-
-#[cfg(test)]
-mod test_row;
-
-#[cfg(test)]
-mod test_sq;
+mod test_group_possibilities;
