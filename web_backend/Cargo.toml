@@ -1,0 +1,23 @@
+[package]
+name = "libre_sudoku_web_backend"
+version = "1.0.0"
+edition = "2024"
+license = "AGPL-3.0"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+js-sys = "0.3.77"
+wasm-bindgen = "0.2.100"
+web-sys = { version = "0.3.77", features = [
+    'CanvasRenderingContext2d',
+    'Document',
+    'Element',
+    'HtmlCanvasElement',
+    'Window',
+    'console'
+] }
+serde = { version = "1.0.219", features = ["derive"] }
+serde-wasm-bindgen = "0.6.5"
+wasm-bindgen-futures = "0.4.50"
