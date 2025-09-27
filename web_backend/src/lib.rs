@@ -19,8 +19,99 @@ pub fn main_init(canvas: HtmlCanvasElement) {
 
     if let Ok(Some(context)) = canvas.get_context("2d") {
         if let Ok(context2d) = context.dyn_into::<CanvasRenderingContext2d>() {
+            // background
             context2d.set_fill_style(&"#f8f8f8".into());
             context2d.fill_rect(0.0, 0.0, len, len);
+
+            // subdivisions
+            context2d.set_stroke_style(&"#999".into());
+            context2d.set_line_width(1.0);
+
+            context2d.begin_path();
+            context2d.move_to(0.0, (len / 3.0) / 3.0);
+            context2d.line_to(len, (len / 3.0) / 3.0);
+            context2d.stroke();
+
+            context2d.begin_path();
+            context2d.move_to(0.0, (len / 3.0) / 1.5);
+            context2d.line_to(len, (len / 3.0) / 1.5);
+            context2d.stroke();
+
+            context2d.begin_path();
+            context2d.move_to(0.0, ((len / 3.0) / 3.0) + len / 3.0);
+            context2d.line_to(len, ((len / 3.0) / 3.0) + len / 3.0);
+            context2d.stroke();
+
+            context2d.begin_path();
+            context2d.move_to(0.0, ((len / 3.0) / 1.5) + len / 3.0);
+            context2d.line_to(len, ((len / 3.0) / 1.5) + len / 3.0);
+            context2d.stroke();
+
+            context2d.begin_path();
+            context2d.move_to(0.0, ((len / 3.0) / 3.0) + len / 1.5);
+            context2d.line_to(len, ((len / 3.0) / 3.0) + len / 1.5);
+            context2d.stroke();
+
+            context2d.begin_path();
+            context2d.move_to(0.0, ((len / 3.0) / 1.5) + len / 1.5);
+            context2d.line_to(len, ((len / 3.0) / 1.5) + len / 1.5);
+            context2d.stroke();
+
+            context2d.begin_path();
+            context2d.move_to((len / 3.0) / 3.0, 0.0);
+            context2d.line_to((len / 3.0) / 3.0, len);
+            context2d.stroke();
+
+            context2d.begin_path();
+            context2d.move_to((len / 3.0) / 1.5, 0.0);
+            context2d.line_to((len / 3.0) / 1.5, len);
+            context2d.stroke();
+
+            context2d.begin_path();
+            context2d.move_to(((len / 3.0) / 3.0) + len / 3.0, 0.0);
+            context2d.line_to(((len / 3.0) / 3.0) + len / 3.0, len);
+            context2d.stroke();
+
+            context2d.begin_path();
+            context2d.move_to(((len / 3.0) / 1.5) + len / 3.0, 0.0);
+            context2d.line_to(((len / 3.0) / 1.5) + len / 3.0, len);
+            context2d.stroke();
+
+            context2d.begin_path();
+            context2d.move_to(((len / 3.0) / 3.0) + len / 1.5, 0.0);
+            context2d.line_to(((len / 3.0) / 3.0) + len / 1.5, len);
+            context2d.stroke();
+
+            context2d.begin_path();
+            context2d.move_to(((len / 3.0) / 1.5) + len / 1.5, 0.0);
+            context2d.line_to(((len / 3.0) / 1.5) + len / 1.5, len);
+            context2d.stroke();
+
+            // main divisions
+            context2d.set_stroke_style(&"#555".into());
+            context2d.set_line_width(2.0);
+
+            context2d.begin_path();
+            context2d.move_to(0.0, len / 3.0);
+            context2d.line_to(len, len / 3.0);
+            context2d.stroke();
+
+            context2d.begin_path();
+            context2d.move_to(0.0, len / 1.5);
+            context2d.line_to(len, len / 1.5);
+            context2d.stroke();
+    
+            context2d.begin_path();
+            context2d.move_to(len / 3.0, 0.0);
+            context2d.line_to(len / 3.0, len);
+            context2d.stroke();
+
+            context2d.begin_path();
+            context2d.move_to(len / 1.5, 0.0);
+            context2d.line_to(len / 1.5, len);
+            context2d.stroke();
+
+            // box
             context2d.set_stroke_style(&"#333".into());
             context2d.set_line_width(3.0);
 
@@ -35,48 +126,9 @@ pub fn main_init(canvas: HtmlCanvasElement) {
             context2d.line_to(mid_min, mid_min);
             context2d.stroke();
 
-            context2d.set_stroke_style(&"#555".into());
-            context2d.set_line_width(2.0);
-
-            
-
-            context2d.begin_path();
-            context2d.move_to(0.0, len / 3.0);
-            context2d.line_to(len, len / 3.0);
-            context2d.stroke();
-
-            context2d.begin_path();
-            context2d.move_to(0.0, len / 3.0 * 2.0);
-            context2d.line_to(len, len / 3.0 * 2.0);
-            context2d.stroke();
-    
-            context2d.begin_path();
-            context2d.move_to(len / 3.0, 0.0);
-            context2d.line_to(len / 3.0, len);
-            context2d.stroke();
-
-            context2d.begin_path();
-            context2d.move_to(len / 3.0 * 2.0, 0.0);
-            context2d.line_to(len / 3.0 * 2.0, len);
-            context2d.stroke();
-    
-
-
-
-
-
+            context2d.set_stroke_style(&"#333".into());
         }
     }
-}
-
-fn print_table(context2d: &CanvasRenderingContext2d, min: f64, max: f64) {
-    context2d.set_fill_style(&"#333".into());
-
-    context2d.fill_rect(max / 3.0, min, min + 1.0, max);
-    context2d.fill_rect(max / 3.0 * 2.0, min, min + 1.0, max);
-
-    context2d.fill_rect(min, max / 3.0, max, min + 1.0);
-    context2d.fill_rect(min, max / 3.0 * 2.0, max, min + 1.0);
 }
 
 #[wasm_bindgen(js_name = "engineSetDimension")]
