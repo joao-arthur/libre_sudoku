@@ -127,6 +127,24 @@ pub fn main_init(canvas: HtmlCanvasElement) {
             context2d.stroke();
 
             context2d.set_stroke_style(&"#333".into());
+            context2d.set_fill_style(&"#333".into());
+
+            // calculate center:
+            // 0 10
+            // render at 5
+
+            context2d.fill_text("1", (((len / 3.0) / 3.0) / 5.0), 15.0);
+            context2d.fill_text("2", (((len / 3.0) / 3.0) / 5.0) * 2.0, 15.0);
+            context2d.fill_text("3", (((len / 3.0) / 3.0) / 5.0) * 3.0, 15.0);
+
+            context2d.fill_text("4", (((len / 3.0) / 3.0) / 5.0), 32.0);
+            context2d.fill_text("5", (((len / 3.0) / 3.0) / 5.0) + (((len / 3.0) / 3.0) / 5.0), 32.0);
+            context2d.fill_text("6", 40.0, 32.0);
+
+            context2d.fill_text("7", (((len / 3.0) / 3.0) / 5.0), 50.0);
+            context2d.fill_text("8", (((len / 3.0) / 3.0) / 5.0) + (((len / 3.0) / 3.0) / 5.0), 50.0);
+            context2d.fill_text("9", 40.0, 50.0);
+
         }
     }
 }
