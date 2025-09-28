@@ -138,7 +138,7 @@ pub fn main_init(canvas: HtmlCanvasElement) {
 
             // len;
             let div_0 = len / 3.0;
-            let div_1 = len / 1.5;
+            let div_1 = div_0 * 2.0;
 
             let div0_sub0 = div_0 / 3.0;
             let div0_sub1 = div_0 / 1.5;
@@ -146,22 +146,47 @@ pub fn main_init(canvas: HtmlCanvasElement) {
             let div1_sub0 = div_0 / 3.0 + div_0;
             let div1_sub1 = div_0 / 1.5 + div_0;
 
-            let div0_sub0_text0 = div0_sub0 / 4.0;
+            let div0_sub0_text0 = div0_sub0 / 6.0;
             let div0_sub0_text1 = (div0_sub0 / 4.0) * 2.0;
-            let div0_sub0_text2 = (div0_sub0 / 4.0) * 3.0;
+            let div0_sub0_text2 = (div0_sub0 / 6.0) * 5.0;
 
-            context2d.fill_text("1", div0_sub0_text0,  div0_sub0_text0);
-            context2d.fill_text("2", div0_sub0_text1,  div0_sub0_text0);
-            context2d.fill_text("3", div0_sub0_text2,  div0_sub0_text0);
+            context2d.set_font ( &(((div0_sub0 / 3.0) - 4.0).to_string() + "px sans serif"));
 
-            context2d.fill_text("4", div0_sub0_text0, div0_sub0_text1);
-            context2d.fill_text("5", div0_sub0_text1, div0_sub0_text1);
-            context2d.fill_text("6", div0_sub0_text2, div0_sub0_text1);
 
-            context2d.fill_text("7", div0_sub0_text0, div0_sub0_text2);
-            context2d.fill_text("8", div0_sub0_text1, div0_sub0_text2);
-            context2d.fill_text("9", div0_sub0_text2, div0_sub0_text2);
+            context2d.fill_text("1", div0_sub0_text0,  div0_sub0_text0 + 2.0);
+            context2d.fill_text("2", div0_sub0_text1,  div0_sub0_text0 + 2.0);
+            context2d.fill_text("3", div0_sub0_text2,  div0_sub0_text0 + 2.0);
 
+            context2d.fill_text("4", div0_sub0_text0, div0_sub0_text1 + 2.0);
+            context2d.fill_text("5", div0_sub0_text1, div0_sub0_text1 + 2.0);
+            context2d.fill_text("6", div0_sub0_text2, div0_sub0_text1 + 2.0);
+
+            context2d.fill_text("7", div0_sub0_text0, div0_sub0_text2 + 2.0);
+            context2d.fill_text("8", div0_sub0_text1, div0_sub0_text2 + 2.0);
+            context2d.fill_text("9", div0_sub0_text2, div0_sub0_text2 + 2.0);
+
+            context2d.set_font ( &((div0_sub0 - 10.0).to_string() + "px sans serif"));
+
+//            context2d.fill_text("1", div0_sub0_text0,  div0_sub0_text0);
+//            context2d.fill_text("2", div0_sub0_text1,  div0_sub0_text0);
+//            context2d.fill_text("3", div0_sub0_text2,  div0_sub0_text0);
+
+            context2d.fill_text("1", div_0 + div_0 / 6.0, div_0 / 6.0 + 4.0);
+            context2d.fill_text("2", div_0 + (div_0 / 4.0) * 2.0, div_0 / 6.0 + 4.0);
+            context2d.fill_text("3", div_0 + (div_0 / 6.0) * 5.0, div_0 / 6.0 + 4.0);
+
+            context2d.fill_text("4", div_0 + div_0 / 6.0, div_0 / 2.0 + 4.0);
+            context2d.fill_text("5", div_0 + (div_0 / 4.0) * 2.0, div_0 / 2.0 + 4.0);
+            context2d.fill_text("6", div_0 + (div_0 / 6.0) * 5.0, div_0 / 2.0 + 4.0);
+
+            context2d.fill_text("7", div_0 + div_0 / 6.0, (div_0 / 6.0) * 5.0 + 4.0);
+            context2d.fill_text("8", div_0 + (div_0 / 4.0) * 2.0, (div_0 / 6.0) * 5.0 + 4.0);
+            context2d.fill_text("9", div_0 + (div_0 / 6.0) * 5.0, (div_0 / 6.0) * 5.0 + 4.0);
+
+            
+//            context2d.fill_text("7", div0_sub0_text0, div0_sub0_text2);
+//            context2d.fill_text("8", div0_sub0_text1, div0_sub0_text2);
+//            context2d.fill_text("9", div0_sub0_text2, div0_sub0_text2);
         }
     }
 }
