@@ -33,7 +33,7 @@ fn draw_subvisions<P: Painter>(painter: &P, size: f64) {
 
 }
 
-fn draw_division<P: Painter>(painter: &P, size: f64) {
+fn draw_subsubdivisions<P: Painter>(painter: &P, size: f64) {
 
 }
 

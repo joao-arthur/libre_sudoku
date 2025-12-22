@@ -13,19 +13,18 @@ thread_local! {
 
 #[wasm_bindgen(js_name = "engineInit")]
 pub fn main_init(canvas: HtmlCanvasElement) {
-    let min = 0.0;
-    let len = 500.0;
+    let len = 2000.0;
     let height = 6.0;
 
     if let Ok(Some(context)) = canvas.get_context("2d") {
         if let Ok(context2d) = context.dyn_into::<CanvasRenderingContext2d>() {
             // background
-            context2d.set_fill_style(&"#f8f8f8".into());
+            context2d.set_fill_style(&"#eee".into());
             context2d.fill_rect(0.0, 0.0, len, len);
 
             // subdivisions
-            context2d.set_stroke_style(&"#999".into());
-            context2d.set_line_width(1.0);
+            context2d.set_stroke_style(&"#666".into());
+            context2d.set_line_width(2.0);
 
             context2d.begin_path();
             context2d.move_to(0.0, (len / 3.0) / 3.0);
@@ -89,7 +88,7 @@ pub fn main_init(canvas: HtmlCanvasElement) {
 
             // main divisions
             context2d.set_stroke_style(&"#555".into());
-            context2d.set_line_width(2.0);
+            context2d.set_line_width(6.0);
 
             context2d.begin_path();
             context2d.move_to(0.0, len / 3.0);
@@ -112,27 +111,41 @@ pub fn main_init(canvas: HtmlCanvasElement) {
             context2d.stroke();
 
             // box
-            context2d.set_stroke_style(&"#333".into());
-            context2d.set_line_width(6.0);
-
-            let mid_min = height / 2.0;
-            let mid_max = len - height / 2.0;
+            let line_width = 6.0;
+            let half_line_width = line_width / 2.0;
+            context2d.set_stroke_style(&"#555".into());
+            context2d.set_line_width(line_width);
 
             context2d.begin_path();
-            context2d.move_to(0.0, 0.0);
-            context2d.line_to(0.0, len);
-            context2d.line_to(len, len);
-            context2d.line_to(len, 0.0);
-            context2d.line_to(0.0, 0.0);
+            context2d.move_to(half_line_width, 0.0);
+            context2d.line_to(half_line_width, len);
+            context2d.close_path();
             context2d.stroke();
 
-            context2d.set_stroke_style(&"#333".into());
-            context2d.set_fill_style(&"#333".into());
+            context2d.begin_path();
+            context2d.move_to(len - half_line_width, 0.0);
+            context2d.line_to(len - half_line_width, len);
+            context2d.close_path();
+            context2d.stroke();
+
+            context2d.begin_path();
+            context2d.move_to(0.0, half_line_width);
+            context2d.line_to(len, half_line_width);
+            context2d.close_path();
+            context2d.stroke();
+
+            context2d.begin_path();
+            context2d.move_to(0.0, len - half_line_width);
+            context2d.line_to(len, len - half_line_width);
+            context2d.close_path();
+            context2d.stroke();
+
+            context2d.set_stroke_style(&"#777".into());
+            context2d.set_fill_style(&"#777".into());
 
             // calculate center:
             // 0 10
             // render at 5
-
             context2d.set_text_align("center");
             context2d.set_text_baseline("middle");
 
@@ -167,9 +180,9 @@ pub fn main_init(canvas: HtmlCanvasElement) {
 
             context2d.set_font ( &((div0_sub0 - 10.0).to_string() + "px sans serif"));
 
-//            context2d.fill_text("1", div0_sub0_text0,  div0_sub0_text0);
-//            context2d.fill_text("2", div0_sub0_text1,  div0_sub0_text0);
-//            context2d.fill_text("3", div0_sub0_text2,  div0_sub0_text0);
+            context2d.set_stroke_style(&"#555".into());
+            context2d.set_fill_style(&"#555".into());
+
 
             context2d.fill_text("1", div_0 + div_0 / 6.0, div_0 / 6.0 + 4.0);
             context2d.fill_text("2", div_0 + (div_0 / 4.0) * 2.0, div_0 / 6.0 + 4.0);
@@ -182,11 +195,6 @@ pub fn main_init(canvas: HtmlCanvasElement) {
             context2d.fill_text("7", div_0 + div_0 / 6.0, (div_0 / 6.0) * 5.0 + 4.0);
             context2d.fill_text("8", div_0 + (div_0 / 4.0) * 2.0, (div_0 / 6.0) * 5.0 + 4.0);
             context2d.fill_text("9", div_0 + (div_0 / 6.0) * 5.0, (div_0 / 6.0) * 5.0 + 4.0);
-
-            
-//            context2d.fill_text("7", div0_sub0_text0, div0_sub0_text2);
-//            context2d.fill_text("8", div0_sub0_text1, div0_sub0_text2);
-//            context2d.fill_text("9", div0_sub0_text2, div0_sub0_text2);
         }
     }
 }

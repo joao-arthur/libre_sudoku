@@ -17,7 +17,7 @@
                     return;
                 }
                 engineInit(canvas);
-                engineSetDimension(Math.min(innerWidth, innerHeight));
+                engineSetDimension(2000);
             });
         }
     });
@@ -40,8 +40,8 @@
 <main>
     <canvas
         bind:this={canvas}
-        width={Math.min(innerHeight, innerWidth)}
-        height={Math.min(innerHeight, innerWidth)}
+        width={2000}
+        height={2000}
         style={`width: ${Math.min(innerHeight, innerWidth)}px; height: ${Math.min(innerHeight, innerWidth)}px;`}
     >
     </canvas>
