@@ -2,14 +2,11 @@ use crate::cell::Cell;
 use std::char;
 
 pub type Group = [Option<Cell>; 9];
+pub type SolvedGroup = [Cell; 9];
 
 fn parse_digit(c: Option<char>) -> Option<Cell> {
     if let Some(c) = c {
-        if c.is_digit(10) {
-            return Cell::try_from_str(&c.to_string());
-        } else {
-            return None;
-        }
+        return if c.is_digit(10) { Cell::try_from_str(&c.to_string()) } else { None };
     }
     None
 }

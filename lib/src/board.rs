@@ -1,10 +1,11 @@
 use crate::{
     cell::Cell,
-    group::{self, Group},
+    group::{self, Group, SolvedGroup},
 };
 use std::fmt;
 
 pub type Board = [Group; 9];
+pub type SolvedBoard = [[SolvedGroup; 9]; 9];
 
 #[derive(Debug, PartialEq)]
 pub struct InvalidCharacterErr;

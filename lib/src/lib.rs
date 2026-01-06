@@ -1,24 +1,8 @@
 mod board;
 mod cell;
+mod difficulty;
+mod generate;
 mod group;
 mod possibilities;
 mod solve;
 mod strategy;
-
-/*
-
-fn get_board() -> Board {
-    return [
-        [None, None, None, None, None, None, None, None, None],
-        [None, None, None, None, None, None, None, None, None],
-        [None, None, None, None, None, None, None, None, None],
-        [None, None, Some(Cell::_1), None, None, None, None, None, None],
-        [None, None, None, None, None, None, None, None, None],
-        [None, None, None, None, None, None, None, None, None],
-        [None, None, None, None, None, None, None, None, None],
-        [None, None, None, None, None, None, None, None, None],
-        [None, None, None, None, None, None, None, None, None],
-    ]
-}
-
-*/
