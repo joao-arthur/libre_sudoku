@@ -5,7 +5,7 @@ use crate::{
 use std::fmt;
 
 pub type Board = [Group; 9];
-pub type SolvedBoard = [[SolvedGroup; 9]; 9];
+pub type SolvedBoard = [SolvedGroup; 9];
 
 #[derive(Debug, PartialEq)]
 pub struct InvalidCharacterErr;
