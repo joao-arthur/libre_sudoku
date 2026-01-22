@@ -1,13 +1,13 @@
 use super::cell_possibilities;
-use crate::{cell::Cell, group};
+use crate::{cell::Cell, group::group_from_str};
 
 #[test]
 fn _0_possible() {
     assert_eq!(
         cell_possibilities(
-            &group::from_str("351672984"),
-            &group::from_str("324519687"),
-            &group::from_str("351287469"),
+            &group_from_str("351672984"),
+            &group_from_str("324519687"),
+            &group_from_str("351287469"),
         ),
         vec![]
     );
@@ -17,9 +17,9 @@ fn _0_possible() {
 fn _0_possible_row() {
     assert_eq!(
         cell_possibilities(
-            &group::from_str("2875496 3"),
-            &group::from_str("586724913"),
-            &group::from_str("351287469"),
+            &group_from_str("2875496 3"),
+            &group_from_str("586724913"),
+            &group_from_str("351287469"),
         ),
         vec![]
     );
@@ -29,9 +29,9 @@ fn _0_possible_row() {
 fn _0_possible_col() {
     assert_eq!(
         cell_possibilities(
-            &group::from_str("287549613"),
-            &group::from_str("5867249 3"),
-            &group::from_str("351287469"),
+            &group_from_str("287549613"),
+            &group_from_str("5867249 3"),
+            &group_from_str("351287469"),
         ),
         vec![]
     );
@@ -41,9 +41,9 @@ fn _0_possible_col() {
 fn _0_possible_sq() {
     assert_eq!(
         cell_possibilities(
-            &group::from_str("287549613"),
-            &group::from_str("586724913"),
-            &group::from_str("35 287469"),
+            &group_from_str("287549613"),
+            &group_from_str("586724913"),
+            &group_from_str("35 287469"),
         ),
         vec![]
     );
@@ -53,9 +53,9 @@ fn _0_possible_sq() {
 fn _1_possible() {
     assert_eq!(
         cell_possibilities(
-            &group::from_str("2875496 3"),
-            &group::from_str("5867249 3"),
-            &group::from_str("35 287469"),
+            &group_from_str("2875496 3"),
+            &group_from_str("5867249 3"),
+            &group_from_str("35 287469"),
         ),
         vec![Cell::_1]
     );
@@ -65,9 +65,9 @@ fn _1_possible() {
 fn _2_possible() {
     assert_eq!(
         cell_possibilities(
-            &group::from_str("46983  57"),
-            &group::from_str(" 79386 54"),
-            &group::from_str("35  87469"),
+            &group_from_str("46983  57"),
+            &group_from_str(" 79386 54"),
+            &group_from_str("35  87469"),
         ),
         vec![Cell::_1, Cell::_2]
     );
@@ -77,9 +77,9 @@ fn _2_possible() {
 fn _3_possible() {
     assert_eq!(
         cell_possibilities(
-            &group::from_str("57  84 96"),
-            &group::from_str("658   479"),
-            &group::from_str(" 84 96 57"),
+            &group_from_str("57  84 96"),
+            &group_from_str("658   479"),
+            &group_from_str(" 84 96 57"),
         ),
         vec![Cell::_1, Cell::_2, Cell::_3]
     );
@@ -89,9 +89,9 @@ fn _3_possible() {
 fn _4_possible() {
     assert_eq!(
         cell_possibilities(
-            &group::from_str("  8 967 5"),
-            &group::from_str("7  895 6 "),
-            &group::from_str(" 8  96 57"),
+            &group_from_str("  8 967 5"),
+            &group_from_str("7  895 6 "),
+            &group_from_str(" 8  96 57"),
         ),
         vec![Cell::_1, Cell::_2, Cell::_3, Cell::_4]
     );
@@ -101,9 +101,9 @@ fn _4_possible() {
 fn _5_possible() {
     assert_eq!(
         cell_possibilities(
-            &group::from_str("9 6  78  "),
-            &group::from_str(" 9  67  8"),
-            &group::from_str(" 8  96  7"),
+            &group_from_str("9 6  78  "),
+            &group_from_str(" 9  67  8"),
+            &group_from_str(" 8  96  7"),
         ),
         vec![Cell::_1, Cell::_2, Cell::_3, Cell::_4, Cell::_5]
     );
@@ -113,9 +113,9 @@ fn _5_possible() {
 fn _6_possible() {
     assert_eq!(
         cell_possibilities(
-            &group::from_str(" 9     78"),
-            &group::from_str("9   78   "),
-            &group::from_str(" 78  9   "),
+            &group_from_str(" 9     78"),
+            &group_from_str("9   78   "),
+            &group_from_str(" 78  9   "),
         ),
         vec![Cell::_1, Cell::_2, Cell::_3, Cell::_4, Cell::_5, Cell::_6]
     );
@@ -125,9 +125,9 @@ fn _6_possible() {
 fn _7_possible() {
     assert_eq!(
         cell_possibilities(
-            &group::from_str("8       9"),
-            &group::from_str("8  9     "),
-            &group::from_str("  8  9   "),
+            &group_from_str("8       9"),
+            &group_from_str("8  9     "),
+            &group_from_str("  8  9   "),
         ),
         vec![Cell::_1, Cell::_2, Cell::_3, Cell::_4, Cell::_5, Cell::_6, Cell::_7]
     );
@@ -137,9 +137,9 @@ fn _7_possible() {
 fn _8_possible() {
     assert_eq!(
         cell_possibilities(
-            &group::from_str("   9     "),
-            &group::from_str("       9 "),
-            &group::from_str("     9   "),
+            &group_from_str("   9     "),
+            &group_from_str("       9 "),
+            &group_from_str("     9   "),
         ),
         vec![Cell::_1, Cell::_2, Cell::_3, Cell::_4, Cell::_5, Cell::_6, Cell::_7, Cell::_8]
     );
@@ -148,9 +148,9 @@ fn _8_possible() {
 fn _9_possible() {
     assert_eq!(
         cell_possibilities(
-            &group::from_str("         "),
-            &group::from_str("         "),
-            &group::from_str("         "),
+            &group_from_str("         "),
+            &group_from_str("         "),
+            &group_from_str("         "),
         ),
         vec![
             Cell::_1,

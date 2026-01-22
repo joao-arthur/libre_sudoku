@@ -11,7 +11,7 @@ fn parse_digit(c: Option<char>) -> Option<Cell> {
     None
 }
 
-pub fn from_str(row: &str) -> Group {
+pub fn group_from_str(row: &str) -> Group {
     [
         parse_digit(row.chars().nth(0)),
         parse_digit(row.chars().nth(1)),
@@ -25,21 +25,32 @@ pub fn from_str(row: &str) -> Group {
     ]
 }
 
+pub fn group_to_string(group: &Group) -> String {
+    let mut res = String::from("");
+        for col in group {
+            match col {
+                Some(val) => res.push_str(val.to_str()),
+                None => res.push_str(" "),
+            }
+        }
+    res
+}
+
 #[cfg(test)]
 mod tests {
-    use super::from_str;
+    use super::group_from_str;
     use crate::cell::Cell;
 
     #[test]
     fn empty_str() {
-        assert_eq!(from_str(""), [None, None, None, None, None, None, None, None, None]);
-        assert_eq!(from_str("         "), [None, None, None, None, None, None, None, None, None]);
+        assert_eq!(group_from_str(""), [None, None, None, None, None, None, None, None, None]);
+        assert_eq!(group_from_str("         "), [None, None, None, None, None, None, None, None, None]);
     }
 
     #[test]
     fn missing_parts() {
         assert_eq!(
-            from_str(" 11111111"),
+            group_from_str(" 11111111"),
             [
                 None,
                 Some(Cell::_1),
@@ -53,7 +64,7 @@ mod tests {
             ]
         );
         assert_eq!(
-            from_str("2 2222222"),
+            group_from_str("2 2222222"),
             [
                 Some(Cell::_2),
                 None,
@@ -67,7 +78,7 @@ mod tests {
             ]
         );
         assert_eq!(
-            from_str("33 333333"),
+            group_from_str("33 333333"),
             [
                 Some(Cell::_3),
                 Some(Cell::_3),
@@ -81,7 +92,7 @@ mod tests {
             ]
         );
         assert_eq!(
-            from_str("444 44444"),
+            group_from_str("444 44444"),
             [
                 Some(Cell::_4),
                 Some(Cell::_4),
@@ -95,7 +106,7 @@ mod tests {
             ]
         );
         assert_eq!(
-            from_str("5555 5555"),
+            group_from_str("5555 5555"),
             [
                 Some(Cell::_5),
                 Some(Cell::_5),
@@ -109,7 +120,7 @@ mod tests {
             ]
         );
         assert_eq!(
-            from_str("66666 666"),
+            group_from_str("66666 666"),
             [
                 Some(Cell::_6),
                 Some(Cell::_6),
@@ -123,7 +134,7 @@ mod tests {
             ]
         );
         assert_eq!(
-            from_str("777777 77"),
+            group_from_str("777777 77"),
             [
                 Some(Cell::_7),
                 Some(Cell::_7),
@@ -137,7 +148,7 @@ mod tests {
             ]
         );
         assert_eq!(
-            from_str("8888888 8"),
+            group_from_str("8888888 8"),
             [
                 Some(Cell::_8),
                 Some(Cell::_8),
@@ -151,7 +162,7 @@ mod tests {
             ]
         );
         assert_eq!(
-            from_str("99999999 "),
+            group_from_str("99999999 "),
             [
                 Some(Cell::_9),
                 Some(Cell::_9),
@@ -169,7 +180,7 @@ mod tests {
     #[test]
     fn full_str() {
         assert_eq!(
-            from_str("123456789"),
+            group_from_str("123456789"),
             [
                 Some(Cell::_1),
                 Some(Cell::_2),
