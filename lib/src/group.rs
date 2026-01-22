@@ -2,53 +2,49 @@ use crate::cell::Cell;
 use std::char;
 
 pub type Group = [Option<Cell>; 9];
-pub type SolvedGroup = [Cell; 9];
-
-fn parse_digit(c: Option<char>) -> Option<Cell> {
-    if let Some(c) = c {
-        return if c.is_digit(10) { Cell::try_from_str(&c.to_string()) } else { None };
-    }
-    None
-}
 
 pub fn group_from_str(row: &str) -> Group {
+    let mut chars = row.chars();
     [
-        parse_digit(row.chars().nth(0)),
-        parse_digit(row.chars().nth(1)),
-        parse_digit(row.chars().nth(2)),
-        parse_digit(row.chars().nth(3)),
-        parse_digit(row.chars().nth(4)),
-        parse_digit(row.chars().nth(5)),
-        parse_digit(row.chars().nth(6)),
-        parse_digit(row.chars().nth(7)),
-        parse_digit(row.chars().nth(8)),
+        chars.next().map_or(None, |c| Cell::try_from_char(&c)),
+        chars.next().map_or(None, |c| Cell::try_from_char(&c)),
+        chars.next().map_or(None, |c| Cell::try_from_char(&c)),
+        chars.next().map_or(None, |c| Cell::try_from_char(&c)),
+        chars.next().map_or(None, |c| Cell::try_from_char(&c)),
+        chars.next().map_or(None, |c| Cell::try_from_char(&c)),
+        chars.next().map_or(None, |c| Cell::try_from_char(&c)),
+        chars.next().map_or(None, |c| Cell::try_from_char(&c)),
+        chars.next().map_or(None, |c| Cell::try_from_char(&c)),
     ]
 }
 
 pub fn group_to_string(group: &Group) -> String {
     let mut res = String::from("");
-        for col in group {
-            match col {
-                Some(val) => res.push_str(val.to_str()),
-                None => res.push_str(" "),
-            }
+    for col in group {
+        match col {
+            Some(val) => res.push_str(val.to_str()),
+            None => res.push_str(" "),
         }
+    }
     res
 }
 
 #[cfg(test)]
 mod tests {
-    use super::group_from_str;
+    use super::{group_from_str, group_to_string};
     use crate::cell::Cell;
 
     #[test]
-    fn empty_str() {
+    fn group_from_empty_str() {
         assert_eq!(group_from_str(""), [None, None, None, None, None, None, None, None, None]);
-        assert_eq!(group_from_str("         "), [None, None, None, None, None, None, None, None, None]);
+        assert_eq!(
+            group_from_str("         "),
+            [None, None, None, None, None, None, None, None, None]
+        );
     }
 
     #[test]
-    fn missing_parts() {
+    fn group_from_missing_parts() {
         assert_eq!(
             group_from_str(" 11111111"),
             [
@@ -178,7 +174,7 @@ mod tests {
     }
 
     #[test]
-    fn full_str() {
+    fn group_from_full_str() {
         assert_eq!(
             group_from_str("123456789"),
             [
@@ -193,5 +189,12 @@ mod tests {
                 Some(Cell::_9),
             ]
         );
+    }
+
+    #[test]
+    fn test_group_to_string() {
+        assert_eq!(group_to_string(&group_from_str("123456789")), "123456789");
+        assert_eq!(group_to_string(&group_from_str("111111111")), "111111111");
+        assert_eq!(group_to_string(&group_from_str("1 2 3 4 5")), "1 2 3 4 5");
     }
 }

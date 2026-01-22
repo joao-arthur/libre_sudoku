@@ -5,4 +5,5 @@ mod generate;
 mod group;
 mod possibilities;
 mod solve;
+mod solved_group;
 mod strategy;

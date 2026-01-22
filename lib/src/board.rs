@@ -1,6 +1,7 @@
 use crate::{
     cell::Cell,
-    group::{group_from_str, Group, SolvedGroup},
+    group::{Group, group_from_str},
+    solved_group::SolvedGroup,
 };
 use std::fmt;
 
@@ -95,15 +96,42 @@ pub fn get_sq(board: &Board, i: &Cell) -> Group {
     let col_i = ii - row_i * 3;
     unsafe {
         [
-            board.get_unchecked(usize::from(row_i * 3 + 0)).get_unchecked(usize::from(col_i * 3 + 0)).clone(),
-            board.get_unchecked(usize::from(row_i * 3 + 0)).get_unchecked(usize::from(col_i * 3 + 1)).clone(),
-            board.get_unchecked(usize::from(row_i * 3 + 0)).get_unchecked(usize::from(col_i * 3 + 2)).clone(),
-            board.get_unchecked(usize::from(row_i * 3 + 1)).get_unchecked(usize::from(col_i * 3 + 0)).clone(),
-            board.get_unchecked(usize::from(row_i * 3 + 1)).get_unchecked(usize::from(col_i * 3 + 1)).clone(),
-            board.get_unchecked(usize::from(row_i * 3 + 1)).get_unchecked(usize::from(col_i * 3 + 2)).clone(),
-            board.get_unchecked(usize::from(row_i * 3 + 2)).get_unchecked(usize::from(col_i * 3 + 0)).clone(),
-            board.get_unchecked(usize::from(row_i * 3 + 2)).get_unchecked(usize::from(col_i * 3 + 1)).clone(),
-            board.get_unchecked(usize::from(row_i * 3 + 2)).get_unchecked(usize::from(col_i * 3 + 2)).clone(),
+            board
+                .get_unchecked(usize::from(row_i * 3 + 0))
+                .get_unchecked(usize::from(col_i * 3 + 0))
+                .clone(),
+            board
+                .get_unchecked(usize::from(row_i * 3 + 0))
+                .get_unchecked(usize::from(col_i * 3 + 1))
+                .clone(),
+            board
+                .get_unchecked(usize::from(row_i * 3 + 0))
+                .get_unchecked(usize::from(col_i * 3 + 2))
+                .clone(),
+            board
+                .get_unchecked(usize::from(row_i * 3 + 1))
+                .get_unchecked(usize::from(col_i * 3 + 0))
+                .clone(),
+            board
+                .get_unchecked(usize::from(row_i * 3 + 1))
+                .get_unchecked(usize::from(col_i * 3 + 1))
+                .clone(),
+            board
+                .get_unchecked(usize::from(row_i * 3 + 1))
+                .get_unchecked(usize::from(col_i * 3 + 2))
+                .clone(),
+            board
+                .get_unchecked(usize::from(row_i * 3 + 2))
+                .get_unchecked(usize::from(col_i * 3 + 0))
+                .clone(),
+            board
+                .get_unchecked(usize::from(row_i * 3 + 2))
+                .get_unchecked(usize::from(col_i * 3 + 1))
+                .clone(),
+            board
+                .get_unchecked(usize::from(row_i * 3 + 2))
+                .get_unchecked(usize::from(col_i * 3 + 2))
+                .clone(),
         ]
     }
 }

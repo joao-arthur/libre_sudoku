@@ -1,7 +1,7 @@
 use crate::{
     board::{Board, SolvedBoard},
     cell::Cell,
-    group::SolvedGroup,
+    solved_group::SolvedGroup,
 };
 
 enum Symmetry {
@@ -20,14 +20,14 @@ fn generate_row_0() -> SolvedGroup {
 fn generate_board_latin_square(row_0: &[Cell; 9]) -> SolvedBoard {
     [
         row_0.clone(),
-        [row_0[3], row_0[4], row_0[5], row_0[6], row_0[7], row_0[8], row_0[0], row_0[1], row_0[2] ],
-        [row_0[6], row_0[7], row_0[8], row_0[0], row_0[1], row_0[2], row_0[3], row_0[4], row_0[5] ],
-        [row_0[1], row_0[2], row_0[3], row_0[4], row_0[5], row_0[6], row_0[7], row_0[8], row_0[0] ],
-        [row_0[4], row_0[5], row_0[6], row_0[7], row_0[8], row_0[0], row_0[1], row_0[2], row_0[3] ],
-        [row_0[7], row_0[8], row_0[0], row_0[1], row_0[2], row_0[3], row_0[4], row_0[5], row_0[6] ],
-        [row_0[2], row_0[3], row_0[4], row_0[5], row_0[6], row_0[7], row_0[8], row_0[0], row_0[1] ],
-        [row_0[5], row_0[6], row_0[7], row_0[8], row_0[0], row_0[1], row_0[2], row_0[3], row_0[4] ],
-        [row_0[8], row_0[0], row_0[1], row_0[2], row_0[3], row_0[4], row_0[5], row_0[6], row_0[7] ],
+        [row_0[3], row_0[4], row_0[5], row_0[6], row_0[7], row_0[8], row_0[0], row_0[1], row_0[2]],
+        [row_0[6], row_0[7], row_0[8], row_0[0], row_0[1], row_0[2], row_0[3], row_0[4], row_0[5]],
+        [row_0[1], row_0[2], row_0[3], row_0[4], row_0[5], row_0[6], row_0[7], row_0[8], row_0[0]],
+        [row_0[4], row_0[5], row_0[6], row_0[7], row_0[8], row_0[0], row_0[1], row_0[2], row_0[3]],
+        [row_0[7], row_0[8], row_0[0], row_0[1], row_0[2], row_0[3], row_0[4], row_0[5], row_0[6]],
+        [row_0[2], row_0[3], row_0[4], row_0[5], row_0[6], row_0[7], row_0[8], row_0[0], row_0[1]],
+        [row_0[5], row_0[6], row_0[7], row_0[8], row_0[0], row_0[1], row_0[2], row_0[3], row_0[4]],
+        [row_0[8], row_0[0], row_0[1], row_0[2], row_0[3], row_0[4], row_0[5], row_0[6], row_0[7]],
     ]
 }
 
@@ -55,7 +55,7 @@ fn generate() -> Board {
 
 #[cfg(test)]
 mod tests {
-    use super::{generate, generate_row_0, generate_board_latin_square};
+    use super::{generate, generate_board_latin_square, generate_row_0};
     use crate::{board, cell::Cell, group};
 
     //#[test]
@@ -80,29 +80,138 @@ mod tests {
     fn test_generate_row_0() {
         assert_eq!(
             generate_row_0(),
-            [Cell::_9, Cell::_1, Cell::_8, Cell::_2, Cell::_7, Cell::_3, Cell::_6, Cell::_4, Cell::_5]
+            [
+                Cell::_9,
+                Cell::_1,
+                Cell::_8,
+                Cell::_2,
+                Cell::_7,
+                Cell::_3,
+                Cell::_6,
+                Cell::_4,
+                Cell::_5
+            ]
         )
     }
 
     #[test]
     fn test_generate_board_latin_square() {
         assert_eq!(
-            generate_board_latin_square(&[Cell::_9, Cell::_1, Cell::_8, Cell::_2, Cell::_7, Cell::_3, Cell::_6, Cell::_4, Cell::_5]),
+            generate_board_latin_square(&[
+                Cell::_9,
+                Cell::_1,
+                Cell::_8,
+                Cell::_2,
+                Cell::_7,
+                Cell::_3,
+                Cell::_6,
+                Cell::_4,
+                Cell::_5
+            ]),
             [
-                [Cell::_9, Cell::_1, Cell::_8, Cell::_2, Cell::_7, Cell::_3, Cell::_6, Cell::_4, Cell::_5],
-                [Cell::_2, Cell::_7, Cell::_3, Cell::_6, Cell::_4, Cell::_5, Cell::_9, Cell::_1, Cell::_8 ],
-                [Cell::_6, Cell::_4, Cell::_5, Cell::_9, Cell::_1, Cell::_8, Cell::_2, Cell::_7, Cell::_3 ],
-                [Cell::_1, Cell::_8, Cell::_2, Cell::_7, Cell::_3, Cell::_6, Cell::_4, Cell::_5, Cell::_9 ],
-                [Cell::_7, Cell::_3, Cell::_6, Cell::_4, Cell::_5, Cell::_9, Cell::_1, Cell::_8, Cell::_2 ],
-                [Cell::_4, Cell::_5, Cell::_9, Cell::_1, Cell::_8, Cell::_2, Cell::_7, Cell::_3, Cell::_6 ],
-                [Cell::_8, Cell::_2, Cell::_7, Cell::_3, Cell::_6, Cell::_4, Cell::_5, Cell::_9, Cell::_1 ],
-                [Cell::_3, Cell::_6, Cell::_4, Cell::_5, Cell::_9, Cell::_1, Cell::_8, Cell::_2, Cell::_7 ],
-                [Cell::_5, Cell::_9, Cell::_1, Cell::_8, Cell::_2, Cell::_7, Cell::_3, Cell::_6, Cell::_4 ],
+                [
+                    Cell::_9,
+                    Cell::_1,
+                    Cell::_8,
+                    Cell::_2,
+                    Cell::_7,
+                    Cell::_3,
+                    Cell::_6,
+                    Cell::_4,
+                    Cell::_5
+                ],
+                [
+                    Cell::_2,
+                    Cell::_7,
+                    Cell::_3,
+                    Cell::_6,
+                    Cell::_4,
+                    Cell::_5,
+                    Cell::_9,
+                    Cell::_1,
+                    Cell::_8
+                ],
+                [
+                    Cell::_6,
+                    Cell::_4,
+                    Cell::_5,
+                    Cell::_9,
+                    Cell::_1,
+                    Cell::_8,
+                    Cell::_2,
+                    Cell::_7,
+                    Cell::_3
+                ],
+                [
+                    Cell::_1,
+                    Cell::_8,
+                    Cell::_2,
+                    Cell::_7,
+                    Cell::_3,
+                    Cell::_6,
+                    Cell::_4,
+                    Cell::_5,
+                    Cell::_9
+                ],
+                [
+                    Cell::_7,
+                    Cell::_3,
+                    Cell::_6,
+                    Cell::_4,
+                    Cell::_5,
+                    Cell::_9,
+                    Cell::_1,
+                    Cell::_8,
+                    Cell::_2
+                ],
+                [
+                    Cell::_4,
+                    Cell::_5,
+                    Cell::_9,
+                    Cell::_1,
+                    Cell::_8,
+                    Cell::_2,
+                    Cell::_7,
+                    Cell::_3,
+                    Cell::_6
+                ],
+                [
+                    Cell::_8,
+                    Cell::_2,
+                    Cell::_7,
+                    Cell::_3,
+                    Cell::_6,
+                    Cell::_4,
+                    Cell::_5,
+                    Cell::_9,
+                    Cell::_1
+                ],
+                [
+                    Cell::_3,
+                    Cell::_6,
+                    Cell::_4,
+                    Cell::_5,
+                    Cell::_9,
+                    Cell::_1,
+                    Cell::_8,
+                    Cell::_2,
+                    Cell::_7
+                ],
+                [
+                    Cell::_5,
+                    Cell::_9,
+                    Cell::_1,
+                    Cell::_8,
+                    Cell::_2,
+                    Cell::_7,
+                    Cell::_3,
+                    Cell::_6,
+                    Cell::_4
+                ],
             ]
         )
     }
 }
-
 
 // alterna linhas do mesmo trio
 // alterna colunas do mesmo trio
