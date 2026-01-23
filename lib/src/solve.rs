@@ -1,31 +1,30 @@
 use crate::{
     board::{self, Board},
     cell::Cell,
-    strategy::{strategy_last_empty_in_group, strategy_only_possibility},
+    strategy::strategy_last_empty_in_group,
 };
 
 fn solve(b: &mut Board) {
     for row_i in 0..9 {
         for col_i in 0..9 {
-            if let Some(row_cell) = Cell::try_from_idx(row_i) {
-                if let Some(col_cell) = Cell::try_from_idx(col_i) {
-                    if board::get_cell(&b, &row_cell, &col_cell).is_none() {
-                        let row = board::get_row(b, &row_cell);
-                        let col = board::get_col(b, &col_cell);
-                        let sq = board::get_sq(b, &board::get_sq_idx(&row_cell, &col_cell));
-                        let opt_col = strategy_last_empty_in_group(&col);
-                        let opt_row = strategy_last_empty_in_group(&row);
-                        let opt_sq = strategy_last_empty_in_group(&sq);
-                        if let Some(opt_col) = opt_col {
-                            b[row_i as usize][col_i as usize] = Some(opt_col);
-                        }
-                        if let Some(opt_row) = opt_row {
-                            b[row_i as usize][col_i as usize] = Some(opt_row);
-                        }
-                        if let Some(opt_sq) = opt_sq {
-                            b[row_i as usize][col_i as usize] = Some(opt_sq);
-                        }
-                    }
+            if let Some(row_cell) = Cell::try_from_idx(row_i)
+                && let Some(col_cell) = Cell::try_from_idx(col_i)
+                && board::get_cell(b, &row_cell, &col_cell).is_none()
+            {
+                let row = board::get_row(b, &row_cell);
+                let col = board::get_col(b, &col_cell);
+                let sq = board::get_sq(b, &board::get_sq_idx(&row_cell, &col_cell));
+                let opt_col = strategy_last_empty_in_group(&col);
+                let opt_row = strategy_last_empty_in_group(&row);
+                let opt_sq = strategy_last_empty_in_group(&sq);
+                if let Some(opt_col) = opt_col {
+                    b[row_i as usize][col_i as usize] = Some(opt_col);
+                }
+                if let Some(opt_row) = opt_row {
+                    b[row_i as usize][col_i as usize] = Some(opt_row);
+                }
+                if let Some(opt_sq) = opt_sq {
+                    b[row_i as usize][col_i as usize] = Some(opt_sq);
                 }
             }
         }

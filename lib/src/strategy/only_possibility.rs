@@ -2,7 +2,7 @@ use crate::{cell::Cell, possibilities::Possibilities};
 
 pub fn strategy_only_possibility(p: &Possibilities) -> Option<Cell> {
     if p.len() == 1 {
-        return p.get(0).cloned();
+        return p.first().cloned();
     }
     None
 }

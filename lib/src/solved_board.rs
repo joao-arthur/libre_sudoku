@@ -8,6 +8,4 @@ use std::fmt;
 pub type SolvedBoard = [SolvedGroup; 9];
 
 #[cfg(test)]
-mod tests {
-
-}
+mod tests {}

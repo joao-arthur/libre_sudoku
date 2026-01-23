@@ -1,9 +1,4 @@
-use crate::{
-    board::Board,
-    solved_board::SolvedBoard,
-    cell::Cell,
-    solved_group::SolvedGroup,
-};
+use crate::{board::Board, cell::Cell, solved_board::SolvedBoard, solved_group::SolvedGroup};
 
 enum Symmetry {
     Rotate90,
@@ -20,7 +15,7 @@ fn generate_row_0() -> SolvedGroup {
 
 fn generate_board_latin_square(row_0: &[Cell; 9]) -> SolvedBoard {
     [
-        row_0.clone(),
+        *row_0,
         [row_0[3], row_0[4], row_0[5], row_0[6], row_0[7], row_0[8], row_0[0], row_0[1], row_0[2]],
         [row_0[6], row_0[7], row_0[8], row_0[0], row_0[1], row_0[2], row_0[3], row_0[4], row_0[5]],
         [row_0[1], row_0[2], row_0[3], row_0[4], row_0[5], row_0[6], row_0[7], row_0[8], row_0[0]],
@@ -41,7 +36,7 @@ fn mirror_ver() {}
 fn mirror_both() {}
 
 fn generate() -> Board {
-    return [
+    [
         [None, None, None, None, None, None, None, None, None],
         [None, None, None, None, None, None, None, None, None],
         [None, None, None, None, None, None, None, None, None],
@@ -51,13 +46,13 @@ fn generate() -> Board {
         [None, None, None, None, None, None, None, None, None],
         [None, None, None, None, None, None, None, None, None],
         [None, None, None, None, None, None, None, None, None],
-    ];
+    ]
 }
 
 #[cfg(test)]
 mod tests {
-    use super::{generate, generate_board_latin_square, generate_row_0};
-    use crate::{board, cell::Cell, group};
+    use super::{generate_board_latin_square, generate_row_0};
+    use crate::cell::Cell;
 
     //#[test]
     //fn test_generate() {

@@ -54,7 +54,7 @@ pub fn try_from_str(rows: [&str; 9]) -> Result<Board, FromStringErr> {
         }
     }
     Ok([
-        group_from_str(rows.get(0).unwrap()),
+        group_from_str(rows.first().unwrap()),
         group_from_str(rows.get(1).unwrap()),
         group_from_str(rows.get(2).unwrap()),
         group_from_str(rows.get(3).unwrap()),
@@ -72,20 +72,20 @@ pub fn from_str(rows: [&str; 9]) -> Board {
 
 pub fn get_col(board: &Board, i: &Cell) -> Group {
     [
-        board.get(0).unwrap().get(usize::from(i.to_idx())).unwrap().clone(),
-        board.get(1).unwrap().get(usize::from(i.to_idx())).unwrap().clone(),
-        board.get(2).unwrap().get(usize::from(i.to_idx())).unwrap().clone(),
-        board.get(3).unwrap().get(usize::from(i.to_idx())).unwrap().clone(),
-        board.get(4).unwrap().get(usize::from(i.to_idx())).unwrap().clone(),
-        board.get(5).unwrap().get(usize::from(i.to_idx())).unwrap().clone(),
-        board.get(6).unwrap().get(usize::from(i.to_idx())).unwrap().clone(),
-        board.get(7).unwrap().get(usize::from(i.to_idx())).unwrap().clone(),
-        board.get(8).unwrap().get(usize::from(i.to_idx())).unwrap().clone(),
+        *board.first().unwrap().get(usize::from(i.to_idx())).unwrap(),
+        *board.get(1).unwrap().get(usize::from(i.to_idx())).unwrap(),
+        *board.get(2).unwrap().get(usize::from(i.to_idx())).unwrap(),
+        *board.get(3).unwrap().get(usize::from(i.to_idx())).unwrap(),
+        *board.get(4).unwrap().get(usize::from(i.to_idx())).unwrap(),
+        *board.get(5).unwrap().get(usize::from(i.to_idx())).unwrap(),
+        *board.get(6).unwrap().get(usize::from(i.to_idx())).unwrap(),
+        *board.get(7).unwrap().get(usize::from(i.to_idx())).unwrap(),
+        *board.get(8).unwrap().get(usize::from(i.to_idx())).unwrap(),
     ]
 }
 
 pub fn get_row(board: &Board, i: &Cell) -> Group {
-    board.get(usize::from(i.to_idx())).unwrap().clone()
+    *board.get(usize::from(i.to_idx())).unwrap()
 }
 
 pub fn get_sq(board: &Board, i: &Cell) -> Group {
@@ -94,48 +94,29 @@ pub fn get_sq(board: &Board, i: &Cell) -> Group {
     let col_i = ii - row_i * 3;
     unsafe {
         [
-            board
-                .get_unchecked(usize::from(row_i * 3 + 0))
-                .get_unchecked(usize::from(col_i * 3 + 0))
-                .clone(),
-            board
-                .get_unchecked(usize::from(row_i * 3 + 0))
-                .get_unchecked(usize::from(col_i * 3 + 1))
-                .clone(),
-            board
-                .get_unchecked(usize::from(row_i * 3 + 0))
-                .get_unchecked(usize::from(col_i * 3 + 2))
-                .clone(),
-            board
+            *board.get_unchecked(usize::from(row_i * 3)).get_unchecked(usize::from(col_i * 3)),
+            *board.get_unchecked(usize::from(row_i * 3)).get_unchecked(usize::from(col_i * 3 + 1)),
+            *board.get_unchecked(usize::from(row_i * 3)).get_unchecked(usize::from(col_i * 3 + 2)),
+            *board.get_unchecked(usize::from(row_i * 3 + 1)).get_unchecked(usize::from(col_i * 3)),
+            *board
                 .get_unchecked(usize::from(row_i * 3 + 1))
-                .get_unchecked(usize::from(col_i * 3 + 0))
-                .clone(),
-            board
+                .get_unchecked(usize::from(col_i * 3 + 1)),
+            *board
                 .get_unchecked(usize::from(row_i * 3 + 1))
-                .get_unchecked(usize::from(col_i * 3 + 1))
-                .clone(),
-            board
-                .get_unchecked(usize::from(row_i * 3 + 1))
-                .get_unchecked(usize::from(col_i * 3 + 2))
-                .clone(),
-            board
+                .get_unchecked(usize::from(col_i * 3 + 2)),
+            *board.get_unchecked(usize::from(row_i * 3 + 2)).get_unchecked(usize::from(col_i * 3)),
+            *board
                 .get_unchecked(usize::from(row_i * 3 + 2))
-                .get_unchecked(usize::from(col_i * 3 + 0))
-                .clone(),
-            board
+                .get_unchecked(usize::from(col_i * 3 + 1)),
+            *board
                 .get_unchecked(usize::from(row_i * 3 + 2))
-                .get_unchecked(usize::from(col_i * 3 + 1))
-                .clone(),
-            board
-                .get_unchecked(usize::from(row_i * 3 + 2))
-                .get_unchecked(usize::from(col_i * 3 + 2))
-                .clone(),
+                .get_unchecked(usize::from(col_i * 3 + 2)),
         ]
     }
 }
 
 pub fn get_cell(board: &Board, row: &Cell, col: &Cell) -> Option<Cell> {
-    board[row.to_idx() as usize][col.to_idx() as usize].clone()
+    board[row.to_idx() as usize][col.to_idx() as usize]
 }
 
 pub fn get_sq_idx(row: &Cell, col: &Cell) -> Cell {
@@ -151,10 +132,10 @@ pub fn to_string(board: &Board) -> String {
         for col in row {
             match col {
                 Some(val) => res.push_str(val.to_str()),
-                None => res.push_str(" "),
+                None => res.push(' '),
             }
         }
-        res.push_str("\n")
+        res.push('\n')
     }
     res
 }

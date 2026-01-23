@@ -10,11 +10,9 @@ pub fn strategy_last_empty_in_group(group: &Group) -> Option<Cell> {
     if cells_len != 8 {
         return None;
     }
-    let mut group_taken = vec![false; 9];
-    for c in group {
-        if let Some(c) = c {
-            group_taken[(c.to_idx()) as usize] = true;
-        }
+    let mut group_taken = [false; 9];
+    for c in group.iter().flatten() {
+        group_taken[(c.to_idx()) as usize] = true;
     }
     for (i, c) in group_taken.iter().enumerate() {
         if !c {

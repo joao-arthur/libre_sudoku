@@ -5,15 +5,15 @@ pub type Group = [Option<Cell>; 9];
 pub fn group_from_str(row: &str) -> Group {
     let mut chars = row.chars();
     [
-        chars.next().map_or(None, |c| Cell::try_from_char(&c)),
-        chars.next().map_or(None, |c| Cell::try_from_char(&c)),
-        chars.next().map_or(None, |c| Cell::try_from_char(&c)),
-        chars.next().map_or(None, |c| Cell::try_from_char(&c)),
-        chars.next().map_or(None, |c| Cell::try_from_char(&c)),
-        chars.next().map_or(None, |c| Cell::try_from_char(&c)),
-        chars.next().map_or(None, |c| Cell::try_from_char(&c)),
-        chars.next().map_or(None, |c| Cell::try_from_char(&c)),
-        chars.next().map_or(None, |c| Cell::try_from_char(&c)),
+        chars.next().and_then(|c| Cell::try_from_char(&c)),
+        chars.next().and_then(|c| Cell::try_from_char(&c)),
+        chars.next().and_then(|c| Cell::try_from_char(&c)),
+        chars.next().and_then(|c| Cell::try_from_char(&c)),
+        chars.next().and_then(|c| Cell::try_from_char(&c)),
+        chars.next().and_then(|c| Cell::try_from_char(&c)),
+        chars.next().and_then(|c| Cell::try_from_char(&c)),
+        chars.next().and_then(|c| Cell::try_from_char(&c)),
+        chars.next().and_then(|c| Cell::try_from_char(&c)),
     ]
 }
 
@@ -22,7 +22,7 @@ pub fn group_to_string(group: &Group) -> String {
     for col in group {
         match col {
             Some(val) => res.push_str(val.to_str()),
-            None => res.push_str(" "),
+            None => res.push(' '),
         }
     }
     res
