@@ -6,4 +6,5 @@ mod group;
 mod possibilities;
 mod solve;
 mod solved_group;
+mod solved_board;
 mod strategy;

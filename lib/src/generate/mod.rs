@@ -1,5 +1,6 @@
 use crate::{
-    board::{Board, SolvedBoard},
+    board::Board,
+    solved_board::SolvedBoard,
     cell::Cell,
     solved_group::SolvedGroup,
 };

@@ -1,5 +1,4 @@
 use crate::cell::Cell;
-use std::char;
 
 pub type SolvedGroup = [Cell; 9];
 
