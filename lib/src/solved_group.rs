@@ -5,15 +5,15 @@ pub type SolvedGroup = [Cell; 9];
 pub fn try_solved_group_from_str(row: &str) -> Option<SolvedGroup> {
     let mut chars = row.chars();
     Some([
-        Cell::try_from_char(&chars.next()?)?,
-        Cell::try_from_char(&chars.next()?)?,
-        Cell::try_from_char(&chars.next()?)?,
-        Cell::try_from_char(&chars.next()?)?,
-        Cell::try_from_char(&chars.next()?)?,
-        Cell::try_from_char(&chars.next()?)?,
-        Cell::try_from_char(&chars.next()?)?,
-        Cell::try_from_char(&chars.next()?)?,
-        Cell::try_from_char(&chars.next()?)?,
+        chars.next().and_then(|c| Cell::try_from_char(&c))?,
+        chars.next().and_then(|c| Cell::try_from_char(&c))?,
+        chars.next().and_then(|c| Cell::try_from_char(&c))?,
+        chars.next().and_then(|c| Cell::try_from_char(&c))?,
+        chars.next().and_then(|c| Cell::try_from_char(&c))?,
+        chars.next().and_then(|c| Cell::try_from_char(&c))?,
+        chars.next().and_then(|c| Cell::try_from_char(&c))?,
+        chars.next().and_then(|c| Cell::try_from_char(&c))?,
+        chars.next().and_then(|c| Cell::try_from_char(&c))?,
     ])
 }
 

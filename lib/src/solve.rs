@@ -7,8 +7,8 @@ use crate::{
 fn solve(b: &mut Board) {
     for row_i in 0..9 {
         for col_i in 0..9 {
-            if let Some(row_cell) = Cell::try_from_idx(row_i)
-                && let Some(col_cell) = Cell::try_from_idx(col_i)
+            if let Some(row_cell) = Cell::try_from_usize(row_i)
+                && let Some(col_cell) = Cell::try_from_usize(col_i)
                 && board::get_cell(b, &row_cell, &col_cell).is_none()
             {
                 let row = board::get_row(b, &row_cell);
@@ -18,13 +18,13 @@ fn solve(b: &mut Board) {
                 let opt_row = strategy_last_empty_in_group(&row);
                 let opt_sq = strategy_last_empty_in_group(&sq);
                 if let Some(opt_col) = opt_col {
-                    b[row_i as usize][col_i as usize] = Some(opt_col);
+                    b[row_i][col_i] = Some(opt_col);
                 }
                 if let Some(opt_row) = opt_row {
-                    b[row_i as usize][col_i as usize] = Some(opt_row);
+                    b[row_i][col_i] = Some(opt_row);
                 }
                 if let Some(opt_sq) = opt_sq {
-                    b[row_i as usize][col_i as usize] = Some(opt_sq);
+                    b[row_i][col_i] = Some(opt_sq);
                 }
             }
         }

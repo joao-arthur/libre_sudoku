@@ -12,11 +12,11 @@ pub fn strategy_last_empty_in_group(group: &Group) -> Option<Cell> {
     }
     let mut group_taken = [false; 9];
     for c in group.iter().flatten() {
-        group_taken[(c.to_idx()) as usize] = true;
+        group_taken[c.to_usize()] = true;
     }
     for (i, c) in group_taken.iter().enumerate() {
         if !c {
-            return Cell::try_from_idx(i as u8);
+            return Cell::try_from_usize(i);
         }
     }
     None

@@ -53,77 +53,73 @@ pub fn try_from_str(rows: [&str; 9]) -> Result<Board, FromStringErr> {
             return Err(FromStringErr::InvalidLength(InvalidLengthErr));
         }
     }
-    Ok([
-        group_from_str(rows.first().unwrap()),
-        group_from_str(rows.get(1).unwrap()),
-        group_from_str(rows.get(2).unwrap()),
-        group_from_str(rows.get(3).unwrap()),
-        group_from_str(rows.get(4).unwrap()),
-        group_from_str(rows.get(5).unwrap()),
-        group_from_str(rows.get(6).unwrap()),
-        group_from_str(rows.get(7).unwrap()),
-        group_from_str(rows.get(8).unwrap()),
-    ])
+    unsafe {
+        Ok([
+            group_from_str(rows.get_unchecked(0)),
+            group_from_str(rows.get_unchecked(1)),
+            group_from_str(rows.get_unchecked(2)),
+            group_from_str(rows.get_unchecked(3)),
+            group_from_str(rows.get_unchecked(4)),
+            group_from_str(rows.get_unchecked(5)),
+            group_from_str(rows.get_unchecked(6)),
+            group_from_str(rows.get_unchecked(7)),
+            group_from_str(rows.get_unchecked(8)),
+        ])
+    }
 }
 
 pub fn from_str(rows: [&str; 9]) -> Board {
     try_from_str(rows).unwrap()
 }
 
-pub fn get_col(board: &Board, i: &Cell) -> Group {
-    [
-        *board.first().unwrap().get(usize::from(i.to_idx())).unwrap(),
-        *board.get(1).unwrap().get(usize::from(i.to_idx())).unwrap(),
-        *board.get(2).unwrap().get(usize::from(i.to_idx())).unwrap(),
-        *board.get(3).unwrap().get(usize::from(i.to_idx())).unwrap(),
-        *board.get(4).unwrap().get(usize::from(i.to_idx())).unwrap(),
-        *board.get(5).unwrap().get(usize::from(i.to_idx())).unwrap(),
-        *board.get(6).unwrap().get(usize::from(i.to_idx())).unwrap(),
-        *board.get(7).unwrap().get(usize::from(i.to_idx())).unwrap(),
-        *board.get(8).unwrap().get(usize::from(i.to_idx())).unwrap(),
-    ]
-}
-
-pub fn get_row(board: &Board, i: &Cell) -> Group {
-    *board.get(usize::from(i.to_idx())).unwrap()
-}
-
-pub fn get_sq(board: &Board, i: &Cell) -> Group {
-    let ii = i.to_idx();
-    let row_i = ii / 3;
-    let col_i = ii - row_i * 3;
+pub fn get_col(board: &Board, cell: &Cell) -> Group {
+    let i = cell.to_usize();
     unsafe {
         [
-            *board.get_unchecked(usize::from(row_i * 3)).get_unchecked(usize::from(col_i * 3)),
-            *board.get_unchecked(usize::from(row_i * 3)).get_unchecked(usize::from(col_i * 3 + 1)),
-            *board.get_unchecked(usize::from(row_i * 3)).get_unchecked(usize::from(col_i * 3 + 2)),
-            *board.get_unchecked(usize::from(row_i * 3 + 1)).get_unchecked(usize::from(col_i * 3)),
-            *board
-                .get_unchecked(usize::from(row_i * 3 + 1))
-                .get_unchecked(usize::from(col_i * 3 + 1)),
-            *board
-                .get_unchecked(usize::from(row_i * 3 + 1))
-                .get_unchecked(usize::from(col_i * 3 + 2)),
-            *board.get_unchecked(usize::from(row_i * 3 + 2)).get_unchecked(usize::from(col_i * 3)),
-            *board
-                .get_unchecked(usize::from(row_i * 3 + 2))
-                .get_unchecked(usize::from(col_i * 3 + 1)),
-            *board
-                .get_unchecked(usize::from(row_i * 3 + 2))
-                .get_unchecked(usize::from(col_i * 3 + 2)),
+            *board.get_unchecked(0).get_unchecked(i),
+            *board.get_unchecked(1).get_unchecked(i),
+            *board.get_unchecked(2).get_unchecked(i),
+            *board.get_unchecked(3).get_unchecked(i),
+            *board.get_unchecked(4).get_unchecked(i),
+            *board.get_unchecked(5).get_unchecked(i),
+            *board.get_unchecked(6).get_unchecked(i),
+            *board.get_unchecked(7).get_unchecked(i),
+            *board.get_unchecked(8).get_unchecked(i),
+        ]
+    }
+}
+
+pub fn get_row(board: &Board, cell: &Cell) -> Group {
+    unsafe { *board.get_unchecked(cell.to_usize()) }
+}
+
+pub fn get_sq(board: &Board, cell: &Cell) -> Group {
+    let i = cell.to_usize();
+    let row_i = i / 3;
+    let col_i = i - row_i * 3;
+    unsafe {
+        [
+            *board.get_unchecked(row_i * 3).get_unchecked(col_i * 3),
+            *board.get_unchecked(row_i * 3).get_unchecked(col_i * 3 + 1),
+            *board.get_unchecked(row_i * 3).get_unchecked(col_i * 3 + 2),
+            *board.get_unchecked(row_i * 3 + 1).get_unchecked(col_i * 3),
+            *board.get_unchecked(row_i * 3 + 1).get_unchecked(col_i * 3 + 1),
+            *board.get_unchecked(row_i * 3 + 1).get_unchecked(col_i * 3 + 2),
+            *board.get_unchecked(row_i * 3 + 2).get_unchecked(col_i * 3),
+            *board.get_unchecked(row_i * 3 + 2).get_unchecked(col_i * 3 + 1),
+            *board.get_unchecked(row_i * 3 + 2).get_unchecked(col_i * 3 + 2),
         ]
     }
 }
 
 pub fn get_cell(board: &Board, row: &Cell, col: &Cell) -> Option<Cell> {
-    board[row.to_idx() as usize][col.to_idx() as usize]
+    unsafe { *board.get_unchecked(row.to_usize()).get_unchecked(col.to_usize()) }
 }
 
 pub fn get_sq_idx(row: &Cell, col: &Cell) -> Cell {
-    let row_i = row.to_idx() / 3;
-    let col_i = col.to_idx() / 3;
-
-    Cell::try_from_idx(row_i * 3 + col_i).unwrap()
+    let row_i = row.to_u8() / 3;
+    let col_i = col.to_u8() / 3;
+    Cell::from_u8(row_i * 3 + col_i)
 }
 
 pub fn to_string(board: &Board) -> String {
