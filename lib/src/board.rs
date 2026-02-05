@@ -20,7 +20,7 @@ pub struct InvalidLengthErr;
 
 impl fmt::Display for InvalidLengthErr {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "The length of every line must be 9")
+        write!(f, "Must have 9 lines with 9 characters each")
     }
 }
 
@@ -31,6 +31,11 @@ pub enum FromStringErr {
 }
 
 pub fn try_from_str(rows: [&str; 9]) -> Result<Board, FromStringErr> {
+    for line in rows {
+        if line.chars().count() != 9 {
+            return Err(FromStringErr::InvalidLength(InvalidLengthErr));
+        }
+    }
     if !rows
         .join("")
         .replace("0", "")
@@ -47,11 +52,6 @@ pub fn try_from_str(rows: [&str; 9]) -> Result<Board, FromStringErr> {
         .is_empty()
     {
         return Err(FromStringErr::InvalidCharacter(InvalidCharacterErr));
-    }
-    for line in rows {
-        if line.chars().count() != 9 {
-            return Err(FromStringErr::InvalidLength(InvalidLengthErr));
-        }
     }
     unsafe {
         Ok([
@@ -70,6 +70,20 @@ pub fn try_from_str(rows: [&str; 9]) -> Result<Board, FromStringErr> {
 
 pub fn from_str(rows: [&str; 9]) -> Board {
     try_from_str(rows).unwrap()
+}
+
+pub fn to_string(board: &Board) -> String {
+    let mut res = String::from("");
+    for row in board {
+        for col in row {
+            match col {
+                Some(val) => res.push_str(val.to_str()),
+                None => res.push(' '),
+            }
+        }
+        res.push('\n')
+    }
+    res
 }
 
 pub fn get_col(board: &Board, cell: &Cell) -> Group {
@@ -122,29 +136,27 @@ pub fn get_sq_idx(row: &Cell, col: &Cell) -> Cell {
     Cell::from_u8(row_i * 3 + col_i)
 }
 
-pub fn to_string(board: &Board) -> String {
-    let mut res = String::from("");
-    for row in board {
-        for col in row {
-            match col {
-                Some(val) => res.push_str(val.to_str()),
-                None => res.push(' '),
-            }
-        }
-        res.push('\n')
-    }
-    res
-}
-
 #[cfg(test)]
 mod tests {
     use super::{
+        FromStringErr,
+        InvalidCharacterErr,InvalidLengthErr,
         from_str, get_cell, get_col, get_row, get_sq, get_sq_idx, to_string, try_from_str,
     };
     use crate::{cell::Cell, group::group_from_str};
 
     #[test]
-    fn test_try_from_str() {
+    fn invalid_character_err() {
+        assert_eq!(InvalidCharacterErr.to_string(), "Must match the pattern [0-9 ]");
+    }
+
+    #[test]
+    fn invalid_length_err() {
+        assert_eq!(InvalidLengthErr.to_string(), "Must have 9 lines with 9 characters each");
+    }
+
+    #[test]
+    fn try_from_str_ok() {
         assert_eq!(
             try_from_str([
                 " 23456789",
@@ -172,9 +184,73 @@ mod tests {
     }
 
     #[test]
-    fn test_from_str() {
+    fn try_from_str_invalid_character() {
         assert_eq!(
-            from_str([
+            try_from_str([
+                "a23456789",
+                "234567891",
+                "345678912",
+                "456789123",
+                "567891234",
+                "678912345",
+                "789123456",
+                "891234567",
+                "912345678",
+            ]),
+            Err(FromStringErr::InvalidCharacter(InvalidCharacterErr))
+        );
+        assert_eq!(
+            try_from_str([
+                "123456789",
+                "234567891",
+                "345678912",
+                "456789123",
+                "567891234",
+                "678912345",
+                "789123456",
+                "891234567",
+                "91234567z",
+            ]),
+            Err(FromStringErr::InvalidCharacter(InvalidCharacterErr))
+        );
+    }
+
+    #[test]
+    fn try_from_str_invalid_line_characters_length() {
+        assert_eq!(
+            try_from_str([
+                "23456789",
+                "234567891",
+                "345678912",
+                "456789123",
+                "567891234",
+                "678912345",
+                "789123456",
+                "891234567",
+                "912345678",
+            ]),
+            Err(FromStringErr::InvalidLength(InvalidLengthErr))
+        );
+        assert_eq!(
+            try_from_str([
+                "123456789",
+                "234567891",
+                "345678912",
+                "456789123",
+                "567891234",
+                "678912345",
+                "789123456",
+                "891234567",
+                "91234567",
+            ]),
+            Err(FromStringErr::InvalidLength(InvalidLengthErr))
+        );
+    }
+
+    #[test]
+    fn test_to_string() {
+        assert_eq!(
+            to_string(&from_str([
                 " 23456789",
                 "1 3456789",
                 "12 456789",
@@ -184,18 +260,16 @@ mod tests {
                 "123456 89",
                 "1234567 9",
                 "12345678 ",
-            ]),
-            [
-                group_from_str(" 23456789"),
-                group_from_str("1 3456789"),
-                group_from_str("12 456789"),
-                group_from_str("123 56789"),
-                group_from_str("1234 6789"),
-                group_from_str("12345 789"),
-                group_from_str("123456 89"),
-                group_from_str("1234567 9"),
-                group_from_str("12345678 "),
-            ]
+            ])),
+            String::from(" 23456789\n")
+                + "1 3456789\n"
+                + "12 456789\n"
+                + "123 56789\n"
+                + "1234 6789\n"
+                + "12345 789\n"
+                + "123456 89\n"
+                + "1234567 9\n"
+                + "12345678 \n"
         );
     }
 
@@ -326,34 +400,5 @@ mod tests {
         assert_eq!(get_sq_idx(&Cell::_4, &Cell::_4), Cell::_5);
         assert_eq!(get_sq_idx(&Cell::_5, &Cell::_5), Cell::_5);
         assert_eq!(get_sq_idx(&Cell::_6, &Cell::_6), Cell::_5);
-    }
-
-    #[test]
-    fn test_to_string() {
-        assert_eq!(
-            to_string(
-                &try_from_str([
-                    " 23456789",
-                    "1 3456789",
-                    "12 456789",
-                    "123 56789",
-                    "1234 6789",
-                    "12345 789",
-                    "123456 89",
-                    "1234567 9",
-                    "12345678 ",
-                ])
-                .unwrap()
-            ),
-            String::from(" 23456789\n")
-                + "1 3456789\n"
-                + "12 456789\n"
-                + "123 56789\n"
-                + "1234 6789\n"
-                + "12345 789\n"
-                + "123456 89\n"
-                + "1234567 9\n"
-                + "12345678 \n"
-        );
     }
 }
