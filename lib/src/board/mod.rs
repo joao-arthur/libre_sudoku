@@ -4,6 +4,8 @@ use crate::{
 };
 use std::fmt;
 
+mod operation;
+
 pub type Board = [Group; 9];
 
 #[derive(Debug, PartialEq)]
