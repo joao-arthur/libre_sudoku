@@ -1,7 +1,7 @@
 mod rotate_90;
+mod rotate_180;
 
 //mod offset;
-//mod rotate_180;
 //mod rotate_270;
 //mod mirror_hor;
 //mod mirror_ver;
