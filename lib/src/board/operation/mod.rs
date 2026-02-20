@@ -1,11 +1,9 @@
+mod mirror_horizontal;
 mod rotate_180;
 mod rotate_270;
 mod rotate_90;
 
 //mod offset;
-//mod mirror_hor;
-//mod mirror_ver;
-//mod mirror_both;
 //mod shake_group_rows;
 //mod shake_group_cols;
 //mod shake_board_group_rows;
