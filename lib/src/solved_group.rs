@@ -35,13 +35,13 @@ mod tests {
     use crate::cell::Cell;
 
     #[test]
-    fn try_solved_group_from_empty_str() {
+    fn try_from_empty_str() {
         assert_eq!(try_solved_group_from_str(""), None);
         assert_eq!(try_solved_group_from_str("         "), None);
     }
 
     #[test]
-    fn try_solved_group_from_missing_parts() {
+    fn try_from_missing_parts() {
         assert_eq!(try_solved_group_from_str(" 11111111"), None);
         assert_eq!(try_solved_group_from_str("2 2222222"), None);
         assert_eq!(try_solved_group_from_str("33 333333"), None);
@@ -54,7 +54,7 @@ mod tests {
     }
 
     #[test]
-    fn try_solved_group_from_str_full_str() {
+    fn try_from_str_full_str() {
         assert_eq!(
             try_solved_group_from_str("123456789"),
             Some([
@@ -86,7 +86,7 @@ mod tests {
     }
 
     #[test]
-    fn solved_group_from_str_full_str() {
+    fn from_str_full_str() {
         assert_eq!(
             solved_group_from_str("123456789"),
             [
@@ -118,7 +118,7 @@ mod tests {
     }
 
     #[test]
-    fn test_solved_group_to_string() {
+    fn to_string() {
         assert_eq!(solved_group_to_string(&solved_group_from_str("123456789")), "123456789");
         assert_eq!(solved_group_to_string(&solved_group_from_str("111111111")), "111111111");
     }

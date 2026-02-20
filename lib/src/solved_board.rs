@@ -1,8 +1,4 @@
-use crate::{
-    cell::Cell,
-    group::{Group, group_from_str},
-    solved_group::{SolvedGroup, solved_group_from_str},
-};
+use crate::solved_group::{SolvedGroup, solved_group_from_str};
 use std::fmt;
 
 pub type SolvedBoard = [SolvedGroup; 9];
@@ -54,7 +50,7 @@ pub fn try_solved_board_from_str(rows: [&str; 9]) -> Result<SolvedBoard, FromStr
         return Err(FromStringErr::InvalidCharacter(InvalidCharacterErr));
     }
     unsafe {
-        return Ok([
+        Ok([
             solved_group_from_str(rows.get_unchecked(0)),
             solved_group_from_str(rows.get_unchecked(1)),
             solved_group_from_str(rows.get_unchecked(2)),
@@ -64,7 +60,7 @@ pub fn try_solved_board_from_str(rows: [&str; 9]) -> Result<SolvedBoard, FromStr
             solved_group_from_str(rows.get_unchecked(6)),
             solved_group_from_str(rows.get_unchecked(7)),
             solved_group_from_str(rows.get_unchecked(8)),
-        ]);
+        ])
     }
 }
 
@@ -98,7 +94,7 @@ mod tests {
         solved_board_to_string,
         try_solved_board_from_str,
     };
-    use crate::{cell::Cell, solved_group::solved_group_from_str};
+    use crate::solved_group::solved_group_from_str;
 
     #[test]
     fn invalid_character_err() {
@@ -203,7 +199,7 @@ mod tests {
     }
 
     #[test]
-    fn test_to_string() {
+    fn to_string() {
         assert_eq!(
             solved_board_to_string(&solved_board_from_str([
                 "123456789",

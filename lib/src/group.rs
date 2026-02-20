@@ -34,7 +34,7 @@ mod tests {
     use crate::cell::Cell;
 
     #[test]
-    fn group_from_empty_str() {
+    fn from_empty_str() {
         assert_eq!(group_from_str(""), [None, None, None, None, None, None, None, None, None]);
         assert_eq!(
             group_from_str("         "),
@@ -43,7 +43,7 @@ mod tests {
     }
 
     #[test]
-    fn group_from_missing_parts() {
+    fn from_missing_parts() {
         assert_eq!(
             group_from_str(" 11111111"),
             [
@@ -173,7 +173,7 @@ mod tests {
     }
 
     #[test]
-    fn group_from_full_str() {
+    fn from_full_str() {
         assert_eq!(
             group_from_str("123456789"),
             [
@@ -191,7 +191,7 @@ mod tests {
     }
 
     #[test]
-    fn test_group_to_string() {
+    fn to_string() {
         assert_eq!(group_to_string(&group_from_str("123456789")), "123456789");
         assert_eq!(group_to_string(&group_from_str("111111111")), "111111111");
         assert_eq!(group_to_string(&group_from_str("1 2 3 4 5")), "1 2 3 4 5");

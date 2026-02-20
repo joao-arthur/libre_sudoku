@@ -112,7 +112,7 @@ mod tests {
     use crate::board::board_from_str;
 
     #[test]
-    fn test_rotate_90() {
+    fn test_mirror_horizontal() {
         assert_eq!(
             mirror_horizontal(&board_from_str([
                 " 11111111",
