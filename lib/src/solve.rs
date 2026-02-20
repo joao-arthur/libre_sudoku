@@ -35,11 +35,11 @@ fn solve(b: &mut Board) {
 #[cfg(test)]
 mod tests {
     use super::solve;
-    use crate::board;
+    use crate::board::{board_to_string, board_from_str};
 
     #[test]
     fn test_solve_last_empty_in_group() {
-        let mut b = board::from_str([
+        let mut b = board_from_str([
             "17 549683",
             "6458 3219",
             "389261  5",
@@ -50,7 +50,7 @@ mod tests {
             "731682594",
             "528934167",
         ]);
-        let solution = board::from_str([
+        let solution = board_from_str([
             "172549683",
             "645873219",
             "389261745",
@@ -62,6 +62,6 @@ mod tests {
             "528934167",
         ]);
         solve(&mut b);
-        assert_eq!(board::to_string(&b), board::to_string(&solution));
+        assert_eq!(board_to_string(&b), board_to_string(&solution));
     }
 }

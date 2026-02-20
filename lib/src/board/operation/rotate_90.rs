@@ -106,14 +106,15 @@ pub fn rotate_90(board: &Board) -> Board {
     }
 }
 
+#[cfg(test)]
 mod tests {
-    use crate::board::{Board, from_str};
+    use crate::board::board_from_str;
     use super::rotate_90;
 
     #[test]
     fn test_rotate_90() {
         assert_eq!(
-            rotate_90(&from_str([
+            rotate_90(&board_from_str([
                 " 11111111",
                 "2 2222222",
                 "33 333333",
@@ -124,7 +125,7 @@ mod tests {
                 "8888888 8",
                 "99999999 ",
             ])),
-            from_str([
+            board_from_str([
                 "98765432 ",
                 "9876543 1",
                 "987654 21",
@@ -137,7 +138,7 @@ mod tests {
             ]),
         );
         assert_eq!(
-            rotate_90(&from_str([
+            rotate_90(&board_from_str([
                 "111111111",
                 "222222222",
                 "333333333",
@@ -148,7 +149,7 @@ mod tests {
                 "888888888",
                 "999999999",
             ])),
-            from_str([
+            board_from_str([
                 "987654321",
                 "987654321",
                 "987654321",

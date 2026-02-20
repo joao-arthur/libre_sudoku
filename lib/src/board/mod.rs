@@ -32,7 +32,7 @@ pub enum FromStringErr {
     InvalidLength(InvalidLengthErr),
 }
 
-pub fn try_from_str(rows: [&str; 9]) -> Result<Board, FromStringErr> {
+pub fn try_board_from_str(rows: [&str; 9]) -> Result<Board, FromStringErr> {
     for line in rows {
         if line.chars().count() != 9 {
             return Err(FromStringErr::InvalidLength(InvalidLengthErr));
@@ -70,11 +70,11 @@ pub fn try_from_str(rows: [&str; 9]) -> Result<Board, FromStringErr> {
     }
 }
 
-pub fn from_str(rows: [&str; 9]) -> Board {
-    try_from_str(rows).unwrap()
+pub fn board_from_str(rows: [&str; 9]) -> Board {
+    try_board_from_str(rows).unwrap()
 }
 
-pub fn to_string(board: &Board) -> String {
+pub fn board_to_string(board: &Board) -> String {
     let mut res = String::from("");
     for row in board {
         for col in row {
@@ -143,7 +143,7 @@ mod tests {
     use super::{
         FromStringErr,
         InvalidCharacterErr,InvalidLengthErr,
-        from_str, get_cell, get_col, get_row, get_sq, get_sq_idx, to_string, try_from_str,
+        board_from_str, get_cell, get_col, get_row, get_sq, get_sq_idx, board_to_string, try_board_from_str,
     };
     use crate::{cell::Cell, group::group_from_str};
 
@@ -160,7 +160,7 @@ mod tests {
     #[test]
     fn try_from_str_ok() {
         assert_eq!(
-            try_from_str([
+            try_board_from_str([
                 " 23456789",
                 "1 3456789",
                 "12 456789",
@@ -188,7 +188,7 @@ mod tests {
     #[test]
     fn try_from_str_invalid_character() {
         assert_eq!(
-            try_from_str([
+            try_board_from_str([
                 "a23456789",
                 "234567891",
                 "345678912",
@@ -202,7 +202,7 @@ mod tests {
             Err(FromStringErr::InvalidCharacter(InvalidCharacterErr))
         );
         assert_eq!(
-            try_from_str([
+            try_board_from_str([
                 "123456789",
                 "234567891",
                 "345678912",
@@ -220,7 +220,7 @@ mod tests {
     #[test]
     fn try_from_str_invalid_line_characters_length() {
         assert_eq!(
-            try_from_str([
+            try_board_from_str([
                 "23456789",
                 "234567891",
                 "345678912",
@@ -234,7 +234,7 @@ mod tests {
             Err(FromStringErr::InvalidLength(InvalidLengthErr))
         );
         assert_eq!(
-            try_from_str([
+            try_board_from_str([
                 "123456789",
                 "234567891",
                 "345678912",
@@ -250,9 +250,9 @@ mod tests {
     }
 
     #[test]
-    fn test_to_string() {
+    fn to_string() {
         assert_eq!(
-            to_string(&from_str([
+            board_to_string(&board_from_str([
                 " 23456789",
                 "1 3456789",
                 "12 456789",
@@ -277,7 +277,7 @@ mod tests {
 
     #[test]
     fn test_get_col() {
-        let board = from_str([
+        let board = board_from_str([
             " 23456789",
             "1 3456789",
             "12 456789",
@@ -301,7 +301,7 @@ mod tests {
 
     #[test]
     fn test_get_row() {
-        let board = from_str([
+        let board = board_from_str([
             " 11111111",
             "2 2222222",
             "33 333333",
@@ -325,7 +325,7 @@ mod tests {
 
     #[test]
     fn test_get_sq() {
-        let board = from_str([
+        let board = board_from_str([
             " 112 233 ",
             "111222333",
             "111222333",
@@ -349,7 +349,7 @@ mod tests {
 
     #[test]
     fn test_get_cell() {
-        let board = from_str([
+        let board = board_from_str([
             " 23456789",
             "1 3456789",
             "12 456789",

@@ -31,7 +31,7 @@ pub enum FromStringErr {
     InvalidLength(InvalidLengthErr),
 }
 
-pub fn try_from_str(rows: [&str; 9]) -> Result<SolvedBoard, FromStringErr> {
+pub fn try_solved_board_from_str(rows: [&str; 9]) -> Result<SolvedBoard, FromStringErr> {
     for line in rows {
         if line.chars().count() != 9 {
             return Err(FromStringErr::InvalidLength(InvalidLengthErr));
@@ -68,11 +68,11 @@ pub fn try_from_str(rows: [&str; 9]) -> Result<SolvedBoard, FromStringErr> {
     }
 }
 
-pub fn from_str(rows: [&str; 9]) -> SolvedBoard {
-    try_from_str(rows).unwrap()
+pub fn solved_board_from_str(rows: [&str; 9]) -> SolvedBoard {
+    try_solved_board_from_str(rows).unwrap()
 }
 
-pub fn to_string(board: &SolvedBoard) -> String {
+pub fn solved_board_to_string(board: &SolvedBoard) -> String {
     let mut res = String::from("");
     for row in board {
         for col in row {
@@ -86,14 +86,14 @@ pub fn to_string(board: &SolvedBoard) -> String {
 #[cfg(test)]
 mod tests {
     use super::{
-        from_str,
+        solved_board_from_str,
         //get_cell,
         //get_col,
         //get_row,
         //get_sq,
         //get_sq_idx,
-        to_string,
-        try_from_str,
+        solved_board_to_string,
+        try_solved_board_from_str,
         InvalidCharacterErr,
         InvalidLengthErr,
         FromStringErr
@@ -113,7 +113,7 @@ mod tests {
     #[test]
     fn try_from_str_ok() {
         assert_eq!(
-            try_from_str([
+            try_solved_board_from_str([
                 "123456789",
                 "234567891",
                 "345678912",
@@ -141,7 +141,7 @@ mod tests {
     #[test]
     fn try_from_str_invalid_character() {
         assert_eq!(
-            try_from_str([
+            try_solved_board_from_str([
                 "a23456789",
                 "234567891",
                 "345678912",
@@ -155,7 +155,7 @@ mod tests {
             Err(FromStringErr::InvalidCharacter(InvalidCharacterErr))
         );
         assert_eq!(
-            try_from_str([
+            try_solved_board_from_str([
                 "123456789",
                 "234567891",
                 "345678912",
@@ -173,7 +173,7 @@ mod tests {
     #[test]
     fn try_from_str_invalid_line_characters_length() {
         assert_eq!(
-            try_from_str([
+            try_solved_board_from_str([
                 "23456789",
                 "234567891",
                 "345678912",
@@ -187,7 +187,7 @@ mod tests {
             Err(FromStringErr::InvalidLength(InvalidLengthErr))
         );
         assert_eq!(
-            try_from_str([
+            try_solved_board_from_str([
                 "123456789",
                 "234567891",
                 "345678912",
@@ -205,7 +205,7 @@ mod tests {
     #[test]
     fn test_to_string() {
         assert_eq!(
-            to_string(&from_str([
+            solved_board_to_string(&solved_board_from_str([
                 "123456789",
                 "234567891",
                 "345678912",
