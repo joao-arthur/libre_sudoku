@@ -1,4 +1,5 @@
 mod mirror_horizontal;
+mod mirror_vertical;
 mod rotate_180;
 mod rotate_270;
 mod rotate_90;
