@@ -141,9 +141,8 @@ pub fn get_sq_idx(row: &Cell, col: &Cell) -> Cell {
 #[cfg(test)]
 mod tests {
     use super::{
-        FromStringErr,
-        InvalidCharacterErr,InvalidLengthErr,
-        board_from_str, get_cell, get_col, get_row, get_sq, get_sq_idx, board_to_string, try_board_from_str,
+        FromStringErr, InvalidCharacterErr, InvalidLengthErr, board_from_str, board_to_string,
+        get_cell, get_col, get_row, get_sq, get_sq_idx, try_board_from_str,
     };
     use crate::{cell::Cell, group::group_from_str};
 

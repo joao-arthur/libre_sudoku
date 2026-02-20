@@ -59,8 +59,8 @@ fn generate() -> Board {
 
 #[cfg(test)]
 mod tests {
-    use crate::{cell::Cell, solved_board::solved_board_from_str};
     use super::{generate_board_latin_square, generate_row_0};
+    use crate::{cell::Cell, solved_board::solved_board_from_str};
 
     #[test]
     fn test_generate_row_0() {

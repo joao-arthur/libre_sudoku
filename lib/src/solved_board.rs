@@ -63,7 +63,7 @@ pub fn try_solved_board_from_str(rows: [&str; 9]) -> Result<SolvedBoard, FromStr
             solved_group_from_str(rows.get_unchecked(5)),
             solved_group_from_str(rows.get_unchecked(6)),
             solved_group_from_str(rows.get_unchecked(7)),
-            solved_group_from_str(rows.get_unchecked(8))
+            solved_group_from_str(rows.get_unchecked(8)),
         ]);
     }
 }
@@ -86,6 +86,9 @@ pub fn solved_board_to_string(board: &SolvedBoard) -> String {
 #[cfg(test)]
 mod tests {
     use super::{
+        FromStringErr,
+        InvalidCharacterErr,
+        InvalidLengthErr,
         solved_board_from_str,
         //get_cell,
         //get_col,
@@ -94,9 +97,6 @@ mod tests {
         //get_sq_idx,
         solved_board_to_string,
         try_solved_board_from_str,
-        InvalidCharacterErr,
-        InvalidLengthErr,
-        FromStringErr
     };
     use crate::{cell::Cell, solved_group::solved_group_from_str};
 

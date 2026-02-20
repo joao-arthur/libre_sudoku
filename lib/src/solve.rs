@@ -35,7 +35,7 @@ fn solve(b: &mut Board) {
 #[cfg(test)]
 mod tests {
     use super::solve;
-    use crate::board::{board_to_string, board_from_str};
+    use crate::board::{board_from_str, board_to_string};
 
     #[test]
     fn test_solve_last_empty_in_group() {

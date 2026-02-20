@@ -1,4 +1,4 @@
-use crate::{board::{Board, get_col, get_row}, cell::Cell};
+use crate::board::Board;
 
 pub fn rotate_180(board: &Board) -> Board {
     unsafe {
@@ -36,7 +36,7 @@ pub fn rotate_180(board: &Board) -> Board {
                 *board.get_unchecked(6).get_unchecked(7),
                 *board.get_unchecked(6).get_unchecked(8),
             ],
-                        [
+            [
                 *board.get_unchecked(5).get_unchecked(0),
                 *board.get_unchecked(5).get_unchecked(1),
                 *board.get_unchecked(5).get_unchecked(2),
@@ -108,8 +108,8 @@ pub fn rotate_180(board: &Board) -> Board {
 
 #[cfg(test)]
 mod tests {
-    use crate::board::board_from_str;
     use super::rotate_180;
+    use crate::board::board_from_str;
 
     #[test]
     fn test_rotate_90() {
