@@ -1,3 +1,5 @@
+use std::ops::{Add, Sub};
+
 #[derive(Debug, PartialEq, Clone, Copy)]
 pub enum Cell {
     _1,
@@ -142,6 +144,22 @@ impl Cell {
             Cell::_8 => "8",
             Cell::_9 => "9",
         }
+    }
+}
+
+impl Add for Cell {
+    type Output = Self;
+
+    fn add(self, rhs: Self) -> Self::Output {
+        Cell::from_u8(((self.to_u8() + 1) + (rhs.to_u8() + 1) - 1) % 9)
+    }
+}
+
+impl Sub for Cell {
+    type Output = Self;
+
+    fn sub(self, rhs: Self) -> Self::Output {
+        Cell::from_u8(((9 + self.to_u8() + 1) - (rhs.to_u8() + 1) - 1) % 9)
     }
 }
 
@@ -309,5 +327,83 @@ mod tests {
         assert_eq!(Cell::_7.to_str(), "7");
         assert_eq!(Cell::_8.to_str(), "8");
         assert_eq!(Cell::_9.to_str(), "9");
+    }
+
+    #[test]
+    fn add_1() {
+        assert_eq!(Cell::_1 + Cell::_1, Cell::_2);
+        assert_eq!(Cell::_2 + Cell::_1, Cell::_3);
+        assert_eq!(Cell::_3 + Cell::_1, Cell::_4);
+        assert_eq!(Cell::_4 + Cell::_1, Cell::_5);
+        assert_eq!(Cell::_5 + Cell::_1, Cell::_6);
+        assert_eq!(Cell::_6 + Cell::_1, Cell::_7);
+        assert_eq!(Cell::_7 + Cell::_1, Cell::_8);
+        assert_eq!(Cell::_8 + Cell::_1, Cell::_9);
+        assert_eq!(Cell::_9 + Cell::_1, Cell::_1);
+    }
+
+    #[test]
+    fn add_5() {
+        assert_eq!(Cell::_1 + Cell::_5, Cell::_6);
+        assert_eq!(Cell::_2 + Cell::_5, Cell::_7);
+        assert_eq!(Cell::_3 + Cell::_5, Cell::_8);
+        assert_eq!(Cell::_4 + Cell::_5, Cell::_9);
+        assert_eq!(Cell::_5 + Cell::_5, Cell::_1);
+        assert_eq!(Cell::_6 + Cell::_5, Cell::_2);
+        assert_eq!(Cell::_7 + Cell::_5, Cell::_3);
+        assert_eq!(Cell::_8 + Cell::_5, Cell::_4);
+        assert_eq!(Cell::_9 + Cell::_5, Cell::_5);
+    }
+
+    #[test]
+    fn add_9() {
+        assert_eq!(Cell::_1 + Cell::_9, Cell::_1);
+        assert_eq!(Cell::_2 + Cell::_9, Cell::_2);
+        assert_eq!(Cell::_3 + Cell::_9, Cell::_3);
+        assert_eq!(Cell::_4 + Cell::_9, Cell::_4);
+        assert_eq!(Cell::_5 + Cell::_9, Cell::_5);
+        assert_eq!(Cell::_6 + Cell::_9, Cell::_6);
+        assert_eq!(Cell::_7 + Cell::_9, Cell::_7);
+        assert_eq!(Cell::_8 + Cell::_9, Cell::_8);
+        assert_eq!(Cell::_9 + Cell::_9, Cell::_9);
+    }
+
+    #[test]
+    fn sub_1() {
+        assert_eq!(Cell::_1 - Cell::_1, Cell::_9);
+        assert_eq!(Cell::_2 - Cell::_1, Cell::_1);
+        assert_eq!(Cell::_3 - Cell::_1, Cell::_2);
+        assert_eq!(Cell::_4 - Cell::_1, Cell::_3);
+        assert_eq!(Cell::_5 - Cell::_1, Cell::_4);
+        assert_eq!(Cell::_6 - Cell::_1, Cell::_5);
+        assert_eq!(Cell::_7 - Cell::_1, Cell::_6);
+        assert_eq!(Cell::_8 - Cell::_1, Cell::_7);
+        assert_eq!(Cell::_9 - Cell::_1, Cell::_8);
+    }
+
+    #[test]
+    fn sub_5() {
+        assert_eq!(Cell::_1 - Cell::_5, Cell::_5);
+        assert_eq!(Cell::_2 - Cell::_5, Cell::_6);
+        assert_eq!(Cell::_3 - Cell::_5, Cell::_7);
+        assert_eq!(Cell::_4 - Cell::_5, Cell::_8);
+        assert_eq!(Cell::_5 - Cell::_5, Cell::_9);
+        assert_eq!(Cell::_6 - Cell::_5, Cell::_1);
+        assert_eq!(Cell::_7 - Cell::_5, Cell::_2);
+        assert_eq!(Cell::_8 - Cell::_5, Cell::_3);
+        assert_eq!(Cell::_9 - Cell::_5, Cell::_4);
+    }
+
+    #[test]
+    fn sub_9() {
+        assert_eq!(Cell::_1 - Cell::_9, Cell::_1);
+        assert_eq!(Cell::_2 - Cell::_9, Cell::_2);
+        assert_eq!(Cell::_3 - Cell::_9, Cell::_3);
+        assert_eq!(Cell::_4 - Cell::_9, Cell::_4);
+        assert_eq!(Cell::_5 - Cell::_9, Cell::_5);
+        assert_eq!(Cell::_6 - Cell::_9, Cell::_6);
+        assert_eq!(Cell::_7 - Cell::_9, Cell::_7);
+        assert_eq!(Cell::_8 - Cell::_9, Cell::_8);
+        assert_eq!(Cell::_9 - Cell::_9, Cell::_9);
     }
 }
