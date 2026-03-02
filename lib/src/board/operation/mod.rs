@@ -1,9 +1,12 @@
 mod mirror_horizontal;
 mod mirror_vertical;
 mod offset;
+mod permute_group_col_1_2;
+mod permute_group_col_1_3;
+mod permute_group_col_2_3;
+mod permute_group_row_1_2;
+mod permute_group_row_1_3;
+mod permute_group_row_2_3;
 mod rotate_180;
 mod rotate_270;
 mod rotate_90;
-mod permute_group_row_1_3;
-mod permute_group_row_1_2;
-mod permute_group_row_2_3;
