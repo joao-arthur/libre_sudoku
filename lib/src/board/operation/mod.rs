@@ -4,8 +4,6 @@ mod offset;
 mod rotate_180;
 mod rotate_270;
 mod rotate_90;
-
-//mod shake_group_rows;
-//mod shake_group_cols;
-//mod shake_board_group_rows;
-//mod shake_board_group_cols;
+mod permute_group_row_1_3;
+mod permute_group_row_1_2;
+mod permute_group_row_2_3;
