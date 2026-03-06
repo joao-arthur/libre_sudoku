@@ -1,2 +1,2 @@
-mod logical;
 mod brute_force;
+mod logical;

@@ -4,27 +4,24 @@ use crate::{
     strategy::strategy_last_empty_in_group,
 };
 
-fn solve(b: &mut Board) {
+fn logical_solve(board: &mut Board) {
     for row_i in 0..9 {
         for col_i in 0..9 {
             if let Some(row_cell) = Cell::try_from_usize(row_i)
                 && let Some(col_cell) = Cell::try_from_usize(col_i)
-                && board::get_cell(b, &row_cell, &col_cell).is_none()
+                && board::get_cell(board, &row_cell, &col_cell).is_none()
             {
-                let row = board::get_row(b, &row_cell);
-                let col = board::get_col(b, &col_cell);
-                let sq = board::get_sq(b, &board::get_sq_idx(&row_cell, &col_cell));
-                let opt_col = strategy_last_empty_in_group(&col);
-                let opt_row = strategy_last_empty_in_group(&row);
-                let opt_sq = strategy_last_empty_in_group(&sq);
-                if let Some(opt_col) = opt_col {
-                    b[row_i][col_i] = Some(opt_col);
+                let row = board::get_row(board, &row_cell);
+                let col = board::get_col(board, &col_cell);
+                let sq = board::get_sq(board, &board::get_sq_idx(&row_cell, &col_cell));
+                if let Some(opt_col) = strategy_last_empty_in_group(&col) {
+                    board[row_i][col_i] = Some(opt_col);
                 }
-                if let Some(opt_row) = opt_row {
-                    b[row_i][col_i] = Some(opt_row);
+                if let Some(opt_row) = strategy_last_empty_in_group(&row) {
+                    board[row_i][col_i] = Some(opt_row);
                 }
-                if let Some(opt_sq) = opt_sq {
-                    b[row_i][col_i] = Some(opt_sq);
+                if let Some(opt_sq) = strategy_last_empty_in_group(&sq) {
+                    board[row_i][col_i] = Some(opt_sq);
                 }
             }
         }
@@ -34,7 +31,7 @@ fn solve(b: &mut Board) {
 
 #[cfg(test)]
 mod tests {
-    use super::solve;
+    use super::logical_solve;
     use crate::board::{board_from_str, board_to_string};
 
     #[test]
@@ -61,7 +58,7 @@ mod tests {
             "731682594",
             "528934167",
         ]);
-        solve(&mut b);
+        logical_solve(&mut b);
         assert_eq!(board_to_string(&b), board_to_string(&solution));
     }
 }
