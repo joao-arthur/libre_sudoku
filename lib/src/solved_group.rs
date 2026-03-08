@@ -2,7 +2,7 @@ use crate::cell::Cell;
 
 pub type SolvedGroup = [Cell; 9];
 
-pub fn try_solved_group_from_str(row: &str) -> Option<SolvedGroup> {
+pub fn try_from_str(row: &str) -> Option<SolvedGroup> {
     let mut chars = row.chars();
     Some([
         chars.next().and_then(|c| Cell::try_from_char(&c))?,
@@ -17,11 +17,11 @@ pub fn try_solved_group_from_str(row: &str) -> Option<SolvedGroup> {
     ])
 }
 
-pub fn solved_group_from_str(row: &str) -> SolvedGroup {
-    try_solved_group_from_str(row).unwrap()
+pub fn from_str(row: &str) -> SolvedGroup {
+    try_from_str(row).unwrap()
 }
 
-pub fn solved_group_to_string(group: &SolvedGroup) -> String {
+pub fn to_string(group: &SolvedGroup) -> String {
     let mut res = String::from("");
     for col in group {
         res.push_str(col.to_str())
@@ -31,32 +31,32 @@ pub fn solved_group_to_string(group: &SolvedGroup) -> String {
 
 #[cfg(test)]
 mod tests {
-    use super::{solved_group_from_str, solved_group_to_string, try_solved_group_from_str};
+    use super::{from_str, to_string, try_from_str};
     use crate::cell::Cell;
 
     #[test]
     fn try_from_empty_str() {
-        assert_eq!(try_solved_group_from_str(""), None);
-        assert_eq!(try_solved_group_from_str("         "), None);
+        assert_eq!(try_from_str(""), None);
+        assert_eq!(try_from_str("         "), None);
     }
 
     #[test]
     fn try_from_missing_parts() {
-        assert_eq!(try_solved_group_from_str(" 11111111"), None);
-        assert_eq!(try_solved_group_from_str("2 2222222"), None);
-        assert_eq!(try_solved_group_from_str("33 333333"), None);
-        assert_eq!(try_solved_group_from_str("444 44444"), None);
-        assert_eq!(try_solved_group_from_str("5555 5555"), None);
-        assert_eq!(try_solved_group_from_str("66666 666"), None);
-        assert_eq!(try_solved_group_from_str("777777 77"), None);
-        assert_eq!(try_solved_group_from_str("8888888 8"), None);
-        assert_eq!(try_solved_group_from_str("99999999 "), None);
+        assert_eq!(try_from_str(" 11111111"), None);
+        assert_eq!(try_from_str("2 2222222"), None);
+        assert_eq!(try_from_str("33 333333"), None);
+        assert_eq!(try_from_str("444 44444"), None);
+        assert_eq!(try_from_str("5555 5555"), None);
+        assert_eq!(try_from_str("66666 666"), None);
+        assert_eq!(try_from_str("777777 77"), None);
+        assert_eq!(try_from_str("8888888 8"), None);
+        assert_eq!(try_from_str("99999999 "), None);
     }
 
     #[test]
-    fn try_from_str_full_str() {
+    fn try_from_full_str() {
         assert_eq!(
-            try_solved_group_from_str("123456789"),
+            try_from_str("123456789"),
             Some([
                 Cell::_1,
                 Cell::_2,
@@ -70,7 +70,7 @@ mod tests {
             ])
         );
         assert_eq!(
-            try_solved_group_from_str("444444444"),
+            try_from_str("444444444"),
             Some([
                 Cell::_4,
                 Cell::_4,
@@ -86,9 +86,9 @@ mod tests {
     }
 
     #[test]
-    fn from_str_full_str() {
+    fn from_full_str() {
         assert_eq!(
-            solved_group_from_str("123456789"),
+            from_str("123456789"),
             [
                 Cell::_1,
                 Cell::_2,
@@ -102,7 +102,7 @@ mod tests {
             ]
         );
         assert_eq!(
-            solved_group_from_str("444444444"),
+            from_str("444444444"),
             [
                 Cell::_4,
                 Cell::_4,
@@ -118,8 +118,8 @@ mod tests {
     }
 
     #[test]
-    fn to_string() {
-        assert_eq!(solved_group_to_string(&solved_group_from_str("123456789")), "123456789");
-        assert_eq!(solved_group_to_string(&solved_group_from_str("111111111")), "111111111");
+    fn test_to_string() {
+        assert_eq!(to_string(&from_str("123456789")), "123456789");
+        assert_eq!(to_string(&from_str("111111111")), "111111111");
     }
 }

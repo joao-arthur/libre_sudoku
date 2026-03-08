@@ -1,10 +1,4 @@
-use std::collections::LinkedList;
-
-use crate::{
-    board::{Board, get_col, get_row, get_sq, get_sq_idx},
-    cell::Cell,
-    strategy::strategy_last_empty_in_group,
-};
+use crate::{board::Board, cell::Cell};
 
 const CELLS: [Cell; 9] =
     [Cell::_1, Cell::_2, Cell::_3, Cell::_4, Cell::_5, Cell::_6, Cell::_7, Cell::_8, Cell::_9];
@@ -96,11 +90,11 @@ fn can_place(board: &Board, guess: Cell, row: usize, col: usize) -> bool {
 #[cfg(test)]
 mod tests {
     use super::brute_force_solve;
-    use crate::board::{board_from_str, board_to_string};
+    use crate::board::{from_str, to_string};
 
     #[test]
     fn test_solve_brute_force() {
-        //        let board = board_from_str([
+        //        let board = from_str([
         //            " 8   5179",
         //            "   2 6 84",
         //            "9 3   6  ",
@@ -111,7 +105,7 @@ mod tests {
         //            "354 1  9 ",
         //            " 96 247  ",
         //        ]);
-        let board = board_from_str([
+        let board = from_str([
             " 8   5179",
             "   2 6 84",
             "9 3   6  ",
@@ -122,7 +116,7 @@ mod tests {
             "354718296",
             "196524738",
         ]);
-        let solution = board_from_str([
+        let solution = from_str([
             "682435179",
             "715296384",
             "943871625",
@@ -133,9 +127,6 @@ mod tests {
             "354718296",
             "196524738",
         ]);
-        assert_eq!(
-            board_to_string(&brute_force_solve(&board).unwrap()),
-            board_to_string(&solution)
-        );
+        assert_eq!(to_string(&brute_force_solve(&board).unwrap()), to_string(&solution));
     }
 }

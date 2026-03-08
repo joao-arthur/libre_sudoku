@@ -109,12 +109,12 @@ pub fn mirror_horizontal(board: &Board) -> Board {
 #[cfg(test)]
 mod tests {
     use super::mirror_horizontal;
-    use crate::board::board_from_str;
+    use crate::board::from_str;
 
     #[test]
     fn test_mirror_horizontal() {
         assert_eq!(
-            mirror_horizontal(&board_from_str([
+            mirror_horizontal(&from_str([
                 " 11111111",
                 "2 2222222",
                 "33 333333",
@@ -125,7 +125,7 @@ mod tests {
                 "8888888 8",
                 "99999999 ",
             ])),
-            board_from_str([
+            from_str([
                 "99999999 ",
                 "8888888 8",
                 "777777 77",
@@ -138,7 +138,7 @@ mod tests {
             ]),
         );
         assert_eq!(
-            mirror_horizontal(&board_from_str([
+            mirror_horizontal(&from_str([
                 "111111111",
                 "222222222",
                 "333333333",
@@ -149,7 +149,7 @@ mod tests {
                 "888888888",
                 "999999999",
             ])),
-            board_from_str([
+            from_str([
                 "999999999",
                 "888888888",
                 "777777777",

@@ -109,12 +109,12 @@ pub fn permute_group_col_1_2(board: &Board) -> Board {
 #[cfg(test)]
 mod tests {
     use super::permute_group_col_1_2;
-    use crate::board::board_from_str;
+    use crate::board::from_str;
 
     #[test]
     fn test_permute_group_col_1_2() {
         assert_eq!(
-            permute_group_col_1_2(&board_from_str([
+            permute_group_col_1_2(&from_str([
                 "123456789",
                 "123456789",
                 "123456789",
@@ -125,7 +125,7 @@ mod tests {
                 "123456789",
                 "123456789",
             ])),
-            board_from_str([
+            from_str([
                 "456123789",
                 "456123789",
                 "456123789",

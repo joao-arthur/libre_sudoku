@@ -19,12 +19,12 @@ pub fn permute_group_row_1_3(board: &Board) -> Board {
 #[cfg(test)]
 mod tests {
     use super::permute_group_row_1_3;
-    use crate::board::board_from_str;
+    use crate::board::from_str;
 
     #[test]
     fn test_permute_group_row_1_3() {
         assert_eq!(
-            permute_group_row_1_3(&board_from_str([
+            permute_group_row_1_3(&from_str([
                 "111111111",
                 "222222222",
                 "333333333",
@@ -35,7 +35,7 @@ mod tests {
                 "888888888",
                 "999999999",
             ])),
-            board_from_str([
+            from_str([
                 "777777777",
                 "888888888",
                 "999999999",

@@ -1,6 +1,6 @@
 use crate::{
     cell::Cell,
-    group::{Group, group_from_str},
+    group::{self, Group},
 };
 use std::fmt;
 
@@ -32,7 +32,7 @@ pub enum FromStringErr {
     InvalidLength(InvalidLengthErr),
 }
 
-pub fn try_board_from_str(rows: [&str; 9]) -> Result<Board, FromStringErr> {
+pub fn try_from_str(rows: [&str; 9]) -> Result<Board, FromStringErr> {
     for line in rows {
         if line.chars().count() != 9 {
             return Err(FromStringErr::InvalidLength(InvalidLengthErr));
@@ -57,24 +57,24 @@ pub fn try_board_from_str(rows: [&str; 9]) -> Result<Board, FromStringErr> {
     }
     unsafe {
         Ok([
-            group_from_str(rows.get_unchecked(0)),
-            group_from_str(rows.get_unchecked(1)),
-            group_from_str(rows.get_unchecked(2)),
-            group_from_str(rows.get_unchecked(3)),
-            group_from_str(rows.get_unchecked(4)),
-            group_from_str(rows.get_unchecked(5)),
-            group_from_str(rows.get_unchecked(6)),
-            group_from_str(rows.get_unchecked(7)),
-            group_from_str(rows.get_unchecked(8)),
+            group::from_str(rows.get_unchecked(0)),
+            group::from_str(rows.get_unchecked(1)),
+            group::from_str(rows.get_unchecked(2)),
+            group::from_str(rows.get_unchecked(3)),
+            group::from_str(rows.get_unchecked(4)),
+            group::from_str(rows.get_unchecked(5)),
+            group::from_str(rows.get_unchecked(6)),
+            group::from_str(rows.get_unchecked(7)),
+            group::from_str(rows.get_unchecked(8)),
         ])
     }
 }
 
-pub fn board_from_str(rows: [&str; 9]) -> Board {
-    try_board_from_str(rows).unwrap()
+pub fn from_str(rows: [&str; 9]) -> Board {
+    try_from_str(rows).unwrap()
 }
 
-pub fn board_to_string(board: &Board) -> String {
+pub fn to_string(board: &Board) -> String {
     let mut res = String::from("");
     for row in board {
         for col in row {
@@ -86,6 +86,10 @@ pub fn board_to_string(board: &Board) -> String {
         res.push('\n')
     }
     res
+}
+
+pub fn get_row(board: &Board, cell: &Cell) -> Group {
+    unsafe { *board.get_unchecked(cell.to_usize()) }
 }
 
 pub fn get_col(board: &Board, cell: &Cell) -> Group {
@@ -105,8 +109,10 @@ pub fn get_col(board: &Board, cell: &Cell) -> Group {
     }
 }
 
-pub fn get_row(board: &Board, cell: &Cell) -> Group {
-    unsafe { *board.get_unchecked(cell.to_usize()) }
+pub fn get_sq_idx(row: &Cell, col: &Cell) -> Cell {
+    let row_i = row.to_u8() / 3;
+    let col_i = col.to_u8() / 3;
+    Cell::from_u8(row_i * 3 + col_i)
 }
 
 pub fn get_sq(board: &Board, cell: &Cell) -> Group {
@@ -132,19 +138,13 @@ pub fn get_cell(board: &Board, row: &Cell, col: &Cell) -> Option<Cell> {
     unsafe { *board.get_unchecked(row.to_usize()).get_unchecked(col.to_usize()) }
 }
 
-pub fn get_sq_idx(row: &Cell, col: &Cell) -> Cell {
-    let row_i = row.to_u8() / 3;
-    let col_i = col.to_u8() / 3;
-    Cell::from_u8(row_i * 3 + col_i)
-}
-
 #[cfg(test)]
 mod tests {
     use super::{
-        FromStringErr, InvalidCharacterErr, InvalidLengthErr, board_from_str, board_to_string,
-        get_cell, get_col, get_row, get_sq, get_sq_idx, try_board_from_str,
+        FromStringErr, InvalidCharacterErr, InvalidLengthErr, from_str, get_cell, get_col, get_row,
+        get_sq, get_sq_idx, to_string, try_from_str,
     };
-    use crate::{cell::Cell, group::group_from_str};
+    use crate::{cell::Cell, group};
 
     #[test]
     fn invalid_character_err() {
@@ -159,7 +159,7 @@ mod tests {
     #[test]
     fn try_from_str_ok() {
         assert_eq!(
-            try_board_from_str([
+            try_from_str([
                 " 23456789",
                 "1 3456789",
                 "12 456789",
@@ -171,15 +171,15 @@ mod tests {
                 "12345678 ",
             ]),
             Ok([
-                group_from_str(" 23456789"),
-                group_from_str("1 3456789"),
-                group_from_str("12 456789"),
-                group_from_str("123 56789"),
-                group_from_str("1234 6789"),
-                group_from_str("12345 789"),
-                group_from_str("123456 89"),
-                group_from_str("1234567 9"),
-                group_from_str("12345678 "),
+                group::from_str(" 23456789"),
+                group::from_str("1 3456789"),
+                group::from_str("12 456789"),
+                group::from_str("123 56789"),
+                group::from_str("1234 6789"),
+                group::from_str("12345 789"),
+                group::from_str("123456 89"),
+                group::from_str("1234567 9"),
+                group::from_str("12345678 "),
             ])
         );
     }
@@ -187,7 +187,7 @@ mod tests {
     #[test]
     fn try_from_str_invalid_character() {
         assert_eq!(
-            try_board_from_str([
+            try_from_str([
                 "a23456789",
                 "234567891",
                 "345678912",
@@ -201,7 +201,7 @@ mod tests {
             Err(FromStringErr::InvalidCharacter(InvalidCharacterErr))
         );
         assert_eq!(
-            try_board_from_str([
+            try_from_str([
                 "123456789",
                 "234567891",
                 "345678912",
@@ -219,7 +219,7 @@ mod tests {
     #[test]
     fn try_from_str_invalid_line_characters_length() {
         assert_eq!(
-            try_board_from_str([
+            try_from_str([
                 "23456789",
                 "234567891",
                 "345678912",
@@ -233,7 +233,7 @@ mod tests {
             Err(FromStringErr::InvalidLength(InvalidLengthErr))
         );
         assert_eq!(
-            try_board_from_str([
+            try_from_str([
                 "123456789",
                 "234567891",
                 "345678912",
@@ -249,9 +249,9 @@ mod tests {
     }
 
     #[test]
-    fn to_string() {
+    fn test_to_string() {
         assert_eq!(
-            board_to_string(&board_from_str([
+            to_string(&from_str([
                 " 23456789",
                 "1 3456789",
                 "12 456789",
@@ -275,32 +275,8 @@ mod tests {
     }
 
     #[test]
-    fn test_get_col() {
-        let board = board_from_str([
-            " 23456789",
-            "1 3456789",
-            "12 456789",
-            "123 56789",
-            "1234 6789",
-            "12345 789",
-            "123456 89",
-            "1234567 9",
-            "12345678 ",
-        ]);
-        assert_eq!(get_col(&board, &Cell::_1), group_from_str(" 11111111"));
-        assert_eq!(get_col(&board, &Cell::_2), group_from_str("2 2222222"));
-        assert_eq!(get_col(&board, &Cell::_3), group_from_str("33 333333"));
-        assert_eq!(get_col(&board, &Cell::_4), group_from_str("444 44444"));
-        assert_eq!(get_col(&board, &Cell::_5), group_from_str("5555 5555"));
-        assert_eq!(get_col(&board, &Cell::_6), group_from_str("66666 666"));
-        assert_eq!(get_col(&board, &Cell::_7), group_from_str("777777 77"));
-        assert_eq!(get_col(&board, &Cell::_8), group_from_str("8888888 8"));
-        assert_eq!(get_col(&board, &Cell::_9), group_from_str("99999999 "));
-    }
-
-    #[test]
     fn test_get_row() {
-        let board = board_from_str([
+        let board = from_str([
             " 11111111",
             "2 2222222",
             "33 333333",
@@ -311,44 +287,20 @@ mod tests {
             "8888888 8",
             "99999999 ",
         ]);
-        assert_eq!(get_row(&board, &Cell::_1), group_from_str(" 11111111"));
-        assert_eq!(get_row(&board, &Cell::_2), group_from_str("2 2222222"));
-        assert_eq!(get_row(&board, &Cell::_3), group_from_str("33 333333"));
-        assert_eq!(get_row(&board, &Cell::_4), group_from_str("444 44444"));
-        assert_eq!(get_row(&board, &Cell::_5), group_from_str("5555 5555"));
-        assert_eq!(get_row(&board, &Cell::_6), group_from_str("66666 666"));
-        assert_eq!(get_row(&board, &Cell::_7), group_from_str("777777 77"));
-        assert_eq!(get_row(&board, &Cell::_8), group_from_str("8888888 8"));
-        assert_eq!(get_row(&board, &Cell::_9), group_from_str("99999999 "));
+        assert_eq!(get_row(&board, &Cell::_1), group::from_str(" 11111111"));
+        assert_eq!(get_row(&board, &Cell::_2), group::from_str("2 2222222"));
+        assert_eq!(get_row(&board, &Cell::_3), group::from_str("33 333333"));
+        assert_eq!(get_row(&board, &Cell::_4), group::from_str("444 44444"));
+        assert_eq!(get_row(&board, &Cell::_5), group::from_str("5555 5555"));
+        assert_eq!(get_row(&board, &Cell::_6), group::from_str("66666 666"));
+        assert_eq!(get_row(&board, &Cell::_7), group::from_str("777777 77"));
+        assert_eq!(get_row(&board, &Cell::_8), group::from_str("8888888 8"));
+        assert_eq!(get_row(&board, &Cell::_9), group::from_str("99999999 "));
     }
 
     #[test]
-    fn test_get_sq() {
-        let board = board_from_str([
-            " 112 233 ",
-            "111222333",
-            "111222333",
-            "444555666",
-            " 445 566 ",
-            "444555666",
-            "777888999",
-            "777888999",
-            " 778 899 ",
-        ]);
-        assert_eq!(get_sq(&board, &Cell::_1), group_from_str(" 11111111"));
-        assert_eq!(get_sq(&board, &Cell::_2), group_from_str("2 2222222"));
-        assert_eq!(get_sq(&board, &Cell::_3), group_from_str("33 333333"));
-        assert_eq!(get_sq(&board, &Cell::_4), group_from_str("444 44444"));
-        assert_eq!(get_sq(&board, &Cell::_5), group_from_str("5555 5555"));
-        assert_eq!(get_sq(&board, &Cell::_6), group_from_str("66666 666"));
-        assert_eq!(get_sq(&board, &Cell::_7), group_from_str("777777 77"));
-        assert_eq!(get_sq(&board, &Cell::_8), group_from_str("8888888 8"));
-        assert_eq!(get_sq(&board, &Cell::_9), group_from_str("99999999 "));
-    }
-
-    #[test]
-    fn test_get_cell() {
-        let board = board_from_str([
+    fn test_get_col() {
+        let board = from_str([
             " 23456789",
             "1 3456789",
             "12 456789",
@@ -359,17 +311,15 @@ mod tests {
             "1234567 9",
             "12345678 ",
         ]);
-        assert_eq!(get_cell(&board, &Cell::_1, &Cell::_1), None);
-        assert_eq!(get_cell(&board, &Cell::_2, &Cell::_2), None);
-        assert_eq!(get_cell(&board, &Cell::_3, &Cell::_3), None);
-
-        assert_eq!(get_cell(&board, &Cell::_1, &Cell::_2), Some(Cell::_2));
-        assert_eq!(get_cell(&board, &Cell::_1, &Cell::_3), Some(Cell::_3));
-        assert_eq!(get_cell(&board, &Cell::_1, &Cell::_4), Some(Cell::_4));
-
-        assert_eq!(get_cell(&board, &Cell::_9, &Cell::_6), Some(Cell::_6));
-        assert_eq!(get_cell(&board, &Cell::_9, &Cell::_7), Some(Cell::_7));
-        assert_eq!(get_cell(&board, &Cell::_9, &Cell::_8), Some(Cell::_8));
+        assert_eq!(get_col(&board, &Cell::_1), group::from_str(" 11111111"));
+        assert_eq!(get_col(&board, &Cell::_2), group::from_str("2 2222222"));
+        assert_eq!(get_col(&board, &Cell::_3), group::from_str("33 333333"));
+        assert_eq!(get_col(&board, &Cell::_4), group::from_str("444 44444"));
+        assert_eq!(get_col(&board, &Cell::_5), group::from_str("5555 5555"));
+        assert_eq!(get_col(&board, &Cell::_6), group::from_str("66666 666"));
+        assert_eq!(get_col(&board, &Cell::_7), group::from_str("777777 77"));
+        assert_eq!(get_col(&board, &Cell::_8), group::from_str("8888888 8"));
+        assert_eq!(get_col(&board, &Cell::_9), group::from_str("99999999 "));
     }
 
     #[test]
@@ -401,5 +351,55 @@ mod tests {
         assert_eq!(get_sq_idx(&Cell::_4, &Cell::_4), Cell::_5);
         assert_eq!(get_sq_idx(&Cell::_5, &Cell::_5), Cell::_5);
         assert_eq!(get_sq_idx(&Cell::_6, &Cell::_6), Cell::_5);
+    }
+
+    #[test]
+    fn test_get_sq() {
+        let board = from_str([
+            " 112 233 ",
+            "111222333",
+            "111222333",
+            "444555666",
+            " 445 566 ",
+            "444555666",
+            "777888999",
+            "777888999",
+            " 778 899 ",
+        ]);
+        assert_eq!(get_sq(&board, &Cell::_1), group::from_str(" 11111111"));
+        assert_eq!(get_sq(&board, &Cell::_2), group::from_str("2 2222222"));
+        assert_eq!(get_sq(&board, &Cell::_3), group::from_str("33 333333"));
+        assert_eq!(get_sq(&board, &Cell::_4), group::from_str("444 44444"));
+        assert_eq!(get_sq(&board, &Cell::_5), group::from_str("5555 5555"));
+        assert_eq!(get_sq(&board, &Cell::_6), group::from_str("66666 666"));
+        assert_eq!(get_sq(&board, &Cell::_7), group::from_str("777777 77"));
+        assert_eq!(get_sq(&board, &Cell::_8), group::from_str("8888888 8"));
+        assert_eq!(get_sq(&board, &Cell::_9), group::from_str("99999999 "));
+    }
+
+    #[test]
+    fn test_get_cell() {
+        let board = from_str([
+            " 23456789",
+            "1 3456789",
+            "12 456789",
+            "123 56789",
+            "1234 6789",
+            "12345 789",
+            "123456 89",
+            "1234567 9",
+            "12345678 ",
+        ]);
+        assert_eq!(get_cell(&board, &Cell::_1, &Cell::_1), None);
+        assert_eq!(get_cell(&board, &Cell::_2, &Cell::_2), None);
+        assert_eq!(get_cell(&board, &Cell::_3, &Cell::_3), None);
+
+        assert_eq!(get_cell(&board, &Cell::_1, &Cell::_2), Some(Cell::_2));
+        assert_eq!(get_cell(&board, &Cell::_1, &Cell::_3), Some(Cell::_3));
+        assert_eq!(get_cell(&board, &Cell::_1, &Cell::_4), Some(Cell::_4));
+
+        assert_eq!(get_cell(&board, &Cell::_9, &Cell::_6), Some(Cell::_6));
+        assert_eq!(get_cell(&board, &Cell::_9, &Cell::_7), Some(Cell::_7));
+        assert_eq!(get_cell(&board, &Cell::_9, &Cell::_8), Some(Cell::_8));
     }
 }

@@ -109,12 +109,12 @@ pub fn rotate_180(board: &Board) -> Board {
 #[cfg(test)]
 mod tests {
     use super::rotate_180;
-    use crate::board::board_from_str;
+    use crate::board::from_str;
 
     #[test]
     fn test_rotate_180() {
         assert_eq!(
-            rotate_180(&board_from_str([
+            rotate_180(&from_str([
                 " 11111111",
                 "2 2222222",
                 "33 333333",
@@ -125,7 +125,7 @@ mod tests {
                 "8888888 8",
                 "99999999 ",
             ])),
-            board_from_str([
+            from_str([
                 " 99999999",
                 "8 8888888",
                 "77 777777",
@@ -138,7 +138,7 @@ mod tests {
             ]),
         );
         assert_eq!(
-            rotate_180(&board_from_str([
+            rotate_180(&from_str([
                 "123456789",
                 "123456789",
                 "123456789",
@@ -149,7 +149,7 @@ mod tests {
                 "123456789",
                 "123456789",
             ])),
-            board_from_str([
+            from_str([
                 "987654321",
                 "987654321",
                 "987654321",

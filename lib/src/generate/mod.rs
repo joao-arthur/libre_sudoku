@@ -60,7 +60,7 @@ fn generate() -> Board {
 #[cfg(test)]
 mod tests {
     use super::{generate_board_latin_square, generate_row_0};
-    use crate::{cell::Cell, solved_board::solved_board_from_str};
+    use crate::{cell::Cell, solved_board};
 
     #[test]
     fn test_generate_row_0() {
@@ -94,7 +94,7 @@ mod tests {
                 Cell::_4,
                 Cell::_5
             ]),
-            solved_board_from_str([
+            solved_board::from_str([
                 "918273645",
                 "273645918",
                 "645918273",

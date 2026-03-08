@@ -109,12 +109,12 @@ pub fn offset_group_col_1(board: &Board) -> Board {
 #[cfg(test)]
 mod tests {
     use super::offset_group_col_1;
-    use crate::board::board_from_str;
+    use crate::board::from_str;
 
     #[test]
     fn test_offset_group_col_1() {
         assert_eq!(
-            offset_group_col_1(&board_from_str([
+            offset_group_col_1(&from_str([
                 "123456789",
                 "123456789",
                 "123456789",
@@ -125,7 +125,7 @@ mod tests {
                 "123456789",
                 "123456789",
             ])),
-            board_from_str([
+            from_str([
                 "789123456",
                 "789123456",
                 "789123456",

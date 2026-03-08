@@ -109,13 +109,13 @@ pub fn offset(board: &Board, by: &Cell) -> Board {
 #[cfg(test)]
 mod tests {
     use super::offset;
-    use crate::{board::board_from_str, cell::Cell};
+    use crate::{board::from_str, cell::Cell};
 
     #[test]
     fn test_offset() {
         assert_eq!(
             offset(
-                &board_from_str([
+                &from_str([
                     " 11111111",
                     "2 2222222",
                     "33 333333",
@@ -128,7 +128,7 @@ mod tests {
                 ]),
                 &Cell::_1
             ),
-            board_from_str([
+            from_str([
                 " 22222222",
                 "3 3333333",
                 "44 444444",
@@ -142,7 +142,7 @@ mod tests {
         );
         assert_eq!(
             offset(
-                &board_from_str([
+                &from_str([
                     " 11111111",
                     "2 2222222",
                     "33 333333",
@@ -155,7 +155,7 @@ mod tests {
                 ]),
                 &Cell::_5
             ),
-            board_from_str([
+            from_str([
                 " 66666666",
                 "7 7777777",
                 "88 888888",
@@ -169,7 +169,7 @@ mod tests {
         );
         assert_eq!(
             offset(
-                &board_from_str([
+                &from_str([
                     " 11111111",
                     "2 2222222",
                     "33 333333",
@@ -182,7 +182,7 @@ mod tests {
                 ]),
                 &Cell::_9
             ),
-            board_from_str([
+            from_str([
                 " 11111111",
                 "2 2222222",
                 "33 333333",

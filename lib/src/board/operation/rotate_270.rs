@@ -109,12 +109,12 @@ pub fn rotate_270(board: &Board) -> Board {
 #[cfg(test)]
 mod tests {
     use super::rotate_270;
-    use crate::board::board_from_str;
+    use crate::board::from_str;
 
     #[test]
     fn test_rotate_270() {
         assert_eq!(
-            rotate_270(&board_from_str([
+            rotate_270(&from_str([
                 " 11111111",
                 "2 2222222",
                 "33 333333",
@@ -125,7 +125,7 @@ mod tests {
                 "8888888 8",
                 "99999999 ",
             ])),
-            board_from_str([
+            from_str([
                 "12345678 ",
                 "1234567 9",
                 "123456 89",
@@ -138,7 +138,7 @@ mod tests {
             ]),
         );
         assert_eq!(
-            rotate_270(&board_from_str([
+            rotate_270(&from_str([
                 "111111111",
                 "222222222",
                 "333333333",
@@ -149,7 +149,7 @@ mod tests {
                 "888888888",
                 "999999999",
             ])),
-            board_from_str([
+            from_str([
                 "123456789",
                 "123456789",
                 "123456789",

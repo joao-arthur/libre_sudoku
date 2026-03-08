@@ -2,7 +2,7 @@ use crate::cell::Cell;
 
 pub type Group = [Option<Cell>; 9];
 
-pub fn group_from_str(row: &str) -> Group {
+pub fn from_str(row: &str) -> Group {
     let mut chars = row.chars();
     [
         chars.next().and_then(|c| Cell::try_from_char(&c)),
@@ -17,7 +17,7 @@ pub fn group_from_str(row: &str) -> Group {
     ]
 }
 
-pub fn group_to_string(group: &Group) -> String {
+pub fn to_string(group: &Group) -> String {
     let mut res = String::from("");
     for col in group {
         match col {
@@ -30,22 +30,19 @@ pub fn group_to_string(group: &Group) -> String {
 
 #[cfg(test)]
 mod tests {
-    use super::{group_from_str, group_to_string};
+    use super::{from_str, to_string};
     use crate::cell::Cell;
 
     #[test]
     fn from_empty_str() {
-        assert_eq!(group_from_str(""), [None, None, None, None, None, None, None, None, None]);
-        assert_eq!(
-            group_from_str("         "),
-            [None, None, None, None, None, None, None, None, None]
-        );
+        assert_eq!(from_str(""), [None, None, None, None, None, None, None, None, None]);
+        assert_eq!(from_str("         "), [None, None, None, None, None, None, None, None, None]);
     }
 
     #[test]
     fn from_missing_parts() {
         assert_eq!(
-            group_from_str(" 11111111"),
+            from_str(" 11111111"),
             [
                 None,
                 Some(Cell::_1),
@@ -59,7 +56,7 @@ mod tests {
             ]
         );
         assert_eq!(
-            group_from_str("2 2222222"),
+            from_str("2 2222222"),
             [
                 Some(Cell::_2),
                 None,
@@ -73,7 +70,7 @@ mod tests {
             ]
         );
         assert_eq!(
-            group_from_str("33 333333"),
+            from_str("33 333333"),
             [
                 Some(Cell::_3),
                 Some(Cell::_3),
@@ -87,7 +84,7 @@ mod tests {
             ]
         );
         assert_eq!(
-            group_from_str("444 44444"),
+            from_str("444 44444"),
             [
                 Some(Cell::_4),
                 Some(Cell::_4),
@@ -101,7 +98,7 @@ mod tests {
             ]
         );
         assert_eq!(
-            group_from_str("5555 5555"),
+            from_str("5555 5555"),
             [
                 Some(Cell::_5),
                 Some(Cell::_5),
@@ -115,7 +112,7 @@ mod tests {
             ]
         );
         assert_eq!(
-            group_from_str("66666 666"),
+            from_str("66666 666"),
             [
                 Some(Cell::_6),
                 Some(Cell::_6),
@@ -129,7 +126,7 @@ mod tests {
             ]
         );
         assert_eq!(
-            group_from_str("777777 77"),
+            from_str("777777 77"),
             [
                 Some(Cell::_7),
                 Some(Cell::_7),
@@ -143,7 +140,7 @@ mod tests {
             ]
         );
         assert_eq!(
-            group_from_str("8888888 8"),
+            from_str("8888888 8"),
             [
                 Some(Cell::_8),
                 Some(Cell::_8),
@@ -157,7 +154,7 @@ mod tests {
             ]
         );
         assert_eq!(
-            group_from_str("99999999 "),
+            from_str("99999999 "),
             [
                 Some(Cell::_9),
                 Some(Cell::_9),
@@ -175,7 +172,7 @@ mod tests {
     #[test]
     fn from_full_str() {
         assert_eq!(
-            group_from_str("123456789"),
+            from_str("123456789"),
             [
                 Some(Cell::_1),
                 Some(Cell::_2),
@@ -191,9 +188,9 @@ mod tests {
     }
 
     #[test]
-    fn to_string() {
-        assert_eq!(group_to_string(&group_from_str("123456789")), "123456789");
-        assert_eq!(group_to_string(&group_from_str("111111111")), "111111111");
-        assert_eq!(group_to_string(&group_from_str("1 2 3 4 5")), "1 2 3 4 5");
+    fn test_to_string() {
+        assert_eq!(to_string(&from_str("123456789")), "123456789");
+        assert_eq!(to_string(&from_str("111111111")), "111111111");
+        assert_eq!(to_string(&from_str("1 2 3 4 5")), "1 2 3 4 5");
     }
 }
